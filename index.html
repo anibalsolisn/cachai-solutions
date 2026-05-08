@@ -1338,7 +1338,7 @@ function initWheel(wheelId, items, currentIndex, onSelect) {
   });
 
   // Rebuild innerHTML for correct items
-  inner.innerHTML = items.map((item, i) => \`<div class="fp-wheel-item" data-val="\${item}">\${item}</div>\`).join('');
+  inner.innerHTML = items.map(function(item,i){ return '<div class="fp-wheel-item" data-val="'+item+'">'+item+'</div>'; }).join('');
   inner.querySelectorAll('.fp-wheel-item').forEach((el, i) => {
     el.addEventListener('click', () => settle(i));
   });
