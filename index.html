@@ -88,8 +88,9 @@
     padding: 0 5vw;
     display: flex; align-items: center; justify-content: space-between;
     height: 72px;
-    background: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
@@ -97,6 +98,7 @@
     border-color: var(--grey-line);
     box-shadow: 0 2px 20px rgba(44,107,78,0.08);
   }
+  .nav-logo { display: flex; align-items: center; }
   .nav-logo img { height: 36px; display: block; }
   .nav-links {
     display: flex; gap: 36px; list-style: none;
@@ -864,35 +866,47 @@
   .currency-dropdown button:hover { background: var(--green-pale); color: var(--green); }
   .currency-dropdown button.selected { color: var(--green); font-weight: 600; background: var(--green-pale); }
 
-  /* Mobile: hide controls in nav, show in slide menu */
+  /* Mobile controls in slide menu */
   @media (max-width: 900px) {
-    .nav-controls { display: none; }
+    .nav-controls { display: none !important; }
     .nav-controls-mobile {
-      display: flex; flex-direction: column; gap: 12px;
-      padding: 16px;
+      display: flex !important;
+      flex-direction: row;
+      gap: 8px;
+      padding: 12px 12px 4px;
       border-top: 1px solid var(--grey-line);
       margin-top: 8px;
+      flex-wrap: wrap;
     }
-    .nav-controls-mobile .lang-switcher,
-    .nav-controls-mobile .currency-selector { width: 100%; }
-    .nav-controls-mobile .currency-btn { width: 100%; justify-content: space-between; border-radius: 10px; padding: 10px 16px; }
-    .nav-controls-mobile .currency-dropdown { position: static; box-shadow: none; border-radius: 10px; margin-top: 6px; }
+    .nav-controls-mobile .lang-switcher { flex: 1; justify-content: center; }
+    .nav-controls-mobile .currency-selector { flex: 1; }
+    .nav-controls-mobile .currency-btn {
+      width: 100%; justify-content: center;
+      border-radius: 100px; padding: 7px 12px;
+    }
+    .nav-controls-mobile .currency-dropdown {
+      position: absolute; left: 12px; right: 12px;
+      bottom: 100%; top: auto;
+      box-shadow: 0 -4px 24px rgba(26,46,37,0.12);
+      border-radius: 12px; margin-bottom: 6px;
+    }
   }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     /* Nav mobile */
     nav {
-      display: grid;
-      grid-template-columns: 40px 1fr 40px;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 16px;
-      height: 64px;
+      height: 60px;
       z-index: 1000;
     }
-    .nav-hamburger { display: flex; }
-    .nav-logo { justify-self: center; }
-    .nav-logo img { height: 44px; }
+    .nav-hamburger { display: flex; order: 1; }
+    .nav-logo { order: 2; position: absolute; left: 50%; transform: translateX(-50%); }
+    .nav-logo img { height: 36px; }
+    .nav-controls { order: 3; display: none !important; }
 
     /* Slide-in menu */
     .nav-links {
@@ -900,57 +914,43 @@
       flex-direction: column;
       position: fixed;
       top: 0; left: 0; bottom: 0;
-      width: 300px;
-      background: #ffffff !important;
+      width: min(280px, 85vw);
+      background: #ffffff;
       z-index: 999;
-      padding: 0 0 32px;
-      gap: 0;
+      padding: 72px 0 40px;
+      gap: 4px;
       list-style: none;
       transform: translateX(-100%);
-      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 6px 0 40px rgba(26,46,37,0.15);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 8px 0 40px rgba(26,46,37,0.15);
       overflow-y: auto;
     }
-    .nav-links::before {
-      content: '';
-      display: block;
-      height: 80px;
-      min-height: 80px;
-      background: var(--green-pale);
-      background-image: url("logo_cachaisolutions_verde.svg");
-      background-repeat: no-repeat;
-      background-position: 24px center;
-      background-size: auto 36px;
-      border-bottom: 1px solid var(--grey-line);
-      margin-bottom: 12px;
-    }
     .nav-links.open { transform: translateX(0); }
-    .nav-links li { width: 100%; padding: 0 16px; }
+    .nav-links li { width: 100%; padding: 0 12px; }
     .nav-links a.nav-link-item {
       display: flex; align-items: center;
-      font-size: 16px; font-weight: 500;
+      font-size: 15px; font-weight: 500;
       color: var(--green-dark) !important;
-      padding: 14px 16px;
-      border-radius: 12px;
+      padding: 13px 16px;
+      border-radius: 10px;
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
-      letter-spacing: 0.01em;
     }
     .nav-links a.nav-link-item:hover,
     .nav-links a.nav-link-item:active {
       background: var(--green-pale);
       color: var(--green) !important;
     }
-    .nav-links li:last-of-type { padding: 0 16px; margin-top: 4px; }
     .nav-links .nav-cta {
-      display: block;
+      display: block !important;
       background: var(--green) !important;
       color: white !important;
       text-align: center;
-      padding: 14px 20px !important;
+      padding: 13px 20px !important;
       border-radius: 100px !important;
-      font-size: 15px !important;
+      font-size: 14px !important;
       font-weight: 700 !important;
+      margin-top: 8px;
     }
 
     /* Sections */
@@ -986,12 +986,107 @@
     .trust-bar { flex-direction: column; gap: 12px; padding: 16px 5vw; }
     section { padding: 64px 5vw; }
   }
+
+  /* ── LANGUAGE POPUP ── */
+  .lang-popup-overlay {
+    position: fixed; inset: 0;
+    background: rgba(26,46,37,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .lang-popup-overlay.visible { opacity: 1; }
+  .lang-popup-overlay.hidden { display: none; }
+  .lang-popup {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 32px 32px;
+    max-width: 360px; width: 100%;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+    box-shadow: 0 24px 64px rgba(26,46,37,0.25);
+  }
+  .lang-popup-overlay.visible .lang-popup { transform: translateY(0); }
+  .lang-popup-logo img { height: 40px; margin-bottom: 24px; }
+  .lang-popup-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--green-dark); margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .lang-popup-sub {
+    font-size: 13px; color: var(--grey-text);
+    margin-bottom: 24px;
+  }
+  .lang-popup-btns {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 20px;
+  }
+  .lang-popup-btn {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--off-white);
+    border: 1.5px solid var(--grey-line);
+    border-radius: 14px;
+    padding: 14px 20px;
+    cursor: pointer; text-align: left;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .lang-popup-btn:hover {
+    border-color: var(--green);
+    background: var(--green-pale);
+    transform: translateY(-1px);
+  }
+  .lang-popup-flag { font-size: 28px; }
+  .lang-popup-btn-title {
+    font-size: 15px; font-weight: 700;
+    color: var(--green-dark);
+  }
+  .lang-popup-btn-sub {
+    font-size: 12px; color: var(--grey-text); margin-top: 2px;
+  }
+  .lang-popup-note {
+    font-size: 11px; color: var(--grey-text);
+    opacity: 0.6; line-height: 1.5;
+  }
 </style>
 </head>
 <body>
 
 <!-- Cursor -->
 <div class="cursor" id="cursor"><div class="cursor-dot"></div></div>
+
+<!-- ── LANGUAGE POPUP ── -->
+<div class="lang-popup-overlay" id="langPopupOverlay">
+  <div class="lang-popup" id="langPopup">
+    <div class="lang-popup-logo">
+      <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
+    </div>
+    <div class="lang-popup-title">Choose your language</div>
+    <div class="lang-popup-sub">Elige tu idioma / Choose your language</div>
+    <div class="lang-popup-btns">
+      <button class="lang-popup-btn" onclick="chooseLang('es')">
+        <span class="lang-popup-flag">🇨🇱</span>
+        <div>
+          <div class="lang-popup-btn-title">Español</div>
+          <div class="lang-popup-btn-sub">Latinoamérica & España</div>
+        </div>
+      </button>
+      <button class="lang-popup-btn" onclick="chooseLang('en')">
+        <span class="lang-popup-flag">🇺🇸</span>
+        <div>
+          <div class="lang-popup-btn-title">English</div>
+          <div class="lang-popup-btn-sub">USA, UK & International</div>
+        </div>
+      </button>
+    </div>
+    <div class="lang-popup-note">You can change this anytime · Puedes cambiar esto cuando quieras</div>
+  </div>
+</div>
 
 <!-- ── NAV ── -->
 <nav id="nav">
@@ -1865,43 +1960,82 @@
     'PE': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
   };
 
+  // ── LANGUAGE POPUP ──
+  function showLangPopup() {
+    const overlay = document.getElementById('langPopupOverlay');
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  }
+
+  function hideLangPopup() {
+    const overlay = document.getElementById('langPopupOverlay');
+    overlay.classList.remove('visible');
+    setTimeout(() => overlay.classList.add('hidden'), 300);
+  }
+
+  function chooseLang(lang) {
+    setLang(lang);
+    hideLangPopup();
+    // also set currency based on choice
+    if (lang === 'es' && !localStorage.getItem('cs_currency')) {
+      setCurrency('CLP', '🇨🇱', '$', 'CLP');
+    } else if (lang === 'en' && !localStorage.getItem('cs_currency')) {
+      setCurrency('USD', '🇺🇸', '$', 'USD');
+    }
+    localStorage.setItem('cs_lang', lang);
+  }
+
   async function detectCountry() {
     // Check saved preferences first
     const savedLang = localStorage.getItem('cs_lang');
     const savedCurrency = localStorage.getItem('cs_currency');
 
+    // Hide popup initially
+    document.getElementById('langPopupOverlay').classList.add('hidden');
+
+    // If user already chose language, apply it and skip popup
+    if (savedLang) {
+      applyLang(savedLang);
+      if (savedCurrency) {
+        const c = JSON.parse(savedCurrency);
+        setCurrency(c.code, c.flag, c.symbol, c.label);
+      }
+      return;
+    }
+
     try {
       const res = await fetch('https://ipapi.co/json/');
       const data = await res.json();
       const countryCode = data.country_code || '';
+      const detectedLang = spanishCountries.has(countryCode) ? 'es' : 'en';
 
-      // Set language
-      if (!savedLang) {
-        const lang = spanishCountries.has(countryCode) ? 'es' : 'en';
-        applyLang(lang);
+      // On mobile: always show popup so user can confirm
+      // On desktop: auto-detect silently
+      const isMobile = window.innerWidth <= 900;
+      if (isMobile) {
+        showLangPopup();
+        // pre-apply detected lang in background
+        applyLang(detectedLang);
       } else {
-        applyLang(savedLang);
+        applyLang(detectedLang);
+        localStorage.setItem('cs_lang', detectedLang);
       }
 
       // Set currency
       if (!savedCurrency) {
         const curr = countryCurrency[countryCode] || { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' };
         setCurrency(curr.code, curr.flag, curr.symbol, curr.label);
-      } else {
-        const c = JSON.parse(savedCurrency);
-        setCurrency(c.code, c.flag, c.symbol, c.label);
       }
     } catch (e) {
-      // Fallback: use browser language
-      if (!savedLang) {
-        const browserLang = navigator.language || navigator.userLanguage || 'en';
-        applyLang(browserLang.startsWith('es') ? 'es' : 'en');
+      const browserLang = navigator.language || navigator.userLanguage || 'en';
+      const detectedLang = browserLang.startsWith('es') ? 'es' : 'en';
+      const isMobile = window.innerWidth <= 900;
+      if (isMobile) {
+        showLangPopup();
+        applyLang(detectedLang);
       } else {
-        applyLang(savedLang);
-      }
-      if (savedCurrency) {
-        const c = JSON.parse(savedCurrency);
-        setCurrency(c.code, c.flag, c.symbol, c.label);
+        applyLang(detectedLang);
+        localStorage.setItem('cs_lang', detectedLang);
       }
     }
   }
