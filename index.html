@@ -219,10 +219,12 @@ nav.scrolled{border-color:var(--grey-line);box-shadow:0 2px 20px rgba(44,107,78,
 .mobile-nav-list li:last-child{border-bottom:none}
 .mobile-nav-link{
   display:flex;align-items:center;justify-content:space-between;
-  padding:20px 28px;
+  width:100%;padding:20px 28px;
   font-size:24px;font-weight:700;
   color:var(--green-dark);text-decoration:none;
   font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.02em;
+  background:none;border:none;cursor:pointer;
+  text-align:left;
   transition:background .15s;
 }
 .mobile-nav-link:active{background:var(--green-pale)}
@@ -552,6 +554,49 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
   section{padding:64px 5vw}
   .footer-pickers{display:block}
   .mega-wrap{display:none!important}
+  .mega-wrap.visible{
+    display:block!important;
+    position:fixed;inset:0;z-index:1100;
+    top:0;padding:0;
+    overflow-y:auto;
+    animation:none;
+  }
+  .mega-wrap.visible .mega-inner{
+    padding:0;
+  }
+  /* Mobile mega header */
+  .mega-wrap.visible::before{
+    content:'';display:block;height:64px;
+  }
+  .mega-mobile-head{
+    display:flex;align-items:center;gap:12px;
+    padding:16px 24px;
+    border-bottom:1px solid var(--grey-line);
+    position:sticky;top:0;background:white;z-index:10;
+    height:64px;
+  }
+  .mega-mobile-back{
+    display:flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:600;
+    color:var(--green-dark);
+    background:none;border:none;cursor:pointer;
+    font-family:'Plus Jakarta Sans',sans-serif;
+  }
+  .mega-mobile-back svg{width:20px;height:20px}
+  .mega-links-grid{
+    grid-template-columns:1fr!important;
+    padding:16px 24px;
+  }
+  .mega-link-lg{
+    font-size:20px!important;
+    padding:16px 0!important;
+  }
+  .mega-link-xl{
+    font-size:24px!important;
+    padding:18px 24px!important;
+  }
+  .mega-narrow .mega-inner{max-width:100%!important}
+  .mega-section-label{padding:20px 24px 8px!important;margin-bottom:0!important}
 }
 @media(max-width:600px){
   .process-steps{grid-template-columns:1fr}
@@ -606,6 +651,12 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-services">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-services')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.services">Servicios</span>
+          </button>
+        </div>
         <div class="mega-inner">
         <div class="mega-section-label" data-i18n="mega.whatwedo">Lo que hacemos</div>
         <div class="mega-links-grid">
@@ -632,6 +683,12 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-industries">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-industries')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.industries">Industrias</span>
+          </button>
+        </div>
         <div class="mega-inner">
         <div class="mega-section-label" data-i18n="mega.industriesserve">Industrias que servimos</div>
         <div class="mega-links-grid">
@@ -656,6 +713,12 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-apps">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-apps')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.apps">Apps & Integraciones</span>
+          </button>
+        </div>
         <div class="mega-inner">
         <div class="mega-section-label" data-i18n="mega.appslabel">Plataformas &amp; Herramientas</div>
         <div class="mega-links-grid">
@@ -682,6 +745,12 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-narrow" id="mega-about">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-about')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.about">Acerca de</span>
+          </button>
+        </div>
         <div class="mega-inner">
         <a href="#nosotros" class="mega-link-xl" data-i18n="ma.about">Nosotros</a>
         <a href="#casos" class="mega-link-xl" data-i18n="ma.work">Nuestro trabajo</a>
@@ -730,18 +799,18 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
     <div class="mobile-close" onclick="closeMobileMenu()">✕</div>
   </div>
   <ul class="mobile-nav-list">
-    <li><a href="#servicios" class="mobile-nav-link" onclick="closeMobileMenu()">
+    <li><button class="mobile-nav-link" onclick="openMobileSubMenu('mega-services')">
       <span data-i18n="nav.services">Servicios</span><span class="arr">›</span>
-    </a></li>
-    <li><a href="#casos" class="mobile-nav-link" onclick="closeMobileMenu()">
+    </button></li>
+    <li><button class="mobile-nav-link" onclick="openMobileSubMenu('mega-industries')">
       <span data-i18n="nav.industries">Industrias</span><span class="arr">›</span>
-    </a></li>
-    <li><a href="#servicios" class="mobile-nav-link" onclick="closeMobileMenu()">
+    </button></li>
+    <li><button class="mobile-nav-link" onclick="openMobileSubMenu('mega-apps')">
       <span data-i18n="nav.apps">Apps &amp; Integraciones</span><span class="arr">›</span>
-    </a></li>
-    <li><a href="#nosotros" class="mobile-nav-link" onclick="closeMobileMenu()">
+    </button></li>
+    <li><button class="mobile-nav-link" onclick="openMobileSubMenu('mega-about')">
       <span data-i18n="nav.about">Acerca de</span><span class="arr">›</span>
-    </a></li>
+    </button></li>
   </ul>
   <a href="#contacto" class="mobile-nav-cta" onclick="closeMobileMenu()" data-i18n="nav.cta">Agendar llamada →</a>
 </div>
@@ -1423,6 +1492,24 @@ function openMobileMenu() {
 function closeMobileMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.body.style.overflow = '';
+  // also close any open mega
+  document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
+}
+function closeMega(id) {
+  const mega = document.getElementById(id);
+  if(mega) mega.classList.remove('visible');
+  if(window.innerWidth <= 900) {
+    document.getElementById('mobileMenu').classList.add('open');
+  }
+}
+function openMobileSubMenu(id) {
+  // Hide mobile menu, show mega fullscreen
+  document.getElementById('mobileMenu').classList.remove('open');
+  const mega = document.getElementById(id);
+  if(mega) {
+    document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
+    mega.classList.add('visible');
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -1435,22 +1522,24 @@ document.querySelectorAll('.nav-item[data-mega]').forEach(item => {
   const trigger = item.querySelector('a.nav-link-item');
   let t;
 
-  const open = () => {
+  // Desktop: hover
+  item.addEventListener('mouseenter', () => {
+    if(window.innerWidth <= 900) return;
     clearTimeout(t);
     document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
     mega.classList.add('visible');
-  };
-  const close = () => {
+  });
+  item.addEventListener('mouseleave', () => {
+    if(window.innerWidth <= 900) return;
     t = setTimeout(() => mega.classList.remove('visible'), 180);
-  };
+  });
+  mega.addEventListener('mouseenter', () => { if(window.innerWidth > 900) clearTimeout(t); });
+  mega.addEventListener('mouseleave', () => {
+    if(window.innerWidth <= 900) return;
+    t = setTimeout(() => mega.classList.remove('visible'), 180);
+  });
 
-  // Desktop: hover to open
-  item.addEventListener('mouseenter', open);
-  item.addEventListener('mouseleave', close);
-  mega.addEventListener('mouseenter', () => clearTimeout(t));
-  mega.addEventListener('mouseleave', close);
-
-  // ALWAYS prevent navigation on trigger link — mega menu opens instead
+  // Click/tap — works on both desktop and mobile
   trigger.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
