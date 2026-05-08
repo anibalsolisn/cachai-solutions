@@ -53,6 +53,9 @@
   @media (hover: none), (max-width: 900px) {
     .cursor { display: none !important; }
   }
+  @media print {
+    .cursor { display: none !important; }
+  }
   .cursor::before, .cursor::after {
     content: '';
     position: absolute;
@@ -1144,7 +1147,7 @@
 
 <!-- ── TRUST BAR ── -->
 <div class="trust-bar">
-  <span class="trust-label">Marcas que escalamos</span>
+  <span class="trust-label" data-i18n="trust.label">Marcas que escalamos</span>
   <div style="overflow:hidden;flex:1">
     <div class="trust-logos">
       <span>Marca Uno</span><span>Brand Two</span><span>E-shop CL</span>
@@ -1162,37 +1165,37 @@
     <div class="reveal">
       <span class="section-tag" data-i18n="services.tag">Servicios</span>
       <h2 class="section-title" data-i18n="services.title">Todo lo que tu tienda<br>necesita para crecer</h2>
-      <p class="section-sub">Combinamos desarrollo técnico en Shopify con estrategias de growth basadas en datos para maximizar cada peso invertido.</p>
+      <p class="section-sub" data-i18n="services.sub">Combinamos desarrollo técnico en Shopify con estrategias de growth basadas en datos para maximizar cada peso invertido.</p>
     </div>
     <div class="services-grid">
       <div class="service-card reveal">
         <div class="service-icon">🛍️</div>
-        <div class="service-title">Desarrollo Shopify</div>
-        <div class="service-desc">Diseño y desarrollo de tiendas Shopify a medida. Temas personalizados, migraciones, integraciones y optimizaciones técnicas de alto rendimiento.</div>
+        <div class="service-title" data-i18n="s1.title">Desarrollo Shopify</div>
+        <div class="service-desc" data-i18n="s1.desc">Diseño y desarrollo de tiendas Shopify a medida. Temas personalizados, migraciones, integraciones y optimizaciones técnicas de alto rendimiento.</div>
         <div class="service-tags">
           <span class="tag">Liquid</span><span class="tag">Custom themes</span><span class="tag">Migrations</span>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="service-icon">🎯</div>
-        <div class="service-title">Growth Marketing</div>
-        <div class="service-desc">Estrategias de adquisición y retención centradas en ROAS. Meta Ads, Google Ads y automatizaciones que escalan con tu negocio.</div>
+        <div class="service-title" data-i18n="s2.title">Growth Marketing</div>
+        <div class="service-desc" data-i18n="s2.desc">Estrategias de adquisición y retención centradas en ROAS. Meta Ads, Google Ads y automatizaciones que escalan con tu negocio.</div>
         <div class="service-tags">
           <span class="tag">Meta Ads</span><span class="tag">Google Ads</span><span class="tag">ROAS</span>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="service-icon">📧</div>
-        <div class="service-title">Email & CRO</div>
-        <div class="service-desc">Flujos de email marketing que convierten y optimización de la tasa de conversión con A/B testing, heatmaps y análisis de comportamiento.</div>
+        <div class="service-title" data-i18n="s3.title">Email & CRO</div>
+        <div class="service-desc" data-i18n="s3.desc">Flujos de email marketing que convierten y optimización de la tasa de conversión con A/B testing, heatmaps y análisis de comportamiento.</div>
         <div class="service-tags">
           <span class="tag">Klaviyo</span><span class="tag">A/B Testing</span><span class="tag">CRO</span>
         </div>
       </div>
       <div class="service-card reveal">
         <div class="service-icon">📊</div>
-        <div class="service-title">Analytics & Datos</div>
-        <div class="service-desc">Dashboards en tiempo real con los KPIs que importan. Tomamos decisiones con datos, no con intuición. GA4, Looker Studio y reportes semanales.</div>
+        <div class="service-title" data-i18n="s4.title">Analytics & Datos</div>
+        <div class="service-desc" data-i18n="s4.desc">Dashboards en tiempo real con los KPIs que importan. Tomamos decisiones con datos, no con intuición. GA4, Looker Studio y reportes semanales.</div>
         <div class="service-tags">
           <span class="tag">GA4</span><span class="tag">Looker</span><span class="tag">Data layer</span>
         </div>
@@ -1211,29 +1214,29 @@
         <div class="why-item reveal">
           <div class="why-num">01</div>
           <div>
-            <div class="why-title">Enfoque en resultados reales</div>
-            <div class="why-desc">No cobramos por horas ni entregamos reportes bonitos. Medimos nuestro éxito en revenue generado, ROAS y conversión de tu tienda.</div>
+            <div class="why-title" data-i18n="w1.title">Enfoque en resultados reales</div>
+            <div class="why-desc" data-i18n="w1.desc">No cobramos por horas ni entregamos reportes bonitos. Medimos nuestro éxito en revenue generado, ROAS y conversión de tu tienda.</div>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">02</div>
           <div>
-            <div class="why-title">Equipo especializado en e-commerce</div>
-            <div class="why-desc">Solo trabajamos con tiendas online. Eso nos da un conocimiento profundo del ecosistema Shopify y las mejores prácticas de la industria.</div>
+            <div class="why-title" data-i18n="w2.title">Equipo especializado en e-commerce</div>
+            <div class="why-desc" data-i18n="w2.desc">Solo trabajamos con tiendas online. Eso nos da un conocimiento profundo del ecosistema Shopify y las mejores prácticas de la industria.</div>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">03</div>
           <div>
-            <div class="why-title">Transparencia total</div>
-            <div class="why-desc">Acceso completo a tus dashboards, reuniones semanales y comunicación directa. Sin capas intermedias ni letra chica.</div>
+            <div class="why-title" data-i18n="w3.title">Transparencia total</div>
+            <div class="why-desc" data-i18n="w3.desc">Acceso completo a tus dashboards, reuniones semanales y comunicación directa. Sin capas intermedias ni letra chica.</div>
           </div>
         </div>
         <div class="why-item reveal">
           <div class="why-num">04</div>
           <div>
-            <div class="why-title">Escalamos contigo</div>
-            <div class="why-desc">Nuestro modelo crece con tu negocio. Desde el primer peso hasta los 8 dígitos de revenue mensual, tenemos la experiencia para acompañarte.</div>
+            <div class="why-title" data-i18n="w4.title">Escalamos contigo</div>
+            <div class="why-desc" data-i18n="w4.desc">Nuestro modelo crece con tu negocio. Desde el primer peso hasta los 8 dígitos de revenue mensual, tenemos la experiencia para acompañarte.</div>
           </div>
         </div>
       </div>
@@ -1271,8 +1274,8 @@
         </div>
       </div>
       <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)">
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px">Promedio medido en 90 días de trabajo</div>
-        <div style="font-size:13px;color:var(--green-light);font-weight:600">Basado en +80 proyectos · 2022–2025</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px" data-i18n="why.kpi.note">Promedio medido en 90 días de trabajo</div>
+        <div style="font-size:13px;color:var(--green-light);font-weight:600" data-i18n="why.kpi.base">Basado en +80 proyectos · 2022–2025</div>
       </div>
     </div>
   </div>
@@ -1284,76 +1287,76 @@
     <div class="reveal">
       <span class="section-tag" data-i18n="cases.tag">Casos de éxito</span>
       <h2 class="section-title" data-i18n="cases.title">Números que<br>hablan por sí solos</h2>
-      <p class="section-sub">Resultados reales de tiendas reales. Sin promedios inflados ni métricas de vanidad.</p>
+      <p class="section-sub" data-i18n="cases.sub">Resultados reales de tiendas reales. Sin promedios inflados ni métricas de vanidad.</p>
     </div>
     <div class="cases-grid">
       <div class="case-card reveal">
         <div class="case-header">
-          <div class="case-industry">Moda & Accesorios</div>
+          <div class="case-industry" data-i18n="c1.industry">Moda & Accesorios</div>
           <div class="case-brand">StyleHouse CL</div>
         </div>
         <div class="case-body">
           <div class="case-result">
             <div class="result-item">
               <div class="result-num">+82%</div>
-              <div class="result-label">Tasa de conversión</div>
+              <div class="result-label" data-i18n="c1.l1">Tasa de conversión</div>
             </div>
             <div class="result-item">
               <div class="result-num">4.6×</div>
-              <div class="result-label">ROAS en Meta</div>
+              <div class="result-label" data-i18n="c1.l2">ROAS en Meta</div>
             </div>
             <div class="result-item">
               <div class="result-num">90d</div>
-              <div class="result-label">Para lograrlo</div>
+              <div class="result-label" data-i18n="c1.l3">Para lograrlo</div>
             </div>
           </div>
-          <div class="case-desc">Rediseño completo de la tienda Shopify + estrategia de Meta Ads con audiencias lookalike. De $8M a $18M de revenue en 3 meses.</div>
+          <div class="case-desc" data-i18n="c1.desc">Rediseño completo de la tienda Shopify + estrategia de Meta Ads con audiencias lookalike. De $8M a $18M de revenue en 3 meses.</div>
         </div>
       </div>
       <div class="case-card reveal">
         <div class="case-header">
-          <div class="case-industry">Tecnología & Gadgets</div>
+          <div class="case-industry" data-i18n="c2.industry">Tecnología & Gadgets</div>
           <div class="case-brand">TechNova Store</div>
         </div>
         <div class="case-body">
           <div class="case-result">
             <div class="result-item">
               <div class="result-num">-44%</div>
-              <div class="result-label">Costo adquisición</div>
+              <div class="result-label" data-i18n="c2.l1">Costo adquisición</div>
             </div>
             <div class="result-item">
               <div class="result-num">+3.1×</div>
-              <div class="result-label">Revenue</div>
+              <div class="result-label" data-i18n="c2.l2">Revenue</div>
             </div>
             <div class="result-item">
               <div class="result-num">60d</div>
-              <div class="result-label">Para lograrlo</div>
+              <div class="result-label" data-i18n="c2.l3">Para lograrlo</div>
             </div>
           </div>
-          <div class="case-desc">Implementación de Klaviyo con flujos de recuperación de carrito + optimización de Google Shopping. El email pasó a ser el canal #1.</div>
+          <div class="case-desc" data-i18n="c2.desc">Implementación de Klaviyo con flujos de recuperación de carrito + optimización de Google Shopping. El email pasó a ser el canal #1.</div>
         </div>
       </div>
       <div class="case-card reveal">
         <div class="case-header">
-          <div class="case-industry">Belleza & Cosmética</div>
+          <div class="case-industry" data-i18n="c3.industry">Belleza & Cosmética</div>
           <div class="case-brand">Glow Natural</div>
         </div>
         <div class="case-body">
           <div class="case-result">
             <div class="result-item">
               <div class="result-num">+194%</div>
-              <div class="result-label">Revenue anual</div>
+              <div class="result-label" data-i18n="c3.l1">Revenue anual</div>
             </div>
             <div class="result-item">
               <div class="result-num">5.2×</div>
-              <div class="result-label">ROAS total</div>
+              <div class="result-label" data-i18n="c3.l2">ROAS total</div>
             </div>
             <div class="result-item">
               <div class="result-num">6m</div>
-              <div class="result-label">De trabajo</div>
+              <div class="result-label" data-i18n="c3.l3">De trabajo</div>
             </div>
           </div>
-          <div class="case-desc">Migración a Shopify Plus + estrategia full-funnel. Lanzamos su programa de fidelización que representa hoy el 40% del revenue mensual.</div>
+          <div class="case-desc" data-i18n="c3.desc">Migración a Shopify Plus + estrategia full-funnel. Lanzamos su programa de fidelización que representa hoy el 40% del revenue mensual.</div>
         </div>
       </div>
     </div>
@@ -1371,36 +1374,36 @@
       <div class="testi-card reveal">
         <div class="stars">★★★★★</div>
         <div class="testi-quote">"</div>
-        <div class="testi-text">Cachai Solutions transformó nuestra tienda por completo. En 3 meses duplicamos el revenue y el equipo siempre estuvo disponible para responder cualquier duda. Los recomiendo sin dudarlo.</div>
+        <div class="testi-text" data-i18n="t1.text">Cachai Solutions transformó nuestra tienda por completo. En 3 meses duplicamos el revenue y el equipo siempre estuvo disponible para responder cualquier duda. Los recomiendo sin dudarlo.</div>
         <div class="testi-author">
           <div class="testi-avatar">MC</div>
           <div>
             <div class="testi-name">María Catalina Rojas</div>
-            <div class="testi-role">CEO · StyleHouse CL</div>
+            <div class="testi-role" data-i18n="t1.role">CEO · StyleHouse CL</div>
           </div>
         </div>
       </div>
       <div class="testi-card reveal">
         <div class="stars">★★★★★</div>
         <div class="testi-quote">"</div>
-        <div class="testi-text">Por fin una agencia que habla en términos de negocio y no de métricas de vanidad. Nuestro ROAS pasó de 1.8× a 4.6× en dos meses. Eso es lo que importa.</div>
+        <div class="testi-text" data-i18n="t2.text">Por fin una agencia que habla en términos de negocio y no de métricas de vanidad. Nuestro ROAS pasó de 1.8× a 4.6× en dos meses. Eso es lo que importa.</div>
         <div class="testi-author">
           <div class="testi-avatar">JP</div>
           <div>
             <div class="testi-name">José Pablo Fuentes</div>
-            <div class="testi-role">Director · TechNova Store</div>
+            <div class="testi-role" data-i18n="t2.role">Director · TechNova Store</div>
           </div>
         </div>
       </div>
       <div class="testi-card reveal">
         <div class="stars">★★★★★</div>
         <div class="testi-quote">"</div>
-        <div class="testi-text">Lo mejor es la transparencia. Tenemos acceso a todo, reuniones semanales y un equipo que entiende nuestro producto. Son parte de nuestro equipo, no solo un proveedor.</div>
+        <div class="testi-text" data-i18n="t3.text">Lo mejor es la transparencia. Tenemos acceso a todo, reuniones semanales y un equipo que entiende nuestro producto. Son parte de nuestro equipo, no solo un proveedor.</div>
         <div class="testi-author">
           <div class="testi-avatar">AV</div>
           <div>
             <div class="testi-name">Andrea Valenzuela</div>
-            <div class="testi-role">Fundadora · Glow Natural</div>
+            <div class="testi-role" data-i18n="t3.role">Fundadora · Glow Natural</div>
           </div>
         </div>
       </div>
@@ -1414,28 +1417,28 @@
     <div class="reveal" style="text-align:center;margin-bottom:0">
       <span class="section-tag" data-i18n="process.tag">Cómo trabajamos</span>
       <h2 class="section-title" data-i18n="process.title">De cero a escala<br>en 4 pasos</h2>
-      <p class="section-sub" style="margin:14px auto 0;text-align:center">Un proceso claro, sin sorpresas y con resultados medibles en cada etapa.</p>
+      <p class="section-sub" style="margin:14px auto 0;text-align:center" data-i18n="process.sub">Un proceso claro, sin sorpresas y con resultados medibles en cada etapa.</p>
     </div>
     <div class="process-steps">
       <div class="process-step reveal">
         <div class="step-num">1</div>
-        <div class="step-title">Diagnóstico</div>
-        <div class="step-desc">Auditamos tu tienda, tus campañas y tus datos. Identificamos las oportunidades de crecimiento más relevantes para tu negocio.</div>
+        <div class="step-title" data-i18n="p1.title">Diagnóstico</div>
+        <div class="step-desc" data-i18n="p1.desc">Auditamos tu tienda, tus campañas y tus datos. Identificamos las oportunidades de crecimiento más relevantes para tu negocio.</div>
       </div>
       <div class="process-step reveal">
         <div class="step-num">2</div>
-        <div class="step-title">Estrategia</div>
-        <div class="step-desc">Diseñamos un plan de acción priorizado con objetivos claros, timelines definidos y KPIs para medir el éxito en cada fase.</div>
+        <div class="step-title" data-i18n="p2.title">Estrategia</div>
+        <div class="step-desc" data-i18n="p2.desc">Diseñamos un plan de acción priorizado con objetivos claros, timelines definidos y KPIs para medir el éxito en cada fase.</div>
       </div>
       <div class="process-step reveal">
         <div class="step-num">3</div>
-        <div class="step-title">Ejecución</div>
-        <div class="step-desc">Implementamos con velocidad y precisión. Desarrollo en Shopify, campañas activas y automatizaciones funcionando en semanas.</div>
+        <div class="step-title" data-i18n="p3.title">Ejecución</div>
+        <div class="step-desc" data-i18n="p3.desc">Implementamos con velocidad y precisión. Desarrollo en Shopify, campañas activas y automatizaciones funcionando en semanas.</div>
       </div>
       <div class="process-step reveal">
         <div class="step-num">4</div>
-        <div class="step-title">Escala</div>
-        <div class="step-desc">Con la base sólida, escalamos lo que funciona, optimizamos lo que no y repetimos el ciclo para un crecimiento sostenido.</div>
+        <div class="step-title" data-i18n="p4.title">Escala</div>
+        <div class="step-desc" data-i18n="p4.desc">Con la base sólida, escalamos lo que funciona, optimizamos lo que no y repetimos el ciclo para un crecimiento sostenido.</div>
       </div>
     </div>
   </div>
@@ -1446,7 +1449,7 @@
   <div class="cta-inner">
     <div>
       <h2 class="cta-title" data-i18n="cta.title">¿Listo para escalar<br>tu tienda?</h2>
-      <p class="cta-sub">Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
+      <p class="cta-sub" data-i18n="cta.sub">Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
       <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.6);font-size:14px">
           <span style="color:var(--green-mid)">✓</span> Sin costo ni compromiso
@@ -1492,7 +1495,7 @@
       <div class="footer-logo">
         <img src="logo_cachaisolutions_blanco.svg" alt="Cachai Solutions">
       </div>
-      <div class="footer-desc">Consultora especializada en Shopify y Growth Marketing. Escalamos tiendas online con estrategia, datos y ejecución de alto nivel.</div>
+      <div class="footer-desc" data-i18n="footer.desc">Consultora especializada en Shopify y Growth Marketing. Escalamos tiendas online con estrategia, datos y ejecución de alto nivel.</div>
       <div class="footer-social">
         <a href="https://linkedin.com" target="_blank" class="social-btn" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1548,21 +1551,33 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 Cachai Solutions. Todos los derechos reservados.</span>
+    <span data-i18n="footer.copy">© 2025 Cachai Solutions. Todos los derechos reservados.</span>
     <span class="footer-partner">✦ Shopify Partner Certificado</span>
     <span>Privacidad · Términos</span>
   </div>
 </footer>
 
 <script>
-  // Cursor
+  // Cursor — hide on touch devices
   const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-  });
-  document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
-  document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+  const isTouchDevice = () => window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
+  if (isTouchDevice()) {
+    cursor.style.display = 'none';
+  } else {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+    document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+    // Hide cursor during screenshot (visibilitychange trick)
+    document.addEventListener('visibilitychange', () => {
+      cursor.style.opacity = document.hidden ? '0' : '1';
+    });
+    // Hide on blur (alt+tab, screenshot tools)
+    window.addEventListener('blur', () => cursor.style.opacity = '0');
+    window.addEventListener('focus', () => cursor.style.opacity = '1');
+  }
 
   // Nav scroll
   const nav = document.getElementById('nav');
@@ -1634,60 +1649,90 @@
   // ── TRANSLATIONS ──
   const i18n = {
     es: {
-      'nav.services': 'Servicios',
-      'nav.cases': 'Casos de éxito',
-      'nav.process': 'Proceso',
-      'nav.cta': 'Agendar llamada →',
+      'nav.services': 'Servicios', 'nav.cases': 'Casos de éxito', 'nav.process': 'Proceso', 'nav.cta': 'Agendar llamada →',
       'hero.badge': 'Shopify Partner Certificado',
-      'hero.title1': 'Escalamos tu tienda',
-      'hero.title2': 'con',
-      'hero.accent': 'estrategia',
-      'hero.title3': 'y datos reales',
+      'hero.title1': 'Escalamos tu tienda', 'hero.title2': 'con', 'hero.accent': 'estrategia', 'hero.title3': 'y datos reales',
       'hero.sub': 'Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.',
-      'hero.cta1': 'Agendar llamada gratuita',
-      'hero.cta2': 'Ver resultados',
-      'hero.stat1': 'Tiendas escaladas',
-      'hero.stat2': 'ROAS promedio',
-      'hero.stat3': 'Conversión media',
-      'services.tag': 'Servicios',
-      'services.title': 'Todo lo que tu tienda<br>necesita para crecer',
-      'why.tag': 'Por qué nosotros',
-      'why.title': 'Hacemos lo que<br>prometemos',
-      'cases.tag': 'Casos de éxito',
-      'cases.title': 'Números que<br>hablan por sí solos',
-      'testi.tag': 'Testimonios',
-      'testi.title': 'Lo que dicen<br>quienes ya escalaron',
-      'process.tag': 'Cómo trabajamos',
-      'process.title': 'De cero a escala<br>en 4 pasos',
-      'cta.title': '¿Listo para escalar<br>tu tienda?',
+      'hero.cta1': 'Agendar llamada gratuita', 'hero.cta2': 'Ver resultados',
+      'hero.stat1': 'Tiendas escaladas', 'hero.stat2': 'ROAS promedio', 'hero.stat3': 'Conversión media',
+      'trust.label': 'Marcas que escalamos',
+      'services.tag': 'Servicios', 'services.title': 'Todo lo que tu tienda<br>necesita para crecer',
+      'services.sub': 'Combinamos desarrollo técnico en Shopify con estrategias de growth basadas en datos para maximizar cada peso invertido.',
+      's1.title': 'Desarrollo Shopify', 's1.desc': 'Diseño y desarrollo de tiendas Shopify a medida. Temas personalizados, migraciones, integraciones y optimizaciones técnicas de alto rendimiento.',
+      's2.title': 'Growth Marketing', 's2.desc': 'Estrategias de adquisición y retención centradas en ROAS. Meta Ads, Google Ads y automatizaciones que escalan con tu negocio.',
+      's3.title': 'Email & CRO', 's3.desc': 'Flujos de email marketing que convierten y optimización de la tasa de conversión con A/B testing, heatmaps y análisis de comportamiento.',
+      's4.title': 'Analytics & Datos', 's4.desc': 'Dashboards en tiempo real con los KPIs que importan. Tomamos decisiones con datos, no con intuición. GA4, Looker Studio y reportes semanales.',
+      'why.tag': 'Por qué nosotros', 'why.title': 'Hacemos lo que<br>prometemos',
+      'w1.title': 'Enfoque en resultados reales', 'w1.desc': 'No cobramos por horas ni entregamos reportes bonitos. Medimos nuestro éxito en revenue generado, ROAS y conversión de tu tienda.',
+      'w2.title': 'Equipo especializado en e-commerce', 'w2.desc': 'Solo trabajamos con tiendas online. Eso nos da un conocimiento profundo del ecosistema Shopify y las mejores prácticas de la industria.',
+      'w3.title': 'Transparencia total', 'w3.desc': 'Acceso completo a tus dashboards, reuniones semanales y comunicación directa. Sin capas intermedias ni letra chica.',
+      'w4.title': 'Escalamos contigo', 'w4.desc': 'Nuestro modelo crece con tu negocio. Desde el primer peso hasta los 8 dígitos de revenue mensual, tenemos la experiencia para acompañarte.',
+      'why.kpi.note': 'Promedio medido en 90 días de trabajo', 'why.kpi.base': 'Basado en +80 proyectos · 2022–2025',
+      'cases.tag': 'Casos de éxito', 'cases.title': 'Números que<br>hablan por sí solos', 'cases.sub': 'Resultados reales de tiendas reales. Sin promedios inflados ni métricas de vanidad.',
+      'c1.industry': 'Moda & Accesorios', 'c1.l1': 'Tasa de conversión', 'c1.l2': 'ROAS en Meta', 'c1.l3': 'Para lograrlo',
+      'c1.desc': 'Rediseño completo de la tienda Shopify + estrategia de Meta Ads con audiencias lookalike. De $8M a $18M de revenue en 3 meses.',
+      'c2.industry': 'Tecnología & Gadgets', 'c2.l1': 'Costo adquisición', 'c2.l2': 'Revenue', 'c2.l3': 'Para lograrlo',
+      'c2.desc': 'Implementación de Klaviyo con flujos de recuperación de carrito + optimización de Google Shopping. El email pasó a ser el canal #1.',
+      'c3.industry': 'Belleza & Cosmética', 'c3.l1': 'Revenue anual', 'c3.l2': 'ROAS total', 'c3.l3': 'De trabajo',
+      'c3.desc': 'Migración a Shopify Plus + estrategia full-funnel. Lanzamos su programa de fidelización que representa hoy el 40% del revenue mensual.',
+      'testi.tag': 'Testimonios', 'testi.title': 'Lo que dicen<br>quienes ya escalaron',
+      't1.text': 'Cachai Solutions transformó nuestra tienda por completo. En 3 meses duplicamos el revenue y el equipo siempre estuvo disponible para responder cualquier duda. Los recomiendo sin dudarlo.',
+      't1.role': 'CEO · StyleHouse CL',
+      't2.text': 'Por fin una agencia que habla en términos de negocio y no de métricas de vanidad. Nuestro ROAS pasó de 1.8× a 4.6× en dos meses. Eso es lo que importa.',
+      't2.role': 'Director · TechNova Store',
+      't3.text': 'Lo mejor es la transparencia. Tenemos acceso a todo, reuniones semanales y un equipo que entiende nuestro producto. Son parte de nuestro equipo, no solo un proveedor.',
+      't3.role': 'Fundadora · Glow Natural',
+      'process.tag': 'Cómo trabajamos', 'process.title': 'De cero a escala<br>en 4 pasos', 'process.sub': 'Un proceso claro, sin sorpresas y con resultados medibles en cada etapa.',
+      'p1.title': 'Diagnóstico', 'p1.desc': 'Auditamos tu tienda, tus campañas y tus datos. Identificamos las oportunidades de crecimiento más relevantes para tu negocio.',
+      'p2.title': 'Estrategia', 'p2.desc': 'Diseñamos un plan de acción priorizado con objetivos claros, timelines definidos y KPIs para medir el éxito en cada fase.',
+      'p3.title': 'Ejecución', 'p3.desc': 'Implementamos con velocidad y precisión. Desarrollo en Shopify, campañas activas y automatizaciones funcionando en semanas.',
+      'p4.title': 'Escala', 'p4.desc': 'Con la base sólida, escalamos lo que funciona, optimizamos lo que no y repetimos el ciclo para un crecimiento sostenido.',
+      'cta.title': '¿Listo para escalar<br>tu tienda?', 'cta.sub': 'Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.',
+      'footer.desc': 'Consultora especializada en Shopify y Growth Marketing. Escalamos tiendas online con estrategia, datos y ejecución de alto nivel.',
+      'footer.copy': '© 2025 Cachai Solutions. Todos los derechos reservados.',
     },
     en: {
-      'nav.services': 'Services',
-      'nav.cases': 'Case Studies',
-      'nav.process': 'Process',
-      'nav.cta': 'Book a Call →',
+      'nav.services': 'Services', 'nav.cases': 'Case Studies', 'nav.process': 'Process', 'nav.cta': 'Book a Call →',
       'hero.badge': 'Certified Shopify Partner',
-      'hero.title1': 'We scale your store',
-      'hero.title2': 'with',
-      'hero.accent': 'strategy',
-      'hero.title3': 'and real data',
+      'hero.title1': 'We scale your store', 'hero.title2': 'with', 'hero.accent': 'strategy', 'hero.title3': 'and real data',
       'hero.sub': 'We are the Shopify & Growth Marketing consultancy that turns your store into a sales machine. No empty promises, only measurable results.',
-      'hero.cta1': 'Book a free call',
-      'hero.cta2': 'See results',
-      'hero.stat1': 'Stores scaled',
-      'hero.stat2': 'Average ROAS',
-      'hero.stat3': 'Avg. conversion lift',
-      'services.tag': 'Services',
-      'services.title': 'Everything your store<br>needs to grow',
-      'why.tag': 'Why us',
-      'why.title': 'We do what<br>we promise',
-      'cases.tag': 'Case Studies',
-      'cases.title': 'Numbers that<br>speak for themselves',
-      'testi.tag': 'Testimonials',
-      'testi.title': 'What our clients<br>say about us',
-      'process.tag': 'How we work',
-      'process.title': 'From zero to scale<br>in 4 steps',
-      'cta.title': 'Ready to scale<br>your store?',
+      'hero.cta1': 'Book a free call', 'hero.cta2': 'See results',
+      'hero.stat1': 'Stores scaled', 'hero.stat2': 'Average ROAS', 'hero.stat3': 'Avg. conversion lift',
+      'trust.label': 'Brands we have scaled',
+      'services.tag': 'Services', 'services.title': 'Everything your store<br>needs to grow',
+      'services.sub': 'We combine Shopify technical expertise with data-driven growth strategies to maximize every dollar invested.',
+      's1.title': 'Shopify Development', 's1.desc': 'Custom Shopify store design and development. Bespoke themes, migrations, integrations and high-performance technical optimizations.',
+      's2.title': 'Growth Marketing', 's2.desc': 'Acquisition and retention strategies focused on ROAS. Meta Ads, Google Ads and automations that scale with your business.',
+      's3.title': 'Email & CRO', 's3.desc': 'High-converting email marketing flows and conversion rate optimization through A/B testing, heatmaps and behavior analysis.',
+      's4.title': 'Analytics & Data', 's4.desc': 'Real-time dashboards with the KPIs that matter. We make decisions based on data, not gut feeling. GA4, Looker Studio and weekly reports.',
+      'why.tag': 'Why us', 'why.title': 'We do what<br>we promise',
+      'w1.title': 'Results-first approach', 'w1.desc': 'We do not charge by the hour or deliver pretty reports. We measure our success by revenue generated, ROAS and your store conversion rate.',
+      'w2.title': 'E-commerce specialists', 'w2.desc': 'We only work with online stores. That gives us deep knowledge of the Shopify ecosystem and the best practices in the industry.',
+      'w3.title': 'Full transparency', 'w3.desc': 'Full access to your dashboards, weekly meetings and direct communication. No middlemen, no hidden fees.',
+      'w4.title': 'We grow with you', 'w4.desc': 'Our model scales with your business. From your first sale to 8-figure monthly revenue, we have the experience to support you.',
+      'why.kpi.note': 'Average measured over 90 days of work', 'why.kpi.base': 'Based on +80 projects · 2022–2025',
+      'cases.tag': 'Case Studies', 'cases.title': 'Numbers that<br>speak for themselves', 'cases.sub': 'Real results from real stores. No inflated averages, no vanity metrics.',
+      'c1.industry': 'Fashion & Accessories', 'c1.l1': 'Conversion rate', 'c1.l2': 'Meta ROAS', 'c1.l3': 'To achieve it',
+      'c1.desc': 'Full Shopify store redesign + Meta Ads strategy with lookalike audiences. From $8M to $18M in revenue in just 3 months.',
+      'c2.industry': 'Technology & Gadgets', 'c2.l1': 'Acquisition cost', 'c2.l2': 'Revenue growth', 'c2.l3': 'To achieve it',
+      'c2.desc': 'Klaviyo implementation with cart recovery flows + Google Shopping optimization. Email became the #1 revenue channel.',
+      'c3.industry': 'Beauty & Cosmetics', 'c3.l1': 'Annual revenue', 'c3.l2': 'Total ROAS', 'c3.l3': 'Of work',
+      'c3.desc': 'Migration to Shopify Plus + full-funnel strategy. We launched a loyalty program that now represents 40% of monthly revenue.',
+      'testi.tag': 'Testimonials', 'testi.title': 'What our clients<br>say about us',
+      't1.text': 'Cachai Solutions completely transformed our store. In 3 months we doubled our revenue and the team was always available to answer any question. I recommend them without hesitation.',
+      't1.role': 'CEO · StyleHouse CL',
+      't2.text': 'Finally an agency that speaks in business terms, not vanity metrics. Our ROAS went from 1.8× to 4.6× in two months. That is what matters.',
+      't2.role': 'Director · TechNova Store',
+      't3.text': 'What stands out most is the transparency. We have access to everything, weekly meetings and a team that truly understands our product. They feel like part of our team.',
+      't3.role': 'Founder · Glow Natural',
+      'process.tag': 'How we work', 'process.title': 'From zero to scale<br>in 4 steps', 'process.sub': 'A clear process with no surprises and measurable results at every stage.',
+      'p1.title': 'Diagnosis', 'p1.desc': 'We audit your store, campaigns and data. We identify the most relevant growth opportunities for your business.',
+      'p2.title': 'Strategy', 'p2.desc': 'We design a prioritized action plan with clear objectives, defined timelines and KPIs to measure success at each phase.',
+      'p3.title': 'Execution', 'p3.desc': 'We implement with speed and precision. Shopify development, live campaigns and automations running within weeks.',
+      'p4.title': 'Scale', 'p4.desc': 'With the solid foundation in place, we scale what works, optimize what does not, and repeat the cycle for sustained growth.',
+      'cta.title': 'Ready to scale<br>your store?', 'cta.sub': 'Let us schedule a free 30-minute call. We will show you exactly what we would do with your store and what results you can expect.',
+      'footer.desc': 'Shopify consultancy and Growth Marketing agency. We scale online stores with strategy, data and world-class execution.',
+      'footer.copy': '© 2025 Cachai Solutions. All rights reserved.',
     }
   };
 
@@ -1723,6 +1768,18 @@
         const labels = ['Your name', 'Contact email', 'Current monthly revenue'];
         if (labels[i]) el.textContent = labels[i];
       });
+      // Update select options
+      const sel = document.querySelector('.form-select');
+      if (sel) sel.innerHTML = `<option value="">Select a range</option>
+        <option>Less than $5K USD</option>
+        <option>$5K – $20K USD</option>
+        <option>$20K – $50K USD</option>
+        <option>$50K – $100K USD</option>
+        <option>More than $100K USD</option>`;
+      // Update input placeholders
+      const inputs = document.querySelectorAll('.form-input');
+      if (inputs[0]) inputs[0].placeholder = 'Full name';
+      if (inputs[1]) inputs[1].placeholder = 'you@company.com';
     } else {
       document.querySelectorAll('.form-submit').forEach(b => {
         if (!b.disabled) b.textContent = 'Agendar mi llamada gratuita →';
@@ -1734,6 +1791,18 @@
         const labels = ['Tu nombre', 'Email de contacto', 'Facturación mensual actual'];
         if (labels[i]) el.textContent = labels[i];
       });
+      // Restore select options
+      const sel = document.querySelector('.form-select');
+      if (sel) sel.innerHTML = `<option value="">Selecciona un rango</option>
+        <option>Menos de $5M CLP</option>
+        <option>$5M – $20M CLP</option>
+        <option>$20M – $50M CLP</option>
+        <option>$50M – $100M CLP</option>
+        <option>Más de $100M CLP</option>`;
+      // Restore input placeholders
+      const inputs = document.querySelectorAll('.form-input');
+      if (inputs[0]) inputs[0].placeholder = 'Nombre completo';
+      if (inputs[1]) inputs[1].placeholder = 'tu@empresa.com';
     }
     localStorage.setItem('cs_lang', lang);
   }
