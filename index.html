@@ -91,7 +91,7 @@
     border-color: var(--grey-line);
     box-shadow: 0 2px 20px rgba(44,107,78,0.08);
   }
-  .nav-logo img { height: 52px; display: block; }
+  .nav-logo img { height: 36px; display: block; }
   .nav-links {
     display: flex; gap: 36px; list-style: none;
   }
@@ -753,8 +753,96 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none; cursor: pointer;
+    padding: 4px; border-radius: 8px;
+    z-index: 200;
+    transition: background 0.2s;
+  }
+  .nav-hamburger:hover { background: var(--green-pale); }
+  .nav-hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--green-dark); border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile overlay */
+  .nav-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(26,46,37,0.4);
+    z-index: 98;
+    backdrop-filter: blur(2px);
+  }
+  .nav-overlay.visible { display: block; }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
+    /* Nav mobile */
+    nav {
+      display: grid;
+      grid-template-columns: 40px 1fr 40px;
+      align-items: center;
+      padding: 0 16px;
+      height: 64px;
+    }
+    .nav-hamburger { display: flex; }
+    .nav-logo { justify-self: center; }
+    .nav-logo img { height: 44px; }
+
+    /* Slide-in menu */
+    .nav-links {
+      display: flex !important;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 280px;
+      background: white;
+      z-index: 99;
+      padding: 88px 28px 40px;
+      gap: 8px;
+      list-style: none;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 4px 0 32px rgba(26,46,37,0.12);
+    }
+    .nav-links.open { transform: translateX(0); }
+    .nav-links li { width: 100%; }
+    .nav-links a.nav-link-item {
+      display: block;
+      font-size: 16px; font-weight: 500;
+      color: var(--grey-text);
+      padding: 12px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .nav-links a.nav-link-item:hover {
+      background: var(--green-pale);
+      color: var(--green);
+    }
+    .nav-links .nav-cta {
+      display: block;
+      margin-top: 8px;
+      background: var(--green) !important;
+      color: white !important;
+      text-align: center;
+      padding: 14px 20px !important;
+      border-radius: 100px !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+    }
+
+    /* Sections */
     .hero-inner { grid-template-columns: 1fr; }
     .hero-visual { display: none; }
     .why-grid { grid-template-columns: 1fr; }
@@ -763,13 +851,29 @@
     .cta-inner { grid-template-columns: 1fr; }
     .cta-form { min-width: auto; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
+
+    /* Hero mobile adjustments */
+    .hero { padding: 100px 5vw 60px; }
+    .hero-title { font-size: clamp(36px, 9vw, 56px); }
+    .hero-sub { font-size: 16px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .btn-primary { width: 100%; justify-content: center; }
+
+    /* Cases */
+    .cases-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
   }
+
   @media (max-width: 600px) {
     .process-steps { grid-template-columns: 1fr; }
-    .hero-stats { flex-wrap: wrap; gap: 20px; }
+    .hero-stats { gap: 24px; }
+    .hero-stats .stat-num { font-size: 26px; }
     .footer-inner { grid-template-columns: 1fr; }
     .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    .cta-inner { gap: 32px; }
+    .trust-bar { flex-direction: column; gap: 12px; padding: 16px 5vw; }
+    section { padding: 64px 5vw; }
   }
 </style>
 </head>
@@ -780,16 +884,20 @@
 
 <!-- ── NAV ── -->
 <nav id="nav">
+  <button class="nav-hamburger" id="hamburger" aria-label="Abrir menú">
+    <span></span><span></span><span></span>
+  </button>
   <a href="#" class="nav-logo">
     <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
   </a>
-  <ul class="nav-links">
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#casos">Casos de éxito</a></li>
-    <li><a href="#proceso">Proceso</a></li>
-    <li><a href="#contacto" class="nav-cta">Agendar llamada →</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#servicios" class="nav-link-item">Servicios</a></li>
+    <li><a href="#casos" class="nav-link-item">Casos de éxito</a></li>
+    <li><a href="#proceso" class="nav-link-item">Proceso</a></li>
+    <li><a href="#contacto" class="nav-cta nav-link-item">Agendar llamada →</a></li>
   </ul>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -1317,13 +1425,31 @@
     btn.disabled = true;
   }
 
-  // Smooth nav links
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function toggleMenu(open) {
+    hamburger.classList.toggle('open', open);
+    navLinks.classList.toggle('open', open);
+    navOverlay.classList.toggle('visible', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('open')));
+  navOverlay.addEventListener('click', () => toggleMenu(false));
+
+  // Smooth nav links + close menu on click
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href');
       if (id === '#') return;
       e.preventDefault();
-      document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+      toggleMenu(false);
+      setTimeout(() => {
+        document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
     });
   });
 </script>
