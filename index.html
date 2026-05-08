@@ -602,7 +602,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
 
     <!-- SERVICIOS -->
     <li class="nav-item" data-mega="mega-services">
-      <a href="#servicios" class="nav-link-item" data-i18n="nav.services">Servicios
+      <a href="#" class="nav-link-item" data-i18n="nav.services">Servicios
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-services">
@@ -628,7 +628,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
 
     <!-- INDUSTRIAS -->
     <li class="nav-item" data-mega="mega-industries">
-      <a href="#casos" class="nav-link-item" data-i18n="nav.industries">Industrias
+      <a href="#" class="nav-link-item" data-i18n="nav.industries">Industrias
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-industries">
@@ -652,7 +652,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
 
     <!-- APPS & INTEGRATIONS -->
     <li class="nav-item" data-mega="mega-apps">
-      <a href="#servicios" class="nav-link-item" data-i18n="nav.apps">Apps &amp; Integraciones
+      <a href="#" class="nav-link-item" data-i18n="nav.apps">Apps &amp; Integraciones
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-wide" id="mega-apps">
@@ -678,7 +678,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
 
     <!-- ABOUT -->
     <li class="nav-item" data-mega="mega-about">
-      <a href="#nosotros" class="nav-link-item" data-i18n="nav.about">Acerca de
+      <a href="#" class="nav-link-item" data-i18n="nav.about">Acerca de
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <div class="mega-wrap mega-narrow" id="mega-about">
@@ -1492,13 +1492,14 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
    SMOOTH SCROLL
 ═══════════════════════════════════════════ */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  // Skip nav trigger links — they open mega menus, not navigate
-  if(a.closest('.nav-item[data-mega]') && a.classList.contains('nav-link-item')) return;
   a.addEventListener('click', e => {
     const id = a.getAttribute('href');
-    if(id === '#') return;
+    if(id === '#') { e.preventDefault(); return; }
+    // Skip nav trigger links with mega menus
+    if(a.closest('.nav-item[data-mega]') && a.classList.contains('nav-link-item')) { e.preventDefault(); return; }
     e.preventDefault();
     closeMobileMenu();
+    document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
     setTimeout(() => document.querySelector(id)?.scrollIntoView({behavior:'smooth'}), 50);
   });
 });
