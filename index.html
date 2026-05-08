@@ -41,103 +41,7 @@
 
   h1,h2,h3,h4 { font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.12; letter-spacing: -0.02em; }
 
-  /* ── CURSOR BRACKETS ── */
-  .cursor {
-    width: 28px; height: 28px;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.12s ease, opacity 0.15s;
-  }
-  @media (hover: none), (max-width: 900px) {
-    .cursor { display: none !important; }
-  }
-  @media print {
-    .cursor { display: none !important; }
-  }
-
-  /* ── FOOTER MOBILE CONTROLS ── */
-  .footer-mobile-controls {
-    display: none;
-    max-width: 1160px; margin: 0 auto 32px;
-    padding: 24px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .footer-controls-label {
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 14px;
-  }
-  .footer-controls-row { display: flex; flex-direction: column; gap: 12px; }
-  .lang-switcher-footer {
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,255,0.15) !important;
-    display: flex; gap: 6px; padding: 4px;
-    border-radius: 100px;
-  }
-  .lang-btn-footer {
-    flex: 1;
-    font-size: 13px !important; font-weight: 700 !important;
-    padding: 8px 12px !important;
-    color: rgba(255,255,255,0.6) !important;
-    border-radius: 100px;
-  }
-  .lang-btn-footer.active {
-    background: var(--green) !important;
-    color: white !important;
-  }
-  .currency-footer-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 8px;
-  }
-  .currency-footer-btn {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 10px;
-    color: rgba(255,255,255,0.7);
-    font-size: 13px; font-weight: 600;
-    cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    transition: background 0.15s, border-color 0.15s;
-  }
-  .currency-footer-btn:active,
-  .currency-footer-btn.selected {
-    background: var(--green);
-    border-color: var(--green);
-    color: white;
-  }
-  @media (max-width: 900px) {
-    .footer-mobile-controls { display: block; }
-  }
-  .cursor::before, .cursor::after {
-    content: '';
-    position: absolute;
-    width: 7px; height: 18px;
-    border-color: var(--green);
-    border-style: solid;
-    top: 50%; transform: translateY(-50%);
-  }
-  .cursor::before {
-    left: 0;
-    border-width: 1.5px 0 1.5px 1.5px;
-  }
-  .cursor::after {
-    right: 0;
-    border-width: 1.5px 1.5px 1.5px 0;
-  }
-  .cursor-dot {
-    width: 3px; height: 3px;
-    background: var(--green);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  
 
   /* ── NAV ── */
   nav {
@@ -180,6 +84,46 @@
     transition: background 0.2s, transform 0.15s !important;
   }
   .nav-cta:hover { background: var(--green-dark) !important; transform: translateY(-1px); }
+
+  /* ── MEGA MENU ── */
+  .nav-chevron {
+    display: inline-block; vertical-align: middle;
+    margin-left: 4px; margin-top: -1px;
+    transition: transform 0.2s;
+  }
+  .nav-item { position: relative; list-style: none; }
+  .nav-item:hover .nav-chevron { transform: rotate(180deg); }
+  .mega-menu {
+    display: none;
+    position: absolute; top: calc(100% + 16px); left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 16px 64px rgba(26,46,37,0.14);
+    border: 1px solid var(--grey-line);
+    padding: 28px;
+    gap: 32px;
+    min-width: 480px;
+    z-index: 500;
+  }
+  .mega-menu.open { display: flex; }
+  .mega-col { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .mega-col-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 8px;
+  }
+  .mega-link {
+    font-size: 14px; font-weight: 500;
+    color: var(--grey-text);
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+    font-family: 'Geist', sans-serif;
+  }
+  .mega-link:hover { background: var(--green-pale); color: var(--green-dark); }
 
   /* ── HERO ── */
   .hero {
@@ -825,6 +769,22 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── MOBILE CLOSE BTN ── */
+  .mobile-close-btn {
+    display: none;
+    position: fixed;
+    top: 16px; right: 20px;
+    z-index: 10000;
+    width: 44px; height: 44px;
+    background: var(--off-white);
+    border: 1px solid var(--grey-line);
+    border-radius: 12px;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--green-dark);
+  }
+
   /* ── HAMBURGER ── */
   .nav-hamburger {
     display: none;
@@ -1052,23 +1012,20 @@
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 10000;
-    display: flex; align-items: center; justify-content: center;
+    display: none;
+    align-items: center; justify-content: center;
     padding: 20px;
-    opacity: 0; transition: opacity 0.3s;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-  .lang-popup-overlay.visible { opacity: 1; }
-  .lang-popup-overlay.hidden { display: none; }
   .lang-popup {
     background: white;
     border-radius: 24px;
     padding: 40px 32px 32px;
     max-width: 360px; width: 100%;
     text-align: center;
-    transform: translateY(20px);
-    transition: transform 0.3s;
     box-shadow: 0 24px 64px rgba(26,46,37,0.25);
   }
-  .lang-popup-overlay.visible .lang-popup { transform: translateY(0); }
   .lang-popup-logo img { height: 40px; margin-bottom: 24px; }
   .lang-popup-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -1116,7 +1073,7 @@
 <body>
 
 <!-- Cursor -->
-<div class="cursor" id="cursor"><div class="cursor-dot"></div></div>
+</div>
 
 <!-- ── LANGUAGE POPUP ── -->
 <div class="lang-popup-overlay" id="langPopupOverlay">
@@ -1155,10 +1112,56 @@
     <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#servicios" class="nav-link-item" data-i18n="nav.services">Servicios</a></li>
-    <li><a href="#casos" class="nav-link-item" data-i18n="nav.cases">Casos de éxito</a></li>
-    <li><a href="#proceso" class="nav-link-item" data-i18n="nav.process">Proceso</a></li>
-    <li><a href="#contacto" class="nav-cta nav-link-item" data-i18n="nav.cta">Agendar llamada →</a></li>
+    <li class="nav-item has-mega" data-mega="mega-services">
+      <a href="#servicios" class="nav-link-item" data-i18n="nav.services">Servicios <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="mega-menu" id="mega-services">
+        <div class="mega-col">
+          <div class="mega-col-title" data-i18n="mega.shopify">Shopify</div>
+          <a href="#servicios" class="mega-link" data-i18n="mega.dev">Desarrollo a medida</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.migration">Migraciones</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.plus">Shopify Plus</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.themes">Temas custom</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title" data-i18n="mega.growth">Growth Marketing</div>
+          <a href="#servicios" class="mega-link" data-i18n="mega.meta">Meta Ads</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.google">Google Ads</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.email">Email Marketing</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.cro">CRO & A/B Testing</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title" data-i18n="mega.data">Analytics</div>
+          <a href="#servicios" class="mega-link" data-i18n="mega.ga4">GA4 & Data Layer</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.dashboards">Dashboards</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.attribution">Atribución</a>
+          <a href="#servicios" class="mega-link" data-i18n="mega.reports">Reportes</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item has-mega" data-mega="mega-cases">
+      <a href="#casos" class="nav-link-item" data-i18n="nav.cases">Casos de éxito <svg class="nav-chevron" width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="mega-menu" id="mega-cases">
+        <div class="mega-col">
+          <div class="mega-col-title" data-i18n="mega.industries">Industrias</div>
+          <a href="#casos" class="mega-link" data-i18n="mega.fashion">Moda & Accesorios</a>
+          <a href="#casos" class="mega-link" data-i18n="mega.beauty">Belleza & Cosmética</a>
+          <a href="#casos" class="mega-link" data-i18n="mega.tech">Tecnología</a>
+          <a href="#casos" class="mega-link" data-i18n="mega.food">Alimentos & Bebidas</a>
+        </div>
+        <div class="mega-col">
+          <div class="mega-col-title" data-i18n="mega.results">Resultados</div>
+          <a href="#casos" class="mega-link" data-i18n="mega.roas">Mejora de ROAS</a>
+          <a href="#casos" class="mega-link" data-i18n="mega.conv">Aumento de conversión</a>
+          <a href="#casos" class="mega-link" data-i18n="mega.revenue">Crecimiento revenue</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="#proceso" class="nav-link-item" data-i18n="nav.process">Proceso</a>
+    </li>
+    <li class="nav-item">
+      <a href="#contacto" class="nav-cta nav-link-item" data-i18n="nav.cta">Agendar llamada →</a>
+    </li>
   </ul>
   <div class="nav-controls">
     <div class="lang-switcher" id="langSwitcher">
@@ -1182,6 +1185,7 @@
   </div>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
+<button class="mobile-close-btn" id="mobileCloseBtn" onclick="toggleMenu(false)" aria-label="Cerrar menú">✕</button>
 
 <!-- ── HERO ── -->
 <section class="hero">
@@ -1686,15 +1690,33 @@
   <div class="footer-mobile-controls" id="footerMobileControls">
     <div class="footer-controls-label" data-i18n="footer.settings">Idioma y moneda</div>
     <div class="footer-controls-row">
-      <div class="lang-switcher lang-switcher-footer">
-        <button class="lang-btn lang-btn-footer active" id="btnES_f" onclick="setLang('es')">🇨🇱 ES</button>
-        <button class="lang-btn lang-btn-footer" id="btnEN_f" onclick="setLang('en')">🇺🇸 EN</button>
+      <!-- Language selector -->
+      <div class="footer-select-wrap">
+        <div class="footer-select-label" data-i18n="footer.lang_label">Idioma</div>
+        <div class="footer-select" id="langSelectBtn" onclick="toggleFooterLang()">
+          <span id="langSelectFlag">🇨🇱</span>
+          <span id="langSelectText">Español</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="footer-dropdown" id="langDropdown">
+          <button onclick="setLangFooter('es','🇨🇱','Español')">🇨🇱 Español</button>
+          <button onclick="setLangFooter('en','🇺🇸','English')">🇺🇸 English</button>
+        </div>
       </div>
-      <div class="currency-footer-grid">
-        <button class="currency-footer-btn" id="cfCLP" onclick="setCurrency('CLP','🇨🇱','$','CLP')">🇨🇱 CLP</button>
-        <button class="currency-footer-btn" id="cfUSD" onclick="setCurrency('USD','🇺🇸','$','USD')">🇺🇸 USD</button>
-        <button class="currency-footer-btn" id="cfEUR" onclick="setCurrency('EUR','🇪🇺','€','EUR')">🇪🇺 EUR</button>
-        <button class="currency-footer-btn" id="cfGBP" onclick="setCurrency('GBP','🇬🇧','£','GBP')">🇬🇧 GBP</button>
+      <!-- Currency selector -->
+      <div class="footer-select-wrap">
+        <div class="footer-select-label" data-i18n="footer.currency_label">Moneda</div>
+        <div class="footer-select" id="currSelectBtn" onclick="toggleFooterCurr()">
+          <span id="currSelectFlag">🇨🇱</span>
+          <span id="currSelectText">CLP</span>
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="footer-dropdown" id="currDropdown">
+          <button onclick="setCurrFooter('CLP','🇨🇱','$')">🇨🇱 CLP — Peso chileno</button>
+          <button onclick="setCurrFooter('USD','🇺🇸','$')">🇺🇸 USD — US Dollar</button>
+          <button onclick="setCurrFooter('EUR','🇪🇺','€')">🇪🇺 EUR — Euro</button>
+          <button onclick="setCurrFooter('GBP','🇬🇧','£')">🇬🇧 GBP — British Pound</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1707,28 +1729,7 @@
 </footer>
 
 <script>
-  // Cursor — hide on touch devices
-  const cursor = document.getElementById('cursor');
-  const isTouchDevice = () => window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0;
-  if (isTouchDevice()) {
-    cursor.style.display = 'none';
-  } else {
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
-    });
-    document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
-    document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-    // Hide cursor during screenshot (visibilitychange trick)
-    document.addEventListener('visibilitychange', () => {
-      cursor.style.opacity = document.hidden ? '0' : '1';
-    });
-    // Hide on blur (alt+tab, screenshot tools)
-    window.addEventListener('blur', () => cursor.style.opacity = '0');
-    window.addEventListener('focus', () => cursor.style.opacity = '1');
-  }
-
-  // Nav scroll
+    // Nav scroll
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
@@ -1762,13 +1763,49 @@
 
   function toggleMenu(open) {
     hamburger.classList.toggle('open', open);
-    navLinks.classList.toggle('open', open);
+    if (open) {
+      navLinks.classList.add('open');
+    } else {
+      navLinks.classList.remove('open');
+    }
     navOverlay.classList.toggle('visible', open);
     document.body.style.overflow = open ? 'hidden' : '';
+    // Show/hide close button on mobile
+    const closeBtn = document.getElementById('mobileCloseBtn');
+    if (closeBtn && window.innerWidth <= 900) {
+      closeBtn.style.display = open ? 'flex' : 'none';
+    }
   }
 
   hamburger.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('open')));
   navOverlay.addEventListener('click', () => toggleMenu(false));
+
+  // ── MEGA MENU ──
+  document.querySelectorAll('.has-mega').forEach(item => {
+    const megaId = item.getAttribute('data-mega');
+    const mega = document.getElementById(megaId);
+    if (!mega) return;
+    let timeout;
+    item.addEventListener('mouseenter', () => {
+      clearTimeout(timeout);
+      // Close all others
+      document.querySelectorAll('.mega-menu').forEach(m => m.classList.remove('open'));
+      mega.classList.add('open');
+    });
+    item.addEventListener('mouseleave', () => {
+      timeout = setTimeout(() => mega.classList.remove('open'), 150);
+    });
+    mega.addEventListener('mouseenter', () => clearTimeout(timeout));
+    mega.addEventListener('mouseleave', () => {
+      timeout = setTimeout(() => mega.classList.remove('open'), 150);
+    });
+  });
+  // Close mega when clicking outside
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.has-mega')) {
+      document.querySelectorAll('.mega-menu').forEach(m => m.classList.remove('open'));
+    }
+  });
 
   // Smooth nav links + close menu on click
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -1827,6 +1864,14 @@
       'cta.title': '¿Listo para escalar<br>tu tienda?', 'cta.sub': 'Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.',
       'footer.desc': 'Consultora especializada en Shopify y Growth Marketing. Escalamos tiendas online con estrategia, datos y ejecución de alto nivel.',
       'footer.copy': '© 2025 Cachai Solutions. Todos los derechos reservados.',
+      'footer.settings': 'Idioma y moneda',
+      'footer.lang_label': 'Idioma',
+      'footer.currency_label': 'Moneda',
+      'mega.shopify': 'Shopify', 'mega.dev': 'Desarrollo a medida', 'mega.migration': 'Migraciones', 'mega.plus': 'Shopify Plus', 'mega.themes': 'Temas custom',
+      'mega.growth': 'Growth Marketing', 'mega.meta': 'Meta Ads', 'mega.google': 'Google Ads', 'mega.email': 'Email Marketing', 'mega.cro': 'CRO & A/B Testing',
+      'mega.data': 'Analytics', 'mega.ga4': 'GA4 & Data Layer', 'mega.dashboards': 'Dashboards', 'mega.attribution': 'Atribución', 'mega.reports': 'Reportes',
+      'mega.industries': 'Industrias', 'mega.fashion': 'Moda & Accesorios', 'mega.beauty': 'Belleza & Cosmética', 'mega.tech': 'Tecnología', 'mega.food': 'Alimentos & Bebidas',
+      'mega.results': 'Resultados', 'mega.roas': 'Mejora de ROAS', 'mega.conv': 'Aumento de conversión', 'mega.revenue': 'Crecimiento revenue',
     },
     en: {
       'nav.services': 'Services', 'nav.cases': 'Case Studies', 'nav.process': 'Process', 'nav.cta': 'Book a Call →',
@@ -1870,6 +1915,14 @@
       'cta.title': 'Ready to scale<br>your store?', 'cta.sub': 'Let us schedule a free 30-minute call. We will show you exactly what we would do with your store and what results you can expect.',
       'footer.desc': 'Shopify consultancy and Growth Marketing agency. We scale online stores with strategy, data and world-class execution.',
       'footer.copy': '© 2025 Cachai Solutions. All rights reserved.',
+      'footer.settings': 'Language & Currency',
+      'footer.lang_label': 'Language',
+      'footer.currency_label': 'Currency',
+      'mega.shopify': 'Shopify', 'mega.dev': 'Custom Development', 'mega.migration': 'Migrations', 'mega.plus': 'Shopify Plus', 'mega.themes': 'Custom Themes',
+      'mega.growth': 'Growth Marketing', 'mega.meta': 'Meta Ads', 'mega.google': 'Google Ads', 'mega.email': 'Email Marketing', 'mega.cro': 'CRO & A/B Testing',
+      'mega.data': 'Analytics', 'mega.ga4': 'GA4 & Data Layer', 'mega.dashboards': 'Dashboards', 'mega.attribution': 'Attribution', 'mega.reports': 'Reports',
+      'mega.industries': 'Industries', 'mega.fashion': 'Fashion & Accessories', 'mega.beauty': 'Beauty & Cosmetics', 'mega.tech': 'Technology', 'mega.food': 'Food & Beverage',
+      'mega.results': 'Results', 'mega.roas': 'ROAS Improvement', 'mega.conv': 'Conversion Lift', 'mega.revenue': 'Revenue Growth',
     }
   };
 
@@ -1941,11 +1994,8 @@
       if (inputs[0]) inputs[0].placeholder = 'Nombre completo';
       if (inputs[1]) inputs[1].placeholder = 'tu@empresa.com';
     }
-    // Update footer lang buttons
-    const btnEsF = document.getElementById('btnES_f');
-    const btnEnF = document.getElementById('btnEN_f');
-    if (btnEsF) btnEsF.classList.toggle('active', lang === 'es');
-    if (btnEnF) btnEnF.classList.toggle('active', lang === 'en');
+    // Sync footer selectors
+    syncFooterSelectors(lang, currentCurrency.code, currentCurrency.flag);
     localStorage.setItem('cs_lang', lang);
   }
 
@@ -1967,10 +2017,14 @@
     });
     const dd = document.getElementById('currencyDropdown');
     if (dd) dd.classList.remove('open');
-    // Update footer mobile buttons
-    ['CLP','USD','EUR','GBP'].forEach(c => {
-      const btn = document.getElementById('cf' + c);
-      if (btn) btn.classList.toggle('selected', c === code);
+    // Sync footer currency selector
+    const cf2 = document.getElementById('currSelectFlag');
+    const ct2 = document.getElementById('currSelectText');
+    if (cf2) cf2.textContent = flag;
+    if (ct2) ct2.textContent = code;
+    // Update dropdown selected state
+    document.querySelectorAll('.footer-dropdown button').forEach(btn => {
+      btn.classList.toggle('selected', btn.textContent.includes(code));
     });
     localStorage.setItem('cs_currency', JSON.stringify(currentCurrency));
   }
@@ -2014,26 +2068,72 @@
   // ── LANGUAGE POPUP ──
   function showLangPopup() {
     const overlay = document.getElementById('langPopupOverlay');
-    overlay.classList.remove('hidden');
-    requestAnimationFrame(() => overlay.classList.add('visible'));
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    overlay.style.pointerEvents = 'all';
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+    });
   }
 
   function hideLangPopup() {
     const overlay = document.getElementById('langPopupOverlay');
-    overlay.classList.remove('visible');
-    setTimeout(() => overlay.classList.add('hidden'), 300);
+    if (!overlay) return;
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 300);
   }
 
   function chooseLang(lang) {
-    setLang(lang);
     hideLangPopup();
-    // also set currency based on choice
-    if (lang === 'es' && !localStorage.getItem('cs_currency')) {
-      setCurrency('CLP', '🇨🇱', '$', 'CLP');
-    } else if (lang === 'en' && !localStorage.getItem('cs_currency')) {
-      setCurrency('USD', '🇺🇸', '$', 'USD');
-    }
+    applyLang(lang);
     localStorage.setItem('cs_lang', lang);
+    if (!localStorage.getItem('cs_currency')) {
+      if (lang === 'es') setCurrency('CLP', '🇨🇱', '$', 'CLP');
+      else setCurrency('USD', '🇺🇸', '$', 'USD');
+    }
+  }
+
+  // ── FOOTER SELECTORS ──
+  function toggleFooterLang() {
+    document.getElementById('langDropdown').classList.toggle('open');
+    document.getElementById('currDropdown').classList.remove('open');
+  }
+  function toggleFooterCurr() {
+    document.getElementById('currDropdown').classList.toggle('open');
+    document.getElementById('langDropdown').classList.remove('open');
+  }
+  function setLangFooter(lang, flag, text) {
+    document.getElementById('langSelectFlag').textContent = flag;
+    document.getElementById('langSelectText').textContent = text;
+    document.getElementById('langDropdown').classList.remove('open');
+    applyLang(lang);
+    localStorage.setItem('cs_lang', lang);
+  }
+  function setCurrFooter(code, flag, symbol) {
+    document.getElementById('currSelectFlag').textContent = flag;
+    document.getElementById('currSelectText').textContent = code;
+    document.getElementById('currDropdown').classList.remove('open');
+    setCurrency(code, flag, symbol, code);
+  }
+  // Close footer dropdowns on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.footer-select-wrap')) {
+      document.querySelectorAll('.footer-dropdown').forEach(d => d.classList.remove('open'));
+    }
+  });
+  // Sync footer selectors with current state
+  function syncFooterSelectors(lang, currCode, currFlag) {
+    const lf = document.getElementById('langSelectFlag');
+    const lt = document.getElementById('langSelectText');
+    if (lf) lf.textContent = lang === 'es' ? '🇨🇱' : '🇺🇸';
+    if (lt) lt.textContent = lang === 'es' ? 'Español' : 'English';
+    const cf = document.getElementById('currSelectFlag');
+    const ct = document.getElementById('currSelectText');
+    if (cf) cf.textContent = currFlag || '🇨🇱';
+    if (ct) ct.textContent = currCode || 'CLP';
   }
 
   async function detectCountry() {
