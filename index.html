@@ -1432,7 +1432,9 @@ document.querySelectorAll('.nav-item[data-mega]').forEach(item => {
   const id = item.getAttribute('data-mega');
   const mega = document.getElementById(id);
   if(!mega) return;
+  const trigger = item.querySelector('a.nav-link-item');
   let t;
+
   const open = () => {
     clearTimeout(t);
     document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
@@ -1441,13 +1443,20 @@ document.querySelectorAll('.nav-item[data-mega]').forEach(item => {
   const close = () => {
     t = setTimeout(() => mega.classList.remove('visible'), 180);
   };
+
+  // Desktop: hover to open
   item.addEventListener('mouseenter', open);
   item.addEventListener('mouseleave', close);
   mega.addEventListener('mouseenter', () => clearTimeout(t));
   mega.addEventListener('mouseleave', close);
-  // touch support
-  item.querySelector('a').addEventListener('click', e => {
-    if(window.innerWidth > 900) e.preventDefault();
+
+  // ALWAYS prevent navigation on trigger link — mega menu opens instead
+  trigger.addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    const isOpen = mega.classList.contains('visible');
+    document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
+    if(!isOpen) mega.classList.add('visible');
   });
 });
 document.addEventListener('click', e => {
@@ -1483,6 +1492,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
    SMOOTH SCROLL
 ═══════════════════════════════════════════ */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
+  // Skip nav trigger links — they open mega menus, not navigate
+  if(a.closest('.nav-item[data-mega]') && a.classList.contains('nav-link-item')) return;
   a.addEventListener('click', e => {
     const id = a.getAttribute('href');
     if(id === '#') return;
