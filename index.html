@@ -50,6 +50,9 @@
     transform: translate(-50%, -50%);
     transition: transform 0.12s ease, opacity 0.15s;
   }
+  @media (hover: none), (max-width: 900px) {
+    .cursor { display: none !important; }
+  }
   .cursor::before, .cursor::after {
     content: '';
     position: absolute;
@@ -766,8 +769,9 @@
     width: 40px; height: 40px;
     background: none; border: none; cursor: pointer;
     padding: 4px; border-radius: 8px;
-    z-index: 200;
+    z-index: 1001;
     transition: background 0.2s;
+    position: relative;
   }
   .nav-hamburger:hover { background: var(--green-pale); }
   .nav-hamburger span {
@@ -784,11 +788,93 @@
   .nav-overlay {
     display: none;
     position: fixed; inset: 0;
-    background: rgba(26,46,37,0.4);
-    z-index: 98;
-    backdrop-filter: blur(2px);
+    background: rgba(26,46,37,0.5);
+    z-index: 998;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
   }
   .nav-overlay.visible { display: block; }
+
+  /* ── LANG & CURRENCY ── */
+  .nav-controls {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .lang-switcher {
+    display: flex; align-items: center; gap: 4px;
+    background: var(--off-white);
+    border: 1px solid var(--grey-line);
+    border-radius: 100px;
+    padding: 4px 10px;
+  }
+  .lang-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--grey-text);
+    padding: 2px 4px; border-radius: 100px;
+    transition: color 0.15s, background 0.15s;
+    letter-spacing: 0.04em;
+  }
+  .lang-btn.active {
+    color: white;
+    background: var(--green);
+    padding: 2px 8px;
+  }
+  .lang-divider { color: var(--grey-line); font-size: 11px; }
+
+  .currency-selector { position: relative; }
+  .currency-btn {
+    display: flex; align-items: center; gap: 5px;
+    background: var(--off-white);
+    border: 1px solid var(--grey-line);
+    border-radius: 100px;
+    padding: 5px 12px;
+    cursor: pointer; font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700; color: var(--grey-text);
+    transition: border-color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .currency-btn:hover { border-color: var(--green); color: var(--green); }
+  .currency-btn svg { opacity: 0.5; }
+  .currency-dropdown {
+    display: none;
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: white;
+    border: 1px solid var(--grey-line);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(26,46,37,0.12);
+    overflow: hidden;
+    min-width: 200px;
+    z-index: 200;
+  }
+  .currency-dropdown.open { display: block; }
+  .currency-dropdown button {
+    display: block; width: 100%;
+    padding: 10px 16px;
+    background: none; border: none; cursor: pointer;
+    text-align: left;
+    font-family: 'Geist', sans-serif;
+    font-size: 13px; color: var(--grey-text);
+    transition: background 0.15s, color 0.15s;
+  }
+  .currency-dropdown button:hover { background: var(--green-pale); color: var(--green); }
+  .currency-dropdown button.selected { color: var(--green); font-weight: 600; background: var(--green-pale); }
+
+  /* Mobile: hide controls in nav, show in slide menu */
+  @media (max-width: 900px) {
+    .nav-controls { display: none; }
+    .nav-controls-mobile {
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 16px;
+      border-top: 1px solid var(--grey-line);
+      margin-top: 8px;
+    }
+    .nav-controls-mobile .lang-switcher,
+    .nav-controls-mobile .currency-selector { width: 100%; }
+    .nav-controls-mobile .currency-btn { width: 100%; justify-content: space-between; border-radius: 10px; padding: 10px 16px; }
+    .nav-controls-mobile .currency-dropdown { position: static; box-shadow: none; border-radius: 10px; margin-top: 6px; }
+  }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -799,6 +885,7 @@
       align-items: center;
       padding: 0 16px;
       height: 64px;
+      z-index: 1000;
     }
     .nav-hamburger { display: flex; }
     .nav-logo { justify-self: center; }
@@ -810,41 +897,56 @@
       flex-direction: column;
       position: fixed;
       top: 0; left: 0; bottom: 0;
-      width: 280px;
-      background: white;
-      z-index: 99;
-      padding: 88px 28px 40px;
-      gap: 8px;
+      width: 300px;
+      background: #ffffff !important;
+      z-index: 999;
+      padding: 0 0 32px;
+      gap: 0;
       list-style: none;
       transform: translateX(-100%);
       transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 4px 0 32px rgba(26,46,37,0.12);
+      box-shadow: 6px 0 40px rgba(26,46,37,0.15);
+      overflow-y: auto;
+    }
+    .nav-links::before {
+      content: '';
+      display: block;
+      height: 80px;
+      min-height: 80px;
+      background: var(--green-pale);
+      background-image: url("logo_cachaisolutions_verde.svg");
+      background-repeat: no-repeat;
+      background-position: 24px center;
+      background-size: auto 36px;
+      border-bottom: 1px solid var(--grey-line);
+      margin-bottom: 12px;
     }
     .nav-links.open { transform: translateX(0); }
-    .nav-links li { width: 100%; }
+    .nav-links li { width: 100%; padding: 0 16px; }
     .nav-links a.nav-link-item {
-      display: block;
+      display: flex; align-items: center;
       font-size: 16px; font-weight: 500;
-      color: var(--grey-text);
-      padding: 12px 16px;
-      border-radius: 10px;
+      color: var(--green-dark) !important;
+      padding: 14px 16px;
+      border-radius: 12px;
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
       letter-spacing: 0.01em;
     }
-    .nav-links a.nav-link-item:hover {
+    .nav-links a.nav-link-item:hover,
+    .nav-links a.nav-link-item:active {
       background: var(--green-pale);
-      color: var(--green);
+      color: var(--green) !important;
     }
+    .nav-links li:last-of-type { padding: 0 16px; margin-top: 4px; }
     .nav-links .nav-cta {
       display: block;
-      margin-top: 8px;
       background: var(--green) !important;
       color: white !important;
       text-align: center;
       padding: 14px 20px !important;
       border-radius: 100px !important;
-      font-size: 14px !important;
+      font-size: 15px !important;
       font-weight: 700 !important;
     }
 
@@ -897,11 +999,52 @@
     <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
   </a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="#servicios" class="nav-link-item">Servicios</a></li>
-    <li><a href="#casos" class="nav-link-item">Casos de éxito</a></li>
-    <li><a href="#proceso" class="nav-link-item">Proceso</a></li>
-    <li><a href="#contacto" class="nav-cta nav-link-item">Agendar llamada →</a></li>
+    <li><a href="#servicios" class="nav-link-item" data-i18n="nav.services">Servicios</a></li>
+    <li><a href="#casos" class="nav-link-item" data-i18n="nav.cases">Casos de éxito</a></li>
+    <li><a href="#proceso" class="nav-link-item" data-i18n="nav.process">Proceso</a></li>
+    <li><a href="#contacto" class="nav-cta nav-link-item" data-i18n="nav.cta">Agendar llamada →</a></li>
   </ul>
+  <!-- Mobile lang+currency controls inside the slide menu -->
+  <div class="nav-controls-mobile" id="mobileControls" style="display:none">
+    <div class="lang-switcher" style="justify-content:center">
+      <button class="lang-btn active" id="btnES_m" onclick="setLang('es')">ES</button>
+      <span class="lang-divider">·</span>
+      <button class="lang-btn" id="btnEN_m" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="currency-selector" style="position:relative">
+      <button class="currency-btn" id="currencyBtnM" onclick="toggleCurrencyMobile()">
+        <span id="currencyFlagM">🇨🇱</span>
+        <span id="currencyCodeM">CLP</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="currency-dropdown" id="currencyDropdownM">
+        <button onclick="setCurrency('CLP','🇨🇱','$','CLP')">🇨🇱 CLP — Peso chileno</button>
+        <button onclick="setCurrency('USD','🇺🇸','$','USD')">🇺🇸 USD — US Dollar</button>
+        <button onclick="setCurrency('EUR','🇪🇺','€','EUR')">🇪🇺 EUR — Euro</button>
+        <button onclick="setCurrency('GBP','🏴󠁧󠁢󠁥󠁮󠁧󠁿','£','GBP')">🇬🇧 GBP — British Pound</button>
+      </div>
+    </div>
+  </div>
+  <div class="nav-controls">
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
+      <span class="lang-divider">·</span>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="currency-selector" id="currencySelector">
+      <button class="currency-btn" id="currencyBtn" onclick="toggleCurrency()">
+        <span id="currencyFlag">🇨🇱</span>
+        <span id="currencyCode">CLP</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="currency-dropdown" id="currencyDropdown">
+        <button onclick="setCurrency('CLP','🇨🇱','$','CLP')">🇨🇱 CLP — Peso chileno</button>
+        <button onclick="setCurrency('USD','🇺🇸','$','USD')">🇺🇸 USD — US Dollar</button>
+        <button onclick="setCurrency('EUR','🇪🇺','€','EUR')">🇪🇺 EUR — Euro</button>
+        <button onclick="setCurrency('GBP','🏴󠁧󠁢󠁥󠁮󠁧󠁿','£','GBP')">🇬🇧 GBP — British Pound</button>
+      </div>
+    </div>
+  </div>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -913,38 +1056,38 @@
     <div class="hero-content">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        Shopify Partner Certificado
+        <span data-i18n="hero.badge">Shopify Partner Certificado</span>
       </div>
       <h1 class="hero-title">
-        Escalamos tu tienda<br>
-        con <span class="accent">estrategia</span><br>
-        y datos reales
+        <span data-i18n="hero.title1">Escalamos tu tienda</span><br>
+        <span data-i18n="hero.title2">con</span> <span class="accent" data-i18n="hero.accent">estrategia</span><br>
+        <span data-i18n="hero.title3">y datos reales</span>
       </h1>
       <p class="hero-sub">
-        Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.
+        <span data-i18n="hero.sub">Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.</span>
       </p>
       <div class="hero-actions">
         <a href="#contacto" class="btn-primary">
-          Agendar llamada gratuita
+          <span data-i18n="hero.cta1">Agendar llamada gratuita</span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="#casos" class="btn-secondary">
-          Ver resultados
+          <span data-i18n="hero.cta2">Ver resultados</span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
       <div class="hero-stats">
         <div>
           <div class="stat-num">+80</div>
-          <div class="stat-label">Tiendas escaladas</div>
+          <div class="stat-label" data-i18n="hero.stat1">Tiendas escaladas</div>
         </div>
         <div>
           <div class="stat-num">3.8×</div>
-          <div class="stat-label">ROAS promedio</div>
+          <div class="stat-label" data-i18n="hero.stat2">ROAS promedio</div>
         </div>
         <div>
           <div class="stat-num">+62%</div>
-          <div class="stat-label">Conversión media</div>
+          <div class="stat-label" data-i18n="hero.stat3">Conversión media</div>
         </div>
       </div>
     </div>
@@ -1017,8 +1160,8 @@
 <section class="services" id="servicios">
   <div class="section-inner">
     <div class="reveal">
-      <span class="section-tag">Servicios</span>
-      <h2 class="section-title">Todo lo que tu tienda<br>necesita para crecer</h2>
+      <span class="section-tag" data-i18n="services.tag">Servicios</span>
+      <h2 class="section-title" data-i18n="services.title">Todo lo que tu tienda<br>necesita para crecer</h2>
       <p class="section-sub">Combinamos desarrollo técnico en Shopify con estrategias de growth basadas en datos para maximizar cada peso invertido.</p>
     </div>
     <div class="services-grid">
@@ -1062,8 +1205,8 @@
 <section id="nosotros">
   <div class="section-inner why-grid">
     <div>
-      <span class="section-tag reveal">Por qué nosotros</span>
-      <h2 class="section-title reveal">Hacemos lo que<br>prometemos</h2>
+      <span class="section-tag reveal" data-i18n="why.tag">Por qué nosotros</span>
+      <h2 class="section-title reveal" data-i18n="why.title">Hacemos lo que<br>prometemos</h2>
       <div class="why-items">
         <div class="why-item reveal">
           <div class="why-num">01</div>
@@ -1139,8 +1282,8 @@
 <section class="cases" id="casos">
   <div class="section-inner">
     <div class="reveal">
-      <span class="section-tag">Casos de éxito</span>
-      <h2 class="section-title">Números que<br>hablan por sí solos</h2>
+      <span class="section-tag" data-i18n="cases.tag">Casos de éxito</span>
+      <h2 class="section-title" data-i18n="cases.title">Números que<br>hablan por sí solos</h2>
       <p class="section-sub">Resultados reales de tiendas reales. Sin promedios inflados ni métricas de vanidad.</p>
     </div>
     <div class="cases-grid">
@@ -1221,8 +1364,8 @@
 <section>
   <div class="section-inner">
     <div class="reveal">
-      <span class="section-tag">Testimonios</span>
-      <h2 class="section-title">Lo que dicen<br>quienes ya escalaron</h2>
+      <span class="section-tag" data-i18n="testi.tag">Testimonios</span>
+      <h2 class="section-title" data-i18n="testi.title">Lo que dicen<br>quienes ya escalaron</h2>
     </div>
     <div class="testimonials-grid">
       <div class="testi-card reveal">
@@ -1269,8 +1412,8 @@
 <section class="process" id="proceso">
   <div class="section-inner">
     <div class="reveal" style="text-align:center;margin-bottom:0">
-      <span class="section-tag">Cómo trabajamos</span>
-      <h2 class="section-title">De cero a escala<br>en 4 pasos</h2>
+      <span class="section-tag" data-i18n="process.tag">Cómo trabajamos</span>
+      <h2 class="section-title" data-i18n="process.title">De cero a escala<br>en 4 pasos</h2>
       <p class="section-sub" style="margin:14px auto 0;text-align:center">Un proceso claro, sin sorpresas y con resultados medibles en cada etapa.</p>
     </div>
     <div class="process-steps">
@@ -1302,7 +1445,7 @@
 <div class="cta-section" id="contacto">
   <div class="cta-inner">
     <div>
-      <h2 class="cta-title">¿Listo para escalar<br>tu tienda?</h2>
+      <h2 class="cta-title" data-i18n="cta.title">¿Listo para escalar<br>tu tienda?</h2>
       <p class="cta-sub">Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
       <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap">
         <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.6);font-size:14px">
@@ -1475,6 +1618,226 @@
       }, 50);
     });
   });
+
+  // ── MOBILE CONTROLS VISIBILITY ──
+  const mobileControls = document.getElementById('mobileControls');
+  function updateMobileControls() {
+    if (window.innerWidth <= 900) {
+      mobileControls.style.display = 'flex';
+    } else {
+      mobileControls.style.display = 'none';
+    }
+  }
+  updateMobileControls();
+  window.addEventListener('resize', updateMobileControls);
+
+  // ── TRANSLATIONS ──
+  const i18n = {
+    es: {
+      'nav.services': 'Servicios',
+      'nav.cases': 'Casos de éxito',
+      'nav.process': 'Proceso',
+      'nav.cta': 'Agendar llamada →',
+      'hero.badge': 'Shopify Partner Certificado',
+      'hero.title1': 'Escalamos tu tienda',
+      'hero.title2': 'con',
+      'hero.accent': 'estrategia',
+      'hero.title3': 'y datos reales',
+      'hero.sub': 'Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.',
+      'hero.cta1': 'Agendar llamada gratuita',
+      'hero.cta2': 'Ver resultados',
+      'hero.stat1': 'Tiendas escaladas',
+      'hero.stat2': 'ROAS promedio',
+      'hero.stat3': 'Conversión media',
+      'services.tag': 'Servicios',
+      'services.title': 'Todo lo que tu tienda<br>necesita para crecer',
+      'why.tag': 'Por qué nosotros',
+      'why.title': 'Hacemos lo que<br>prometemos',
+      'cases.tag': 'Casos de éxito',
+      'cases.title': 'Números que<br>hablan por sí solos',
+      'testi.tag': 'Testimonios',
+      'testi.title': 'Lo que dicen<br>quienes ya escalaron',
+      'process.tag': 'Cómo trabajamos',
+      'process.title': 'De cero a escala<br>en 4 pasos',
+      'cta.title': '¿Listo para escalar<br>tu tienda?',
+    },
+    en: {
+      'nav.services': 'Services',
+      'nav.cases': 'Case Studies',
+      'nav.process': 'Process',
+      'nav.cta': 'Book a Call →',
+      'hero.badge': 'Certified Shopify Partner',
+      'hero.title1': 'We scale your store',
+      'hero.title2': 'with',
+      'hero.accent': 'strategy',
+      'hero.title3': 'and real data',
+      'hero.sub': 'We are the Shopify & Growth Marketing consultancy that turns your store into a sales machine. No empty promises, only measurable results.',
+      'hero.cta1': 'Book a free call',
+      'hero.cta2': 'See results',
+      'hero.stat1': 'Stores scaled',
+      'hero.stat2': 'Average ROAS',
+      'hero.stat3': 'Avg. conversion lift',
+      'services.tag': 'Services',
+      'services.title': 'Everything your store<br>needs to grow',
+      'why.tag': 'Why us',
+      'why.title': 'We do what<br>we promise',
+      'cases.tag': 'Case Studies',
+      'cases.title': 'Numbers that<br>speak for themselves',
+      'testi.tag': 'Testimonials',
+      'testi.title': 'What our clients<br>say about us',
+      'process.tag': 'How we work',
+      'process.title': 'From zero to scale<br>in 4 steps',
+      'cta.title': 'Ready to scale<br>your store?',
+    }
+  };
+
+  let currentLang = 'es';
+
+  function applyLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (i18n[lang][key] !== undefined) {
+        el.innerHTML = i18n[lang][key];
+      }
+    });
+    // Update page title
+    document.title = lang === 'en'
+      ? 'Cachai Solutions · Shopify Consultancy & Growth Marketing'
+      : 'Cachai Solutions · Consultora Shopify & Growth Marketing';
+    // Update active btn
+    document.getElementById('btnES').classList.toggle('active', lang === 'es');
+    document.getElementById('btnEN').classList.toggle('active', lang === 'en');
+    document.getElementById('btnES_m').classList.toggle('active', lang === 'es');
+    document.getElementById('btnEN_m').classList.toggle('active', lang === 'en');
+    // Update form placeholder text
+    if (lang === 'en') {
+      document.querySelectorAll('.form-submit').forEach(b => {
+        if (!b.disabled) b.textContent = 'Book my free call →';
+      });
+      document.querySelectorAll('.form-disclaimer').forEach(e => {
+        e.textContent = 'No spam. Your data is never shared.';
+      });
+      document.querySelectorAll('.form-label').forEach((el, i) => {
+        const labels = ['Your name', 'Contact email', 'Current monthly revenue'];
+        if (labels[i]) el.textContent = labels[i];
+      });
+    } else {
+      document.querySelectorAll('.form-submit').forEach(b => {
+        if (!b.disabled) b.textContent = 'Agendar mi llamada gratuita →';
+      });
+      document.querySelectorAll('.form-disclaimer').forEach(e => {
+        e.textContent = 'Sin spam. Tus datos no se comparten con terceros.';
+      });
+      document.querySelectorAll('.form-label').forEach((el, i) => {
+        const labels = ['Tu nombre', 'Email de contacto', 'Facturación mensual actual'];
+        if (labels[i]) el.textContent = labels[i];
+      });
+    }
+    localStorage.setItem('cs_lang', lang);
+  }
+
+  function setLang(lang) { applyLang(lang); }
+
+  // ── CURRENCY ──
+  let currentCurrency = { code: 'CLP', flag: '🇨🇱', symbol: '$', label: 'CLP' };
+
+  function setCurrency(code, flag, symbol, label) {
+    currentCurrency = { code, flag, symbol, label };
+    document.getElementById('currencyFlag').textContent = flag;
+    document.getElementById('currencyCode').textContent = code;
+    document.getElementById('currencyFlagM').textContent = flag;
+    document.getElementById('currencyCodeM').textContent = code;
+    // Update selected state
+    document.querySelectorAll('.currency-dropdown button').forEach(btn => {
+      btn.classList.toggle('selected', btn.textContent.includes(code));
+    });
+    document.getElementById('currencyDropdown').classList.remove('open');
+    document.getElementById('currencyDropdownM').classList.remove('open');
+    localStorage.setItem('cs_currency', JSON.stringify(currentCurrency));
+  }
+
+  function toggleCurrency() {
+    document.getElementById('currencyDropdown').classList.toggle('open');
+  }
+  function toggleCurrencyMobile() {
+    document.getElementById('currencyDropdownM').classList.toggle('open');
+  }
+
+  // Close currency dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.currency-selector')) {
+      document.getElementById('currencyDropdown').classList.remove('open');
+      document.getElementById('currencyDropdownM').classList.remove('open');
+    }
+  });
+
+  // ── SPANISH-SPEAKING COUNTRIES ──
+  const spanishCountries = new Set([
+    'AR','BO','CL','CO','CR','CU','DO','EC','SV','GQ',
+    'GT','HN','MX','NI','PA','PY','PE','ES','UY','VE','PR'
+  ]);
+
+  // Currency defaults by country
+  const countryCurrency = {
+    'CL': { code: 'CLP', flag: '🇨🇱', symbol: '$', label: 'CLP' },
+    'US': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'CA': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'AU': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'GB': { code: 'GBP', flag: '🇬🇧', symbol: '£', label: 'GBP' },
+    'DE': { code: 'EUR', flag: '🇪🇺', symbol: '€', label: 'EUR' },
+    'FR': { code: 'EUR', flag: '🇪🇺', symbol: '€', label: 'EUR' },
+    'ES': { code: 'EUR', flag: '🇪🇺', symbol: '€', label: 'EUR' },
+    'IT': { code: 'EUR', flag: '🇪🇺', symbol: '€', label: 'EUR' },
+    'AR': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'MX': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'CO': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+    'PE': { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' },
+  };
+
+  async function detectCountry() {
+    // Check saved preferences first
+    const savedLang = localStorage.getItem('cs_lang');
+    const savedCurrency = localStorage.getItem('cs_currency');
+
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      const countryCode = data.country_code || '';
+
+      // Set language
+      if (!savedLang) {
+        const lang = spanishCountries.has(countryCode) ? 'es' : 'en';
+        applyLang(lang);
+      } else {
+        applyLang(savedLang);
+      }
+
+      // Set currency
+      if (!savedCurrency) {
+        const curr = countryCurrency[countryCode] || { code: 'USD', flag: '🇺🇸', symbol: '$', label: 'USD' };
+        setCurrency(curr.code, curr.flag, curr.symbol, curr.label);
+      } else {
+        const c = JSON.parse(savedCurrency);
+        setCurrency(c.code, c.flag, c.symbol, c.label);
+      }
+    } catch (e) {
+      // Fallback: use browser language
+      if (!savedLang) {
+        const browserLang = navigator.language || navigator.userLanguage || 'en';
+        applyLang(browserLang.startsWith('es') ? 'es' : 'en');
+      } else {
+        applyLang(savedLang);
+      }
+      if (savedCurrency) {
+        const c = JSON.parse(savedCurrency);
+        setCurrency(c.code, c.flag, c.symbol, c.label);
+      }
+    }
+  }
+
+  detectCountry();
 </script>
 </body>
 </html>
