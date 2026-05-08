@@ -83,6 +83,21 @@ nav.scrolled{border-color:var(--grey-line);box-shadow:0 2px 20px rgba(44,107,78,
 }
 @keyframes megaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 .mega-wrap.visible{display:block}
+/* Mobile mega fullscreen — outside any media query so it always wins */
+@media(max-width:900px){
+  .mega-wrap.visible{
+    display:block !important;
+    position:fixed !important;
+    top:0 !important; left:0 !important; right:0 !important; bottom:0 !important;
+    z-index:9999 !important;
+    overflow-y:auto !important;
+    background:white !important;
+    padding:0 !important;
+    border:none !important;
+    box-shadow:none !important;
+    animation:none !important;
+  }
+}
 .mega-inner{max-width:1160px;margin:0 auto}
 .mega-wide .mega-inner{}
 .mega-section-label{
@@ -534,8 +549,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
   .nav-logo{position:absolute;left:50%;transform:translateX(-50%)}
   .nav-logo img{height:32px}
   .nav-links,.nav-controls{display:none!important}
-  /* mega menus inside nav-links must still show when .visible */
-  .nav-links .mega-wrap.visible{display:block!important}
+
   .hero-inner{grid-template-columns:1fr}
   .hero-visual{display:none}
   .hero{padding:100px 5vw 60px}
@@ -555,18 +569,6 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
   .trust-bar{flex-direction:column;gap:12px;padding:16px 5vw}
   section{padding:64px 5vw}
   .footer-pickers{display:block}
-  /* Hide mega menus on mobile by default */
-  .mega-wrap{ display:none; }
-  /* Show when visible class added */
-  .mega-wrap.visible{
-    display:block!important;
-    position:fixed!important;top:0!important;left:0!important;right:0!important;bottom:0!important;
-    z-index:9999!important;
-    overflow-y:auto;
-    background:white;
-    animation:none;
-    border:none;box-shadow:none;padding:0;
-  }
   .mega-mobile-head{
     display:flex;align-items:center;gap:12px;
     padding:0 24px;
@@ -642,31 +644,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
       <a href="#" class="nav-link-item" data-i18n="nav.services">Servicios
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap mega-wide" id="mega-services">
-        <div class="mega-mobile-head">
-          <button class="mega-mobile-back" onclick="closeMega('mega-services')">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="nav.services">Servicios</span>
-          </button>
-        </div>
-        <div class="mega-inner">
-        <div class="mega-section-label" data-i18n="mega.whatwedo">Lo que hacemos</div>
-        <div class="mega-links-grid">
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifydev">Desarrollo Shopify</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifyplus">Shopify Plus</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.migration">Migraciones &amp; Replatforming</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.themes">Diseño &amp; Temas Custom</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.growth">Growth Marketing</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.metaads">Meta Ads</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.googleads">Google Ads</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.email">Email Marketing</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.cro">Optimización de Conversión</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.seo">eCommerce SEO</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.analytics">Analytics &amp; Data</a>
-          <a href="#servicios" class="mega-link-lg" data-i18n="ms.audit">eCommerce Audit</a>
-        </div>
-        </div>
-      </div>
+      
     </li>
 
     <!-- INDUSTRIAS -->
@@ -674,29 +652,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
       <a href="#" class="nav-link-item" data-i18n="nav.industries">Industrias
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap mega-wide" id="mega-industries">
-        <div class="mega-mobile-head">
-          <button class="mega-mobile-back" onclick="closeMega('mega-industries')">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="nav.industries">Industrias</span>
-          </button>
-        </div>
-        <div class="mega-inner">
-        <div class="mega-section-label" data-i18n="mega.industriesserve">Industrias que servimos</div>
-        <div class="mega-links-grid">
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.fashion">Moda &amp; Accesorios</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.beauty">Belleza &amp; Cosmética</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.tech">Tecnología &amp; Gadgets</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.food">Alimentos &amp; Bebidas</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.sports">Deportes &amp; Outdoors</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.home">Hogar &amp; Decoración</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.health">Salud &amp; Bienestar</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.b2b">B2B eCommerce</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.enterprise">Enterprise eCommerce</a>
-          <a href="#casos" class="mega-link-lg" data-i18n="mi.luxury">Lujo &amp; Premium</a>
-        </div>
-        </div>
-      </div>
+      
     </li>
 
     <!-- APPS & INTEGRATIONS -->
@@ -704,31 +660,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
       <a href="#" class="nav-link-item" data-i18n="nav.apps">Apps &amp; Integraciones
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap mega-wide" id="mega-apps">
-        <div class="mega-mobile-head">
-          <button class="mega-mobile-back" onclick="closeMega('mega-apps')">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="nav.apps">Apps & Integraciones</span>
-          </button>
-        </div>
-        <div class="mega-inner">
-        <div class="mega-section-label" data-i18n="mega.appslabel">Plataformas &amp; Herramientas</div>
-        <div class="mega-links-grid">
-          <a href="#servicios" class="mega-link-lg">Klaviyo</a>
-          <a href="#servicios" class="mega-link-lg">Mailchimp</a>
-          <a href="#servicios" class="mega-link-lg">Meta Ads</a>
-          <a href="#servicios" class="mega-link-lg">Google Ads</a>
-          <a href="#servicios" class="mega-link-lg">Yotpo</a>
-          <a href="#servicios" class="mega-link-lg">Recharge</a>
-          <a href="#servicios" class="mega-link-lg">Gorgias</a>
-          <a href="#servicios" class="mega-link-lg">NetSuite</a>
-          <a href="#servicios" class="mega-link-lg">Shopify Flow</a>
-          <a href="#servicios" class="mega-link-lg">Loox</a>
-          <a href="#servicios" class="mega-link-lg">Judge.me</a>
-          <a href="#servicios" class="mega-link-lg">Attentive</a>
-        </div>
-        </div>
-      </div>
+      
     </li>
 
     <!-- ABOUT -->
@@ -736,52 +668,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
       <a href="#" class="nav-link-item" data-i18n="nav.about">Acerca de
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap mega-narrow" id="mega-about">
-        <div class="mega-mobile-head">
-          <button class="mega-mobile-back" onclick="closeMega('mega-about')">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="nav.about">Acerca de</span>
-          </button>
-        </div>
-        <div class="mega-inner">
-        <a href="#nosotros" class="mega-link-xl" data-i18n="ma.about">Nosotros</a>
-        <a href="#casos" class="mega-link-xl" data-i18n="ma.work">Nuestro trabajo</a>
-        <a href="#" class="mega-link-xl" data-i18n="ma.blog">Blog &amp; Recursos</a>
-        <a href="#contacto" class="mega-link-xl" data-i18n="ma.contact">Contacto</a>
-        </div>
-      </div>
-    </li>
-
-    <li class="nav-item">
-      <a href="#contacto" class="nav-link-item nav-cta" data-i18n="nav.cta">Agendar llamada →</a>
-    </li>
-  </ul>
-  <div class="nav-controls">
-    <div class="lang-switcher">
-      <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
-      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
-    </div>
-    <div class="curr-select-wrap">
-      <div class="curr-trigger" id="currTrigger" onclick="toggleCurrDropdown()">
-        <span id="currTriggerText">CLP</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="curr-dropdown" id="currDropdown">
-        <button onclick="pickCurr('CLP','CLP — Peso chileno','$')">
-          <span class="curr-symbol">$</span>CLP — Peso chileno
-        </button>
-        <button onclick="pickCurr('USD','USD — US Dollar','$')">
-          <span class="curr-symbol">$</span>USD — US Dollar
-        </button>
-        <button onclick="pickCurr('EUR','EUR — Euro','€')">
-          <span class="curr-symbol">€</span>EUR — Euro
-        </button>
-        <button onclick="pickCurr('GBP','GBP — British Pound','£')">
-          <span class="curr-symbol">£</span>GBP — British Pound
-        </button>
-      </div>
-    </div>
-  </div>
+      
 </nav>
 
 <!-- ── MOBILE FULLSCREEN MENU ── -->
@@ -1674,5 +1561,128 @@ async function init() {
 
 init();
 </script>
+
+
+<!-- ── MEGA MENUS (outside nav) ── -->
+<div class="mega-wrap mega-wide" id="mega-services">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-services')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.services">Servicios</span>
+          </button>
+        </div>
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.whatwedo">Lo que hacemos</div>
+        <div class="mega-links-grid">
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifydev">Desarrollo Shopify</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifyplus">Shopify Plus</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.migration">Migraciones &amp; Replatforming</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.themes">Diseño &amp; Temas Custom</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.growth">Growth Marketing</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.metaads">Meta Ads</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.googleads">Google Ads</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.email">Email Marketing</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.cro">Optimización de Conversión</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.seo">eCommerce SEO</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.analytics">Analytics &amp; Data</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.audit">eCommerce Audit</a>
+        </div>
+        </div>
+      </div>
+<div class="mega-wrap mega-wide" id="mega-industries">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-industries')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.industries">Industrias</span>
+          </button>
+        </div>
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.industriesserve">Industrias que servimos</div>
+        <div class="mega-links-grid">
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.fashion">Moda &amp; Accesorios</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.beauty">Belleza &amp; Cosmética</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.tech">Tecnología &amp; Gadgets</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.food">Alimentos &amp; Bebidas</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.sports">Deportes &amp; Outdoors</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.home">Hogar &amp; Decoración</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.health">Salud &amp; Bienestar</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.b2b">B2B eCommerce</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.enterprise">Enterprise eCommerce</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.luxury">Lujo &amp; Premium</a>
+        </div>
+        </div>
+      </div>
+<div class="mega-wrap mega-wide" id="mega-apps">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-apps')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.apps">Apps & Integraciones</span>
+          </button>
+        </div>
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.appslabel">Plataformas &amp; Herramientas</div>
+        <div class="mega-links-grid">
+          <a href="#servicios" class="mega-link-lg">Klaviyo</a>
+          <a href="#servicios" class="mega-link-lg">Mailchimp</a>
+          <a href="#servicios" class="mega-link-lg">Meta Ads</a>
+          <a href="#servicios" class="mega-link-lg">Google Ads</a>
+          <a href="#servicios" class="mega-link-lg">Yotpo</a>
+          <a href="#servicios" class="mega-link-lg">Recharge</a>
+          <a href="#servicios" class="mega-link-lg">Gorgias</a>
+          <a href="#servicios" class="mega-link-lg">NetSuite</a>
+          <a href="#servicios" class="mega-link-lg">Shopify Flow</a>
+          <a href="#servicios" class="mega-link-lg">Loox</a>
+          <a href="#servicios" class="mega-link-lg">Judge.me</a>
+          <a href="#servicios" class="mega-link-lg">Attentive</a>
+        </div>
+        </div>
+      </div>
+<div class="mega-wrap mega-narrow" id="mega-about">
+        <div class="mega-mobile-head">
+          <button class="mega-mobile-back" onclick="closeMega('mega-about')">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-i18n="nav.about">Acerca de</span>
+          </button>
+        </div>
+        <div class="mega-inner">
+        <a href="#nosotros" class="mega-link-xl" data-i18n="ma.about">Nosotros</a>
+        <a href="#casos" class="mega-link-xl" data-i18n="ma.work">Nuestro trabajo</a>
+        <a href="#" class="mega-link-xl" data-i18n="ma.blog">Blog &amp; Recursos</a>
+        <a href="#contacto" class="mega-link-xl" data-i18n="ma.contact">Contacto</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a href="#contacto" class="nav-link-item nav-cta" data-i18n="nav.cta">Agendar llamada →</a>
+    </li>
+  </ul>
+  <div class="nav-controls">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="curr-select-wrap">
+      <div class="curr-trigger" id="currTrigger" onclick="toggleCurrDropdown()">
+        <span id="currTriggerText">CLP</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="curr-dropdown" id="currDropdown">
+        <button onclick="pickCurr('CLP','CLP — Peso chileno','$')">
+          <span class="curr-symbol">$</span>CLP — Peso chileno
+        </button>
+        <button onclick="pickCurr('USD','USD — US Dollar','$')">
+          <span class="curr-symbol">$</span>USD — US Dollar
+        </button>
+        <button onclick="pickCurr('EUR','EUR — Euro','€')">
+          <span class="curr-symbol">€</span>EUR — Euro
+        </button>
+        <button onclick="pickCurr('GBP','GBP — British Pound','£')">
+          <span class="curr-symbol">£</span>GBP — British Pound
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
