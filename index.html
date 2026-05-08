@@ -1213,7 +1213,13 @@ function applyLang(l) {
   if(ls) ls.value = l;
 }
 
-function setLang(l) { applyLang(l); }
+function setLang(l) {
+  applyLang(l);
+  // Auto-set currency when changing language (unless user manually picked)
+  if(!localStorage.getItem('cs_curr_manual')) {
+    autoSetCurrencyForLang(l);
+  }
+}
 
 /* ═══════════════════════════════════════════
    CURRENCY
@@ -1231,7 +1237,7 @@ function pickCurr(code, label, symbol) {
     b.classList.toggle('active', b.textContent.includes(code));
   });
   localStorage.setItem('cs_curr', JSON.stringify(curr));
-  // sync footer select
+  localStorage.setItem('cs_curr_manual', '1'); // user manually chose
   const cs = document.getElementById('footerCurrSelect');
   if(cs) cs.value = code;
 }
@@ -1251,14 +1257,9 @@ function pickLang(l) {
   setTimeout(() => { bg.style.display = 'none'; }, 280);
   // Apply language
   applyLang(l);
-  // Set default currency based on language if not already chosen
-  if(!localStorage.getItem('cs_curr')) {
-    if(l === 'es') {
-      pickCurr('CLP', 'CLP — Peso chileno', '$');
-    } else {
-      pickCurr('USD', 'USD — US Dollar', '$');
-    }
-  }
+  // Auto-set currency based on language (popup = first visit, always auto)
+  autoSetCurrencyForLang(l);
+  localStorage.removeItem('cs_curr_manual'); // popup resets manual flag
   // Sync footer selects immediately
   setTimeout(() => {
     const ls = document.getElementById('footerLangSelect');
@@ -1267,6 +1268,31 @@ function pickLang(l) {
     if(cs) cs.value = curr.code;
   }, 50);
   localStorage.setItem('cs_lang_chosen', '1');
+}
+
+/* ═══════════════════════════════════════════
+   AUTO CURRENCY BY LANGUAGE
+═══════════════════════════════════════════ */
+function autoSetCurrencyForLang(l) {
+  // Maps language to default currency
+  // 'es' → CLP (Chile default, most clients)
+  // 'en' → USD (global default)
+  const defaultCurr = l === 'es' ? 'CLP' : 'USD';
+  const map = {
+    CLP:{label:'CLP — Peso chileno',symbol:'$'},
+    USD:{label:'USD — US Dollar',symbol:'$'},
+    EUR:{label:'EUR — Euro',symbol:'€'},
+    GBP:{label:'GBP — British Pound',symbol:'£'}
+  };
+  const c = map[defaultCurr];
+  curr = {code:defaultCurr, ...c};
+  const ct = document.getElementById('currTriggerText');
+  if(ct) ct.textContent = defaultCurr;
+  document.querySelectorAll('#currDropdown button').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(defaultCurr));
+  });
+  // Don't save to cs_curr_manual — this is auto
+  localStorage.setItem('cs_curr', JSON.stringify(curr));
 }
 
 /* ═══════════════════════════════════════════
@@ -1281,6 +1307,15 @@ function syncFooterSelects() {
 
 function onFooterLangChange(val) {
   applyLang(val);
+  // Auto-set currency when changing language (unless user manually picked)
+  if(!localStorage.getItem('cs_curr_manual')) {
+    autoSetCurrencyForLang(val);
+    // Sync footer currency select after auto-set
+    setTimeout(() => {
+      const cs = document.getElementById('footerCurrSelect');
+      if(cs) cs.value = curr.code;
+    }, 50);
+  }
 }
 
 function onFooterCurrChange(val) {
@@ -1292,12 +1327,13 @@ function onFooterCurrChange(val) {
   };
   const c = map[val];
   curr = {code:val, ...c};
-  document.getElementById('currTriggerText').textContent = val;
-  // update desktop dropdown active state
+  const ct = document.getElementById('currTriggerText');
+  if(ct) ct.textContent = val;
   document.querySelectorAll('#currDropdown button').forEach(b => {
     b.classList.toggle('active', b.textContent.includes(val));
   });
   localStorage.setItem('cs_curr', JSON.stringify(curr));
+  localStorage.setItem('cs_curr_manual', '1'); // user manually chose
 }
 
 /* ═══════════════════════════════════════════
@@ -1428,12 +1464,13 @@ async function init() {
     const detectedCurr = CURR_MAP[cc] || 'USD';
 
     if(!savedLang) applyLang(detectedLang);
-    if(!savedCurr) {
+    if(!savedCurr && !localStorage.getItem('cs_curr_manual')) {
       const map = {CLP:{label:'CLP — Peso chileno',symbol:'$'},USD:{label:'USD — US Dollar',symbol:'$'},EUR:{label:'EUR — Euro',symbol:'€'},GBP:{label:'GBP — British Pound',symbol:'£'}};
       const c = map[detectedCurr] || map['USD'];
       curr = {code:detectedCurr, ...c};
       const ct = document.getElementById('currTriggerText');
       if(ct) ct.textContent = detectedCurr;
+      localStorage.setItem('cs_curr', JSON.stringify(curr));
     }
     // sync footer selects
     setTimeout(() => {
