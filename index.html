@@ -279,41 +279,28 @@ nav.scrolled{border-color:var(--grey-line);box-shadow:0 2px 20px rgba(44,107,78,
 }
 .footer-pickers-row{display:flex;gap:16px}
 .fp-wrap{flex:1;position:relative}
-.fp-label{font-size:11px;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:'Geist',sans-serif}
-
-/* Wheel picker container */
-.fp-wheel-wrap{
-  position:relative;height:44px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:12px;overflow:hidden;
-  cursor:pointer;
-}
-.fp-wheel-wrap::before,
-.fp-wheel-wrap::after{
-  content:'';position:absolute;left:0;right:0;height:14px;z-index:2;pointer-events:none;
-}
-.fp-wheel-wrap::before{top:0;background:linear-gradient(to bottom,rgba(30,50,38,.85),transparent)}
-.fp-wheel-wrap::after{bottom:0;background:linear-gradient(to top,rgba(30,50,38,.85),transparent)}
-.fp-wheel-selected-line{
-  position:absolute;top:50%;left:0;right:0;height:1px;
-  background:rgba(200,230,213,.25);transform:translateY(-50%);z-index:1;pointer-events:none;
-}
-.fp-wheel{
-  display:flex;flex-direction:column;
-  transition:transform .25s cubic-bezier(.25,.46,.45,.94);
-  padding:0;
-}
-.fp-wheel-item{
-  height:44px;display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:600;
-  color:rgba(255,255,255,.4);
+.fp-label{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:8px;font-family:'Geist',sans-serif;letter-spacing:.03em}
+.fp-select{
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:12px;
+  padding:14px 16px;
+  color:white;
+  font-size:15px;font-weight:600;
   font-family:'Plus Jakarta Sans',sans-serif;
-  flex-shrink:0;user-select:none;
-  transition:color .2s,transform .2s;
+  outline:none;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='white' stroke-opacity='0.5' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:38px;
+  transition:border-color .2s,background-color .2s;
 }
-.fp-wheel-item.center{color:white;font-size:15px}
-.fp-wheel-item.near{color:rgba(255,255,255,.7);font-size:14.5px}
+.fp-select:focus{border-color:rgba(200,230,213,.6);background-color:rgba(255,255,255,.15)}
+.fp-select option{background:#1A2E25;color:white;font-weight:500}
 
 /* ═══════════════════════════════════════════
    HERO
@@ -1044,33 +1031,21 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
   <div class="footer-pickers" id="footerPickers">
     <div class="footer-pickers-label" data-i18n="footer.settings">Idioma y moneda</div>
     <div class="footer-pickers-row">
-      <!-- Language wheel -->
       <div class="fp-wrap">
         <div class="fp-label" data-i18n="footer.lang_label">Idioma</div>
-        <div class="fp-wheel-wrap" id="langWheel" data-index="0">
-          <div class="fp-wheel-selected-line"></div>
-          <div class="fp-wheel" id="langWheelInner">
-            <div class="fp-wheel-item" data-val="es">Español</div>
-            <div class="fp-wheel-item center" data-val="es">Español</div>
-            <div class="fp-wheel-item near" data-val="en">English</div>
-            <div class="fp-wheel-item" data-val="en">English</div>
-          </div>
-        </div>
+        <select class="fp-select" id="footerLangSelect" onchange="onFooterLangChange(this.value)">
+          <option value="es">Español — Latinoamérica &amp; España</option>
+          <option value="en">English — USA, UK &amp; International</option>
+        </select>
       </div>
-      <!-- Currency wheel -->
       <div class="fp-wrap">
         <div class="fp-label" data-i18n="footer.currency_label">Moneda</div>
-        <div class="fp-wheel-wrap" id="currWheel" data-index="0">
-          <div class="fp-wheel-selected-line"></div>
-          <div class="fp-wheel" id="currWheelInner">
-            <div class="fp-wheel-item" data-val="CLP">CLP</div>
-            <div class="fp-wheel-item center" data-val="CLP">CLP</div>
-            <div class="fp-wheel-item near" data-val="USD">USD</div>
-            <div class="fp-wheel-item" data-val="EUR">EUR</div>
-            <div class="fp-wheel-item" data-val="GBP">GBP</div>
-            <div class="fp-wheel-item" data-val="CLP">CLP</div>
-          </div>
-        </div>
+        <select class="fp-select" id="footerCurrSelect" onchange="onFooterCurrChange(this.value)">
+          <option value="CLP">CLP — Peso chileno</option>
+          <option value="USD">USD — US Dollar</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="GBP">GBP — British Pound</option>
+        </select>
       </div>
     </div>
   </div>
@@ -1233,6 +1208,9 @@ function applyLang(l) {
   const btn = document.getElementById('formBtn');
   if(btn && !btn.disabled) btn.textContent = T[l]['form.btn'];
   localStorage.setItem('cs_lang', l);
+  // sync footer select
+  const ls = document.getElementById('footerLangSelect');
+  if(ls) ls.value = l;
 }
 
 function setLang(l) { applyLang(l); }
@@ -1253,6 +1231,9 @@ function pickCurr(code, label, symbol) {
     b.classList.toggle('active', b.textContent.includes(code));
   });
   localStorage.setItem('cs_curr', JSON.stringify(curr));
+  // sync footer select
+  const cs = document.getElementById('footerCurrSelect');
+  if(cs) cs.value = code;
 }
 
 function toggleCurrDropdown() {
@@ -1263,92 +1244,60 @@ function toggleCurrDropdown() {
    LANGUAGE POPUP
 ═══════════════════════════════════════════ */
 function pickLang(l) {
+  // Close popup smoothly
   const bg = document.getElementById('langPopupBg');
   bg.style.opacity = '0';
   bg.style.pointerEvents = 'none';
   setTimeout(() => { bg.style.display = 'none'; }, 280);
+  // Apply language
   applyLang(l);
+  // Set default currency based on language if not already chosen
   if(!localStorage.getItem('cs_curr')) {
-    if(l==='es') pickCurr('CLP','CLP — Peso chileno','$');
-    else pickCurr('USD','USD — US Dollar','$');
+    if(l === 'es') {
+      pickCurr('CLP', 'CLP — Peso chileno', '$');
+    } else {
+      pickCurr('USD', 'USD — US Dollar', '$');
+    }
   }
-  localStorage.setItem('cs_lang_chosen','1');
+  // Sync footer selects immediately
+  setTimeout(() => {
+    const ls = document.getElementById('footerLangSelect');
+    const cs = document.getElementById('footerCurrSelect');
+    if(ls) ls.value = l;
+    if(cs) cs.value = curr.code;
+  }, 50);
+  localStorage.setItem('cs_lang_chosen', '1');
 }
 
 /* ═══════════════════════════════════════════
-   WHEEL PICKER
+   FOOTER SELECT SYNC
 ═══════════════════════════════════════════ */
-function initWheel(wheelId, items, currentIndex, onSelect) {
-  const wrap = document.getElementById(wheelId);
-  const inner = wrap.querySelector('.fp-wheel');
-  const itemH = 44;
-  let idx = currentIndex;
-  let startY = 0, lastY = 0, vel = 0, dragging = false;
-
-  function render(animated) {
-    if(!animated) inner.style.transition = 'none';
-    else inner.style.transition = 'transform .3s cubic-bezier(.25,.46,.45,.94)';
-    // center selected item
-    const offset = (wrap.clientHeight / 2) - (itemH / 2) - idx * itemH;
-    inner.style.transform = 'translateY(' + offset + 'px)';
-    inner.querySelectorAll('.fp-wheel-item').forEach((el, i) => {
-      el.classList.remove('center','near');
-      const diff = Math.abs(i - idx);
-      if(diff === 0) el.classList.add('center');
-      else if(diff === 1) el.classList.add('near');
-    });
-  }
-
-  function clamp(i){ return Math.max(0, Math.min(items.length - 1, i)); }
-
-  function settle(newIdx) {
-    idx = clamp(newIdx);
-    render(true);
-    onSelect(idx, items[idx]);
-  }
-
-  function onStart(y) { startY = y; lastY = y; vel = 0; dragging = true; }
-  function onMove(y) {
-    if(!dragging) return;
-    const dy = y - lastY;
-    vel = dy;
-    lastY = y;
-    const delta = (startY - y) / itemH;
-    inner.style.transition = 'none';
-    const offset = (wrap.clientHeight / 2) - (itemH / 2) - (idx + delta) * itemH;
-    inner.style.transform = 'translateY(' + offset + 'px)';
-  }
-  function onEnd(y) {
-    if(!dragging) return;
-    dragging = false;
-    const delta = Math.round((startY - y) / itemH + (vel < 0 ? -.3 : .3));
-    settle(idx + delta);
-  }
-
-  wrap.addEventListener('touchstart', e => onStart(e.touches[0].clientY), {passive:true});
-  wrap.addEventListener('touchmove', e => { e.preventDefault(); onMove(e.touches[0].clientY); }, {passive:false});
-  wrap.addEventListener('touchend', e => onEnd(e.changedTouches[0].clientY));
-  wrap.addEventListener('mousedown', e => { onStart(e.clientY); });
-  window.addEventListener('mousemove', e => { if(dragging) onMove(e.clientY); });
-  window.addEventListener('mouseup', e => { if(dragging) onEnd(e.clientY); });
-
-  // Click on items
-  inner.querySelectorAll('.fp-wheel-item').forEach((el, i) => {
-    el.addEventListener('click', () => settle(i));
-  });
-
-  // Rebuild innerHTML for correct items
-  inner.innerHTML = items.map(function(item,i){ return '<div class="fp-wheel-item" data-val="'+item+'">'+item+'</div>'; }).join('');
-  inner.querySelectorAll('.fp-wheel-item').forEach((el, i) => {
-    el.addEventListener('click', () => settle(i));
-  });
-
-  setTimeout(() => render(false), 0);
-  return { settle };
+function syncFooterSelects() {
+  const ls = document.getElementById('footerLangSelect');
+  const cs = document.getElementById('footerCurrSelect');
+  if(ls) ls.value = lang;
+  if(cs) cs.value = curr.code;
 }
 
-function spinWheelTo(wheelId, idx) {
-  // just re-render
+function onFooterLangChange(val) {
+  applyLang(val);
+}
+
+function onFooterCurrChange(val) {
+  const map = {
+    CLP:{label:'CLP — Peso chileno',symbol:'$'},
+    USD:{label:'USD — US Dollar',symbol:'$'},
+    EUR:{label:'EUR — Euro',symbol:'€'},
+    GBP:{label:'GBP — British Pound',symbol:'£'}
+  };
+  const c = map[val];
+  curr = {code:val, ...c};
+  document.getElementById('currTriggerText').textContent = val;
+  // update desktop dropdown active state
+  document.querySelectorAll('#currDropdown button').forEach(b => {
+    b.classList.toggle('active', b.textContent.includes(val));
+  });
+  localStorage.setItem('cs_curr', JSON.stringify(curr));
 }
 
 /* ═══════════════════════════════════════════
@@ -1452,30 +1401,21 @@ async function init() {
     try {
       const c = JSON.parse(savedCurr);
       curr = c;
-      document.getElementById('currTriggerText').textContent = c.code;
+      const ct = document.getElementById('currTriggerText');
+      if(ct) ct.textContent = c.code;
     } catch(e){}
   }
 
   // restore lang
   if(savedLang) applyLang(savedLang);
 
-  // init wheels
-  const langItems = ['Español','English'];
-  const currItems = ['CLP','USD','EUR','GBP'];
-  const langIdx = (savedLang||'es') === 'en' ? 1 : 0;
-  const currIdx = Math.max(0, currItems.indexOf(curr.code));
-
-  initWheel('langWheel', langItems, langIdx, (idx) => {
-    const l = idx === 0 ? 'es' : 'en';
-    applyLang(l);
-  });
-  initWheel('currWheel', currItems, currIdx, (idx, val) => {
-    const map = {CLP:{label:'CLP — Peso chileno',symbol:'$'},USD:{label:'USD — US Dollar',symbol:'$'},EUR:{label:'EUR — Euro',symbol:'€'},GBP:{label:'GBP — British Pound',symbol:'£'}};
-    const c = map[val];
-    curr = {code:val, ...c};
-    document.getElementById('currTriggerText').textContent = val;
-    localStorage.setItem('cs_curr', JSON.stringify(curr));
-  });
+  // sync footer selects to current state
+  setTimeout(() => {
+    const ls = document.getElementById('footerLangSelect');
+    const cs = document.getElementById('footerCurrSelect');
+    if(ls) ls.value = lang;
+    if(cs) cs.value = curr.code;
+  }, 100);
 
   // skip IP detection if already chosen
   if(savedLang && chosen) return;
@@ -1492,8 +1432,16 @@ async function init() {
       const map = {CLP:{label:'CLP — Peso chileno',symbol:'$'},USD:{label:'USD — US Dollar',symbol:'$'},EUR:{label:'EUR — Euro',symbol:'€'},GBP:{label:'GBP — British Pound',symbol:'£'}};
       const c = map[detectedCurr] || map['USD'];
       curr = {code:detectedCurr, ...c};
-      document.getElementById('currTriggerText').textContent = detectedCurr;
+      const ct = document.getElementById('currTriggerText');
+      if(ct) ct.textContent = detectedCurr;
     }
+    // sync footer selects
+    setTimeout(() => {
+      const ls = document.getElementById('footerLangSelect');
+      const cs = document.getElementById('footerCurrSelect');
+      if(ls) ls.value = lang;
+      if(cs) cs.value = curr.code;
+    }, 200);
 
     // Show popup on mobile only (first visit)
     if(!chosen && window.innerWidth <= 900) {
