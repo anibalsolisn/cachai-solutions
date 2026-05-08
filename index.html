@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cachai Solutions · Consultora Shopify & Growth Marketing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  /* ── TOKENS ── */
+  :root {
+    --green:       #2C6B4E;
+    --green-mid:   #3A8A60;
+    --green-light: #C8E6D5;
+    --green-pale:  #EAF5EE;
+    --green-dark:  #1A2E25;
+    --white:       #FFFFFF;
+    --off-white:   #F7FAF8;
+    --grey-text:   #5A7065;
+    --grey-line:   #D4E4DC;
+    --text:        #1A2E25;
+    --radius:      12px;
+    --radius-lg:   20px;
+    --shadow:      0 4px 24px rgba(44,107,78,0.10);
+    --shadow-lg:   0 12px 48px rgba(44,107,78,0.16);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  h1,h2,h3,h4 { font-family: 'Syne', sans-serif; line-height: 1.15; }
+
+  /* ── CURSOR DOT ── */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s, opacity 0.15s;
+    mix-blend-mode: multiply;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  nav.scrolled {
+    border-color: var(--grey-line);
+    box-shadow: 0 2px 20px rgba(44,107,78,0.08);
+  }
+  .nav-logo img { height: 36px; display: block; }
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    color: var(--grey-text);
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green);
+    color: white !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--green-dark) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, #EAF5EE 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 10% 80%, #C8E6D500 0%, transparent 60%);
+    z-index: 0;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--grey-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grey-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1160px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-pale);
+    border: 1px solid var(--green-light);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px; font-weight: 500;
+    color: var(--green);
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.5; transform: scale(1.4); }
+  }
+  .hero-title {
+    font-size: clamp(42px, 5.5vw, 72px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--green-dark);
+    line-height: 1.05;
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title .accent {
+    color: var(--green);
+    position: relative;
+    display: inline-block;
+  }
+  .hero-title .accent::after {
+    content: '';
+    position: absolute; bottom: 4px; left: 0; right: 0;
+    height: 4px; background: var(--green-light);
+    border-radius: 2px; z-index: -1;
+  }
+  .hero-sub {
+    font-size: 18px; font-weight: 300;
+    color: var(--grey-text);
+    max-width: 480px; line-height: 1.65;
+    margin-bottom: 36px;
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; align-items: center;
+    opacity: 0; transform: translateY(24px);
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(44,107,78,0.3);
+  }
+  .btn-primary:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(44,107,78,0.4);
+  }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--green);
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    padding: 14px 4px;
+    transition: gap 0.2s;
+  }
+  .btn-secondary:hover { gap: 12px; }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 48px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: var(--green-dark);
+  }
+  .stat-label { font-size: 13px; color: var(--grey-text); margin-top: 2px; }
+
+  /* Hero visual side */
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; transform: translateX(30px);
+    animation: fadeLeft 0.8s 0.4s forwards;
+    position: relative;
+  }
+  .hero-card-main {
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 28px;
+    width: 340px;
+    border: 1px solid var(--grey-line);
+    position: relative;
+    z-index: 2;
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .card-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
+  .card-sub { font-size: 12px; color: var(--grey-text); }
+  .metric-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--grey-line);
+  }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-label { font-size: 13px; color: var(--grey-text); }
+  .metric-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700; color: var(--green-dark);
+  }
+  .metric-change {
+    font-size: 11px; font-weight: 600;
+    color: #1A9E5B;
+    background: #E6F7EF;
+    padding: 2px 7px; border-radius: 100px;
+    margin-left: 6px;
+  }
+  .metric-change.neg { color: #B94040; background: #FDECEA; }
+  .sparkline {
+    height: 48px; margin: 16px 0 0;
+    display: flex; align-items: flex-end; gap: 4px;
+  }
+  .bar {
+    flex: 1; background: var(--green-light);
+    border-radius: 4px 4px 0 0;
+    transition: background 0.2s;
+  }
+  .bar:hover { background: var(--green); }
+  .bar.active { background: var(--green); }
+
+  .hero-card-float {
+    position: absolute;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px 18px;
+    border: 1px solid var(--grey-line);
+    z-index: 3;
+  }
+  .float-1 { top: -24px; right: -20px; animation: float1 3s ease-in-out infinite; }
+  .float-2 { bottom: -24px; left: -20px; animation: float2 3.5s ease-in-out infinite; }
+  @keyframes float1 {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes float2 {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  .float-label { font-size: 11px; color: var(--grey-text); }
+  .float-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 800; color: var(--green-dark);
+  }
+  .float-badge {
+    font-size: 11px; font-weight: 600; color: #1A9E5B;
+  }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--off-white);
+    border-top: 1px solid var(--grey-line);
+    border-bottom: 1px solid var(--grey-line);
+    padding: 20px 5vw;
+    display: flex; align-items: center; gap: 40px;
+    overflow: hidden;
+  }
+  .trust-label {
+    font-size: 12px; font-weight: 600;
+    color: var(--grey-text); letter-spacing: 0.08em;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .trust-logos {
+    display: flex; gap: 40px; align-items: center;
+    animation: scroll-x 20s linear infinite;
+    white-space: nowrap;
+  }
+  .trust-logos span {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--grey-line);
+    letter-spacing: -0.02em;
+  }
+  @keyframes scroll-x {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .trust-partner {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green);
+    color: white;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 100px 5vw; }
+  .section-inner { max-width: 1160px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800; letter-spacing: -0.03em;
+    color: var(--green-dark);
+    line-height: 1.1;
+  }
+  .section-sub {
+    font-size: 17px; color: var(--grey-text);
+    margin-top: 14px; max-width: 560px; line-height: 1.65;
+  }
+
+  /* ── SERVICES ── */
+  .services { background: var(--off-white); }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; margin-top: 56px;
+  }
+  .service-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--grey-line);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--green);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--green-light);
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--green-pale);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+  .service-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 19px; font-weight: 700;
+    color: var(--green-dark); margin-bottom: 10px;
+  }
+  .service-desc { font-size: 14px; color: var(--grey-text); line-height: 1.65; }
+  .service-tags {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px;
+  }
+  .tag {
+    font-size: 11px; font-weight: 600;
+    background: var(--green-pale); color: var(--green);
+    padding: 4px 10px; border-radius: 100px;
+  }
+
+  /* ── WHY US ── */
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; margin-top: 0;
+  }
+  .why-items { display: flex; flex-direction: column; gap: 32px; margin-top: 48px; }
+  .why-item { display: flex; gap: 18px; }
+  .why-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 800; color: var(--green);
+    min-width: 28px; padding-top: 2px;
+  }
+  .why-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px; font-weight: 700;
+    color: var(--green-dark); margin-bottom: 6px;
+  }
+  .why-desc { font-size: 14px; color: var(--grey-text); line-height: 1.65; }
+  .why-visual {
+    background: var(--green-dark);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    display: flex; flex-direction: column; gap: 20px;
+    position: relative; overflow: hidden;
+  }
+  .why-visual::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(58,138,96,0.2);
+  }
+  .why-visual-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700; color: var(--green-light);
+    margin-bottom: 4px;
+  }
+  .why-kpi-row {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .why-kpi-bar-wrap {
+    flex: 1; height: 8px; background: rgba(255,255,255,0.1); border-radius: 100px;
+  }
+  .why-kpi-bar {
+    height: 100%; border-radius: 100px; background: var(--green-mid);
+    transition: width 1.5s ease;
+  }
+  .why-kpi-label {
+    font-size: 13px; color: rgba(255,255,255,0.7); min-width: 140px;
+  }
+  .why-kpi-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700; color: white;
+    min-width: 36px; text-align: right;
+  }
+
+  /* ── CASES ── */
+  .cases { background: var(--off-white); }
+  .cases-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px; margin-top: 56px;
+  }
+  .case-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--grey-line);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .case-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .case-header {
+    background: var(--green); padding: 28px 28px 20px;
+    position: relative; overflow: hidden;
+  }
+  .case-header::after {
+    content: '';
+    position: absolute; bottom: -30px; right: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .case-industry {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green-light);
+    margin-bottom: 6px;
+  }
+  .case-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800; color: white;
+  }
+  .case-body { padding: 28px; }
+  .case-result {
+    display: flex; gap: 24px; margin-bottom: 16px;
+  }
+  .result-item {}
+  .result-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800; color: var(--green);
+    line-height: 1;
+  }
+  .result-label { font-size: 12px; color: var(--grey-text); margin-top: 4px; }
+  .case-desc { font-size: 14px; color: var(--grey-text); line-height: 1.65; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px; margin-top: 56px;
+  }
+  .testi-card {
+    background: var(--off-white);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    border: 1px solid var(--grey-line);
+    position: relative;
+  }
+  .testi-quote {
+    font-size: 36px; color: var(--green-light);
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    line-height: 1; margin-bottom: 12px;
+  }
+  .testi-text {
+    font-size: 15px; line-height: 1.7;
+    color: var(--grey-text); margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 15px; color: white;
+  }
+  .testi-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--green-dark);
+  }
+  .testi-role { font-size: 12px; color: var(--grey-text); }
+  .stars { color: #F5A623; font-size: 13px; letter-spacing: 1px; margin-bottom: 10px; }
+
+  /* ── PROCESS ── */
+  .process { background: var(--off-white); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 56px; position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 28px; left: 10%; right: 10%; height: 2px;
+    background: var(--green-light);
+  }
+  .process-step {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 0 16px;
+    position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 18px; font-weight: 800; color: white;
+    margin-bottom: 20px; position: relative; z-index: 1;
+    box-shadow: 0 4px 16px rgba(44,107,78,0.3);
+  }
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--green-dark); margin-bottom: 8px;
+  }
+  .step-desc { font-size: 13px; color: var(--grey-text); line-height: 1.6; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: var(--green-dark);
+    padding: 100px 5vw;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px; border-radius: 50%;
+    background: rgba(58,138,96,0.2);
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute; bottom: -80px; left: -80px;
+    width: 280px; height: 280px; border-radius: 50%;
+    background: rgba(44,107,78,0.3);
+  }
+  .cta-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 60px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .cta-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800; color: white;
+    letter-spacing: -0.03em; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cta-sub { font-size: 17px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .cta-form {
+    display: flex; flex-direction: column; gap: 12px;
+    min-width: 320px;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 5px; }
+  .form-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); }
+  .form-input {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: white; font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.3); }
+  .form-input:focus {
+    border-color: var(--green-mid);
+    background: rgba(255,255,255,0.15);
+  }
+  .form-select {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    color: white; font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transition: border-color 0.2s;
+  }
+  .form-select option { background: var(--green-dark); color: white; }
+  .form-submit {
+    background: white; color: var(--green-dark);
+    border: none; border-radius: 100px;
+    padding: 14px 28px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .form-disclaimer { font-size: 11px; color: rgba(255,255,255,0.35); text-align: center; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--green-dark);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 60px 5vw 40px;
+  }
+  .footer-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-logo img { height: 32px; filter: brightness(10); margin-bottom: 16px; }
+  .footer-desc { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; margin-bottom: 20px; }
+  .footer-social { display: flex; gap: 12px; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .social-btn:hover { background: var(--green); }
+  .footer-col-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: white; margin-bottom: 16px;
+    letter-spacing: 0.04em;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-links a {
+    text-decoration: none; font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--green-light); }
+  .footer-bottom {
+    max-width: 1160px; margin: 0 auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: rgba(255,255,255,0.25);
+  }
+  .footer-partner {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(58,138,96,0.25); color: var(--green-light);
+    padding: 4px 10px; border-radius: 100px;
+    font-size: 11px; font-weight: 600;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .cta-inner { grid-template-columns: 1fr; }
+    .cta-form { min-width: auto; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .process-steps { grid-template-columns: 1fr; }
+    .hero-stats { flex-wrap: wrap; gap: 20px; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="data:image/png;base64,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" alt="Cachai Solutions">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#casos">Casos de éxito</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto" class="nav-cta">Agendar llamada →</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Shopify Partner Certificado
+      </div>
+      <h1 class="hero-title">
+        Escalamos tu tienda<br>
+        con <span class="accent">estrategia</span><br>
+        y datos reales
+      </h1>
+      <p class="hero-sub">
+        Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.
+      </p>
+      <div class="hero-actions">
+        <a href="#contacto" class="btn-primary">
+          Agendar llamada gratuita
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#casos" class="btn-secondary">
+          Ver resultados
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">+80</div>
+          <div class="stat-label">Tiendas escaladas</div>
+        </div>
+        <div>
+          <div class="stat-num">3.8×</div>
+          <div class="stat-label">ROAS promedio</div>
+        </div>
+        <div>
+          <div class="stat-num">+62%</div>
+          <div class="stat-label">Conversión media</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard visual -->
+    <div class="hero-visual">
+      <div class="hero-card-main">
+        <div class="card-header">
+          <div class="card-icon">📈</div>
+          <div>
+            <div class="card-title">Resumen mensual</div>
+            <div class="card-sub">Tienda de moda · Mar 2025</div>
+          </div>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Conversión</span>
+          <span class="metric-value">4.8% <span class="metric-change">↑ 82%</span></span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">ROAS campañas</span>
+          <span class="metric-value">4.2× <span class="metric-change">↑ 61%</span></span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Revenue mensual</span>
+          <span class="metric-value">$48.2M <span class="metric-change">↑ 94%</span></span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">CAC</span>
+          <span class="metric-value">$1.240 <span class="metric-change neg">↓ 38%</span></span>
+        </div>
+        <div class="sparkline">
+          <div class="bar" style="height:30%"></div>
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:40%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar active" style="height:100%"></div>
+        </div>
+      </div>
+      <div class="hero-card-float float-1">
+        <div class="float-label">Revenue hoy</div>
+        <div class="float-val">$2.4M</div>
+        <div class="float-badge">↑ +18% vs ayer</div>
+      </div>
+      <div class="hero-card-float float-2">
+        <div class="float-label">ROAS ads</div>
+        <div class="float-val">4.2×</div>
+        <div class="float-badge">↑ Mejor semana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BAR ── -->
+<div class="trust-bar">
+  <span class="trust-label">Marcas que escalamos</span>
+  <div style="overflow:hidden;flex:1">
+    <div class="trust-logos">
+      <span>Marca Uno</span><span>Brand Two</span><span>E-shop CL</span>
+      <span>Moda Store</span><span>Tech Market</span><span>StyleCo</span>
+      <span>Marca Uno</span><span>Brand Two</span><span>E-shop CL</span>
+      <span>Moda Store</span><span>Tech Market</span><span>StyleCo</span>
+    </div>
+  </div>
+  <span class="trust-partner">✦ Shopify Partner</span>
+</div>
+
+<!-- ── SERVICIOS ── -->
+<section class="services" id="servicios">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Servicios</span>
+      <h2 class="section-title">Todo lo que tu tienda<br>necesita para crecer</h2>
+      <p class="section-sub">Combinamos desarrollo técnico en Shopify con estrategias de growth basadas en datos para maximizar cada peso invertido.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">🛍️</div>
+        <div class="service-title">Desarrollo Shopify</div>
+        <div class="service-desc">Diseño y desarrollo de tiendas Shopify a medida. Temas personalizados, migraciones, integraciones y optimizaciones técnicas de alto rendimiento.</div>
+        <div class="service-tags">
+          <span class="tag">Liquid</span><span class="tag">Custom themes</span><span class="tag">Migrations</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🎯</div>
+        <div class="service-title">Growth Marketing</div>
+        <div class="service-desc">Estrategias de adquisición y retención centradas en ROAS. Meta Ads, Google Ads y automatizaciones que escalan con tu negocio.</div>
+        <div class="service-tags">
+          <span class="tag">Meta Ads</span><span class="tag">Google Ads</span><span class="tag">ROAS</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📧</div>
+        <div class="service-title">Email & CRO</div>
+        <div class="service-desc">Flujos de email marketing que convierten y optimización de la tasa de conversión con A/B testing, heatmaps y análisis de comportamiento.</div>
+        <div class="service-tags">
+          <span class="tag">Klaviyo</span><span class="tag">A/B Testing</span><span class="tag">CRO</span>
+        </div>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📊</div>
+        <div class="service-title">Analytics & Datos</div>
+        <div class="service-desc">Dashboards en tiempo real con los KPIs que importan. Tomamos decisiones con datos, no con intuición. GA4, Looker Studio y reportes semanales.</div>
+        <div class="service-tags">
+          <span class="tag">GA4</span><span class="tag">Looker</span><span class="tag">Data layer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY US ── -->
+<section id="nosotros">
+  <div class="section-inner why-grid">
+    <div>
+      <span class="section-tag reveal">Por qué nosotros</span>
+      <h2 class="section-title reveal">Hacemos lo que<br>prometemos</h2>
+      <div class="why-items">
+        <div class="why-item reveal">
+          <div class="why-num">01</div>
+          <div>
+            <div class="why-title">Enfoque en resultados reales</div>
+            <div class="why-desc">No cobramos por horas ni entregamos reportes bonitos. Medimos nuestro éxito en revenue generado, ROAS y conversión de tu tienda.</div>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">02</div>
+          <div>
+            <div class="why-title">Equipo especializado en e-commerce</div>
+            <div class="why-desc">Solo trabajamos con tiendas online. Eso nos da un conocimiento profundo del ecosistema Shopify y las mejores prácticas de la industria.</div>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">03</div>
+          <div>
+            <div class="why-title">Transparencia total</div>
+            <div class="why-desc">Acceso completo a tus dashboards, reuniones semanales y comunicación directa. Sin capas intermedias ni letra chica.</div>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">04</div>
+          <div>
+            <div class="why-title">Escalamos contigo</div>
+            <div class="why-desc">Nuestro modelo crece con tu negocio. Desde el primer peso hasta los 8 dígitos de revenue mensual, tenemos la experiencia para acompañarte.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="why-visual-title">Métricas promedio de nuestros clientes</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span class="why-kpi-label" style="color:rgba(255,255,255,0.6);font-size:13px">Aumento en conversión</span>
+            <span class="why-kpi-val">+68%</span>
+          </div>
+          <div class="why-kpi-bar-wrap"><div class="why-kpi-bar" style="width:68%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span class="why-kpi-label" style="color:rgba(255,255,255,0.6);font-size:13px">Mejora en ROAS</span>
+            <span class="why-kpi-val">+85%</span>
+          </div>
+          <div class="why-kpi-bar-wrap"><div class="why-kpi-bar" style="width:85%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span class="why-kpi-label" style="color:rgba(255,255,255,0.6);font-size:13px">Reducción de CAC</span>
+            <span class="why-kpi-val">-42%</span>
+          </div>
+          <div class="why-kpi-bar-wrap"><div class="why-kpi-bar" style="width:42%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span class="why-kpi-label" style="color:rgba(255,255,255,0.6);font-size:13px">Crecimiento revenue</span>
+            <span class="why-kpi-val">+120%</span>
+          </div>
+          <div class="why-kpi-bar-wrap"><div class="why-kpi-bar" style="width:100%"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:6px">Promedio medido en 90 días de trabajo</div>
+        <div style="font-size:13px;color:var(--green-light);font-weight:600">Basado en +80 proyectos · 2022–2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CASOS DE ÉXITO ── -->
+<section class="cases" id="casos">
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Casos de éxito</span>
+      <h2 class="section-title">Números que<br>hablan por sí solos</h2>
+      <p class="section-sub">Resultados reales de tiendas reales. Sin promedios inflados ni métricas de vanidad.</p>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card reveal">
+        <div class="case-header">
+          <div class="case-industry">Moda & Accesorios</div>
+          <div class="case-brand">StyleHouse CL</div>
+        </div>
+        <div class="case-body">
+          <div class="case-result">
+            <div class="result-item">
+              <div class="result-num">+82%</div>
+              <div class="result-label">Tasa de conversión</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">4.6×</div>
+              <div class="result-label">ROAS en Meta</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">90d</div>
+              <div class="result-label">Para lograrlo</div>
+            </div>
+          </div>
+          <div class="case-desc">Rediseño completo de la tienda Shopify + estrategia de Meta Ads con audiencias lookalike. De $8M a $18M de revenue en 3 meses.</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-header">
+          <div class="case-industry">Tecnología & Gadgets</div>
+          <div class="case-brand">TechNova Store</div>
+        </div>
+        <div class="case-body">
+          <div class="case-result">
+            <div class="result-item">
+              <div class="result-num">-44%</div>
+              <div class="result-label">Costo adquisición</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">+3.1×</div>
+              <div class="result-label">Revenue</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">60d</div>
+              <div class="result-label">Para lograrlo</div>
+            </div>
+          </div>
+          <div class="case-desc">Implementación de Klaviyo con flujos de recuperación de carrito + optimización de Google Shopping. El email pasó a ser el canal #1.</div>
+        </div>
+      </div>
+      <div class="case-card reveal">
+        <div class="case-header">
+          <div class="case-industry">Belleza & Cosmética</div>
+          <div class="case-brand">Glow Natural</div>
+        </div>
+        <div class="case-body">
+          <div class="case-result">
+            <div class="result-item">
+              <div class="result-num">+194%</div>
+              <div class="result-label">Revenue anual</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">5.2×</div>
+              <div class="result-label">ROAS total</div>
+            </div>
+            <div class="result-item">
+              <div class="result-num">6m</div>
+              <div class="result-label">De trabajo</div>
+            </div>
+          </div>
+          <div class="case-desc">Migración a Shopify Plus + estrategia full-funnel. Lanzamos su programa de fidelización que representa hoy el 40% del revenue mensual.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section>
+  <div class="section-inner">
+    <div class="reveal">
+      <span class="section-tag">Testimonios</span>
+      <h2 class="section-title">Lo que dicen<br>quienes ya escalaron</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Cachai Solutions transformó nuestra tienda por completo. En 3 meses duplicamos el revenue y el equipo siempre estuvo disponible para responder cualquier duda. Los recomiendo sin dudarlo.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">MC</div>
+          <div>
+            <div class="testi-name">María Catalina Rojas</div>
+            <div class="testi-role">CEO · StyleHouse CL</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Por fin una agencia que habla en términos de negocio y no de métricas de vanidad. Nuestro ROAS pasó de 1.8× a 4.6× en dos meses. Eso es lo que importa.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">JP</div>
+          <div>
+            <div class="testi-name">José Pablo Fuentes</div>
+            <div class="testi-role">Director · TechNova Store</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <div class="testi-quote">"</div>
+        <div class="testi-text">Lo mejor es la transparencia. Tenemos acceso a todo, reuniones semanales y un equipo que entiende nuestro producto. Son parte de nuestro equipo, no solo un proveedor.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">AV</div>
+          <div>
+            <div class="testi-name">Andrea Valenzuela</div>
+            <div class="testi-role">Fundadora · Glow Natural</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROCESO ── -->
+<section class="process" id="proceso">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:0">
+      <span class="section-tag">Cómo trabajamos</span>
+      <h2 class="section-title">De cero a escala<br>en 4 pasos</h2>
+      <p class="section-sub" style="margin:14px auto 0;text-align:center">Un proceso claro, sin sorpresas y con resultados medibles en cada etapa.</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">Diagnóstico</div>
+        <div class="step-desc">Auditamos tu tienda, tus campañas y tus datos. Identificamos las oportunidades de crecimiento más relevantes para tu negocio.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">2</div>
+        <div class="step-title">Estrategia</div>
+        <div class="step-desc">Diseñamos un plan de acción priorizado con objetivos claros, timelines definidos y KPIs para medir el éxito en cada fase.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">3</div>
+        <div class="step-title">Ejecución</div>
+        <div class="step-desc">Implementamos con velocidad y precisión. Desarrollo en Shopify, campañas activas y automatizaciones funcionando en semanas.</div>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">4</div>
+        <div class="step-title">Escala</div>
+        <div class="step-desc">Con la base sólida, escalamos lo que funciona, optimizamos lo que no y repetimos el ciclo para un crecimiento sostenido.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<div class="cta-section" id="contacto">
+  <div class="cta-inner">
+    <div>
+      <h2 class="cta-title">¿Listo para escalar<br>tu tienda?</h2>
+      <p class="cta-sub">Agendemos una llamada de 30 minutos sin costo. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
+      <div style="display:flex;gap:24px;margin-top:28px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.6);font-size:14px">
+          <span style="color:var(--green-mid)">✓</span> Sin costo ni compromiso
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.6);font-size:14px">
+          <span style="color:var(--green-mid)">✓</span> Respuesta en menos de 24h
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;color:rgba(255,255,255,0.6);font-size:14px">
+          <span style="color:var(--green-mid)">✓</span> Análisis previo de tu tienda
+        </div>
+      </div>
+    </div>
+    <div class="cta-form">
+      <div class="form-group">
+        <label class="form-label">Tu nombre</label>
+        <input class="form-input" type="text" placeholder="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email de contacto</label>
+        <input class="form-input" type="email" placeholder="tu@empresa.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Facturación mensual actual</label>
+        <select class="form-select">
+          <option value="">Selecciona un rango</option>
+          <option>Menos de $5M CLP</option>
+          <option>$5M – $20M CLP</option>
+          <option>$20M – $50M CLP</option>
+          <option>$50M – $100M CLP</option>
+          <option>Más de $100M CLP</option>
+        </select>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">Agendar mi llamada gratuita →</button>
+      <div class="form-disclaimer">Sin spam. Tus datos no se comparten con terceros.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGbAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAB6OUlEQVR42u29d5ylR3XnfU7Vk27o23G6J+eoCcoJJIRExmSTsfFigjFhDbbxggPruAsYvBjWGJsMBhEESiChPNJIGk3OOU9P6J7ONz+h6rx/1O2enpkO97ndPZp9P+dLHE33DU9V/erUqSOQiIBhGOb/BQQ/AoZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhgWLYRiGBYthGIYFi2EYFiyGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGIYFi2EYFiyGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIYFi2EYhgWLYRgWLIZhGBYshmEYFiyGYViwGIZhWLAYhmFYsBiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYViwGIZhwWIYhmHBYhiGYcFiGIYFi2EYhgWLYRiGBYthGBYshmEYFiyGYRgWLIZhWLAYhmFYsBiGYcFiGIZhwWIYhmHBYhiGBYthGIYFi2EYhgWLYRiGBYthGIIFi2EYFiyGYRgWLIZhGBYshmFYsBiGYRgWLIZhGBYshmFYsBiGYViwGIZhWLAYhmHBYhiGYcFiGIIFi2EYhgWLYRgWLIZhWLAWoVTJAAAAAElFTkSuQmCC" alt="Cachai Solutions">
+      </div>
+      <div class="footer-desc">Consultora especializada en Shopify y Growth Marketing. Escalamos tiendas online con estrategia, datos y ejecución de alto nivel.</div>
+      <div class="footer-social">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">tw</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Servicios</div>
+      <ul class="footer-links">
+        <li><a href="#">Desarrollo Shopify</a></li>
+        <li><a href="#">Growth Marketing</a></li>
+        <li><a href="#">Email & CRO</a></li>
+        <li><a href="#">Analytics</a></li>
+        <li><a href="#">Shopify Plus</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Empresa</div>
+      <ul class="footer-links">
+        <li><a href="#">Nosotros</a></li>
+        <li><a href="#">Casos de éxito</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Recursos</a></li>
+        <li><a href="#">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contacto</div>
+      <ul class="footer-links">
+        <li><a href="mailto:hola@cachaisolutions.com">hola@cachaisolutions.com</a></li>
+        <li><a href="tel:+56912345678">+56 9 1234 5678</a></li>
+        <li><a href="#">Santiago, Chile</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Cachai Solutions. Todos los derechos reservados.</span>
+    <span class="footer-partner">✦ Shopify Partner Certificado</span>
+    <span>Privacidad · Términos</span>
+  </div>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = (e.clientX - 5) + 'px';
+    cursor.style.top  = (e.clientY - 5) + 'px';
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit() {
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = '✓ ¡Listo! Te contactaremos pronto';
+    btn.style.background = '#C8E6D5';
+    btn.style.color = '#1A2E25';
+    btn.disabled = true;
+  }
+
+  // Smooth nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#') return;
+      e.preventDefault();
+      document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
