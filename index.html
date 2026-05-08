@@ -56,6 +56,64 @@
   @media print {
     .cursor { display: none !important; }
   }
+
+  /* ── FOOTER MOBILE CONTROLS ── */
+  .footer-mobile-controls {
+    display: none;
+    max-width: 1160px; margin: 0 auto 32px;
+    padding: 24px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-controls-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 14px;
+  }
+  .footer-controls-row { display: flex; flex-direction: column; gap: 12px; }
+  .lang-switcher-footer {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.15) !important;
+    display: flex; gap: 6px; padding: 4px;
+    border-radius: 100px;
+  }
+  .lang-btn-footer {
+    flex: 1;
+    font-size: 13px !important; font-weight: 700 !important;
+    padding: 8px 12px !important;
+    color: rgba(255,255,255,0.6) !important;
+    border-radius: 100px;
+  }
+  .lang-btn-footer.active {
+    background: var(--green) !important;
+    color: white !important;
+  }
+  .currency-footer-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .currency-footer-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 10px;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px; font-weight: 600;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .currency-footer-btn:active,
+  .currency-footer-btn.selected {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  @media (max-width: 900px) {
+    .footer-mobile-controls { display: block; }
+  }
   .cursor::before, .cursor::after {
     content: '';
     position: absolute;
@@ -1102,27 +1160,6 @@
     <li><a href="#proceso" class="nav-link-item" data-i18n="nav.process">Proceso</a></li>
     <li><a href="#contacto" class="nav-cta nav-link-item" data-i18n="nav.cta">Agendar llamada →</a></li>
   </ul>
-  <!-- Mobile lang+currency controls inside the slide menu -->
-  <div class="nav-controls-mobile" id="mobileControls" style="display:none">
-    <div class="lang-switcher" style="justify-content:center">
-      <button class="lang-btn active" id="btnES_m" onclick="setLang('es')">ES</button>
-      <span class="lang-divider">·</span>
-      <button class="lang-btn" id="btnEN_m" onclick="setLang('en')">EN</button>
-    </div>
-    <div class="currency-selector" style="position:relative">
-      <button class="currency-btn" id="currencyBtnM" onclick="toggleCurrencyMobile()">
-        <span id="currencyFlagM">🇨🇱</span>
-        <span id="currencyCodeM">CLP</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <div class="currency-dropdown" id="currencyDropdownM">
-        <button onclick="setCurrency('CLP','🇨🇱','$','CLP')">🇨🇱 CLP — Peso chileno</button>
-        <button onclick="setCurrency('USD','🇺🇸','$','USD')">🇺🇸 USD — US Dollar</button>
-        <button onclick="setCurrency('EUR','🇪🇺','€','EUR')">🇪🇺 EUR — Euro</button>
-        <button onclick="setCurrency('GBP','🏴󠁧󠁢󠁥󠁮󠁧󠁿','£','GBP')">🇬🇧 GBP — British Pound</button>
-      </div>
-    </div>
-  </div>
   <div class="nav-controls">
     <div class="lang-switcher" id="langSwitcher">
       <button class="lang-btn active" id="btnES" onclick="setLang('es')">ES</button>
@@ -1645,6 +1682,23 @@
       </ul>
     </div>
   </div>
+  <!-- Mobile lang + currency in footer -->
+  <div class="footer-mobile-controls" id="footerMobileControls">
+    <div class="footer-controls-label" data-i18n="footer.settings">Idioma y moneda</div>
+    <div class="footer-controls-row">
+      <div class="lang-switcher lang-switcher-footer">
+        <button class="lang-btn lang-btn-footer active" id="btnES_f" onclick="setLang('es')">🇨🇱 ES</button>
+        <button class="lang-btn lang-btn-footer" id="btnEN_f" onclick="setLang('en')">🇺🇸 EN</button>
+      </div>
+      <div class="currency-footer-grid">
+        <button class="currency-footer-btn" id="cfCLP" onclick="setCurrency('CLP','🇨🇱','$','CLP')">🇨🇱 CLP</button>
+        <button class="currency-footer-btn" id="cfUSD" onclick="setCurrency('USD','🇺🇸','$','USD')">🇺🇸 USD</button>
+        <button class="currency-footer-btn" id="cfEUR" onclick="setCurrency('EUR','🇪🇺','€','EUR')">🇪🇺 EUR</button>
+        <button class="currency-footer-btn" id="cfGBP" onclick="setCurrency('GBP','🇬🇧','£','GBP')">🇬🇧 GBP</button>
+      </div>
+    </div>
+  </div>
+
   <div class="footer-bottom">
     <span data-i18n="footer.copy">© 2025 Cachai Solutions. Todos los derechos reservados.</span>
     <span class="footer-partner">✦ Shopify Partner Certificado</span>
@@ -1728,18 +1782,6 @@
       }, 50);
     });
   });
-
-  // ── MOBILE CONTROLS VISIBILITY ──
-  const mobileControls = document.getElementById('mobileControls');
-  function updateMobileControls() {
-    if (window.innerWidth <= 900) {
-      mobileControls.style.display = 'flex';
-    } else {
-      mobileControls.style.display = 'none';
-    }
-  }
-  updateMobileControls();
-  window.addEventListener('resize', updateMobileControls);
 
   // ── TRANSLATIONS ──
   const i18n = {
@@ -1899,6 +1941,11 @@
       if (inputs[0]) inputs[0].placeholder = 'Nombre completo';
       if (inputs[1]) inputs[1].placeholder = 'tu@empresa.com';
     }
+    // Update footer lang buttons
+    const btnEsF = document.getElementById('btnES_f');
+    const btnEnF = document.getElementById('btnEN_f');
+    if (btnEsF) btnEsF.classList.toggle('active', lang === 'es');
+    if (btnEnF) btnEnF.classList.toggle('active', lang === 'en');
     localStorage.setItem('cs_lang', lang);
   }
 
@@ -1909,25 +1956,29 @@
 
   function setCurrency(code, flag, symbol, label) {
     currentCurrency = { code, flag, symbol, label };
-    document.getElementById('currencyFlag').textContent = flag;
-    document.getElementById('currencyCode').textContent = code;
-    document.getElementById('currencyFlagM').textContent = flag;
-    document.getElementById('currencyCodeM').textContent = code;
-    // Update selected state
+    // Update desktop nav
+    const cf = document.getElementById('currencyFlag');
+    const cc = document.getElementById('currencyCode');
+    if (cf) cf.textContent = flag;
+    if (cc) cc.textContent = code;
+    // Update desktop dropdown selected state
     document.querySelectorAll('.currency-dropdown button').forEach(btn => {
       btn.classList.toggle('selected', btn.textContent.includes(code));
     });
-    document.getElementById('currencyDropdown').classList.remove('open');
-    document.getElementById('currencyDropdownM').classList.remove('open');
+    const dd = document.getElementById('currencyDropdown');
+    if (dd) dd.classList.remove('open');
+    // Update footer mobile buttons
+    ['CLP','USD','EUR','GBP'].forEach(c => {
+      const btn = document.getElementById('cf' + c);
+      if (btn) btn.classList.toggle('selected', c === code);
+    });
     localStorage.setItem('cs_currency', JSON.stringify(currentCurrency));
   }
 
   function toggleCurrency() {
     document.getElementById('currencyDropdown').classList.toggle('open');
   }
-  function toggleCurrencyMobile() {
-    document.getElementById('currencyDropdownM').classList.toggle('open');
-  }
+
 
   // Close currency dropdown when clicking outside
   document.addEventListener('click', (e) => {
