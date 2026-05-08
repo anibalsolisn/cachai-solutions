@@ -72,33 +72,55 @@ nav.scrolled{border-color:var(--grey-line);box-shadow:0 2px 20px rgba(44,107,78,
 /* ── MEGA MENU ── */
 .mega-wrap{
   display:none;
-  position:absolute;top:calc(100% + 12px);left:50%;
-  transform:translateX(-50%);
+  position:fixed;top:72px;left:0;right:0;
   background:white;
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(26,46,37,.15);
-  border:1px solid var(--grey-line);
-  padding:28px 32px;
-  gap:40px;
-  min-width:500px;
+  box-shadow:0 8px 40px rgba(26,46,37,.12);
+  border-top:1px solid var(--grey-line);
+  border-bottom:1px solid var(--grey-line);
+  padding:48px 5vw;
   z-index:300;
-  animation:megaIn .2s ease;
+  animation:megaIn .18s ease;
 }
-@keyframes megaIn{from{opacity:0;transform:translateX(-50%) translateY(-6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-.mega-wrap.visible{display:flex}
-.mega-col{display:flex;flex-direction:column;gap:2px;min-width:160px}
-.mega-col-title{
-  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--green);margin-bottom:10px;padding:0 8px;
+@keyframes megaIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mega-wrap.visible{display:block}
+.mega-inner{max-width:1160px;margin:0 auto}
+.mega-wide .mega-inner{}
+.mega-section-label{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--grey-text);margin-bottom:28px;
   font-family:'Geist',sans-serif;
 }
-.mega-link{
-  display:block;padding:7px 10px;border-radius:8px;
-  font-size:13.5px;font-weight:500;color:var(--grey-text);
-  text-decoration:none;font-family:'Geist',sans-serif;
-  transition:background .12s,color .12s;
+.mega-links-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
 }
-.mega-link:hover{background:var(--green-pale);color:var(--green-dark)}
+.mega-link-lg{
+  display:block;
+  padding:14px 0;
+  font-size:19px;font-weight:400;
+  color:var(--text);
+  text-decoration:none;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  letter-spacing:-.01em;
+  border-bottom:1px solid var(--grey-line);
+  transition:color .12s,padding-left .12s;
+}
+.mega-link-lg:hover{color:var(--green);padding-left:8px}
+/* Narrow menu (About) */
+.mega-narrow{padding:48px 5vw}
+.mega-narrow .mega-inner{max-width:400px}
+.mega-link-xl{
+  display:block;
+  padding:16px 0;
+  font-size:28px;font-weight:700;
+  color:var(--text);
+  text-decoration:none;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  letter-spacing:-.02em;
+  border-bottom:1px solid var(--grey-line);
+  transition:color .12s,padding-left .15s;
+}
+.mega-link-xl:hover{color:var(--green);padding-left:12px}
 
 /* ── NAV CONTROLS (desktop) ── */
 .nav-controls{display:flex;align-items:center;gap:8px}
@@ -577,57 +599,98 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
     <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
   </a>
   <ul class="nav-links">
+
+    <!-- SERVICIOS -->
     <li class="nav-item" data-mega="mega-services">
       <a href="#servicios" class="nav-link-item" data-i18n="nav.services">Servicios
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap" id="mega-services">
-        <div class="mega-col">
-          <div class="mega-col-title" data-i18n="mega.shopify">Shopify</div>
-          <a href="#servicios" class="mega-link" data-i18n="mega.dev">Desarrollo a medida</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.migration">Migraciones</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.plus">Shopify Plus</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.themes">Temas custom</a>
+      <div class="mega-wrap mega-wide" id="mega-services">
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.whatwedo">Lo que hacemos</div>
+        <div class="mega-links-grid">
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifydev">Desarrollo Shopify</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.shopifyplus">Shopify Plus</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.migration">Migraciones &amp; Replatforming</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.themes">Diseño &amp; Temas Custom</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.growth">Growth Marketing</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.metaads">Meta Ads</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.googleads">Google Ads</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.email">Email Marketing</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.cro">Optimización de Conversión</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.seo">eCommerce SEO</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.analytics">Analytics &amp; Data</a>
+          <a href="#servicios" class="mega-link-lg" data-i18n="ms.audit">eCommerce Audit</a>
         </div>
-        <div class="mega-col">
-          <div class="mega-col-title" data-i18n="mega.growth">Growth</div>
-          <a href="#servicios" class="mega-link" data-i18n="mega.meta">Meta Ads</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.google">Google Ads</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.email">Email Marketing</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.cro">CRO &amp; A/B Testing</a>
-        </div>
-        <div class="mega-col">
-          <div class="mega-col-title" data-i18n="mega.data">Analytics</div>
-          <a href="#servicios" class="mega-link" data-i18n="mega.ga4">GA4 &amp; Data Layer</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.dashboards">Dashboards</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.attribution">Atribución</a>
-          <a href="#servicios" class="mega-link" data-i18n="mega.reports">Reportes</a>
         </div>
       </div>
     </li>
-    <li class="nav-item" data-mega="mega-cases">
-      <a href="#casos" class="nav-link-item" data-i18n="nav.cases">Casos de éxito
+
+    <!-- INDUSTRIAS -->
+    <li class="nav-item" data-mega="mega-industries">
+      <a href="#casos" class="nav-link-item" data-i18n="nav.industries">Industrias
         <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <div class="mega-wrap" id="mega-cases">
-        <div class="mega-col">
-          <div class="mega-col-title" data-i18n="mega.industries">Industrias</div>
-          <a href="#casos" class="mega-link" data-i18n="mega.fashion">Moda &amp; Accesorios</a>
-          <a href="#casos" class="mega-link" data-i18n="mega.beauty">Belleza &amp; Cosmética</a>
-          <a href="#casos" class="mega-link" data-i18n="mega.tech">Tecnología</a>
-          <a href="#casos" class="mega-link" data-i18n="mega.food">Alimentos &amp; Bebidas</a>
+      <div class="mega-wrap mega-wide" id="mega-industries">
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.industriesserve">Industrias que servimos</div>
+        <div class="mega-links-grid">
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.fashion">Moda &amp; Accesorios</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.beauty">Belleza &amp; Cosmética</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.tech">Tecnología &amp; Gadgets</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.food">Alimentos &amp; Bebidas</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.sports">Deportes &amp; Outdoors</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.home">Hogar &amp; Decoración</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.health">Salud &amp; Bienestar</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.b2b">B2B eCommerce</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.enterprise">Enterprise eCommerce</a>
+          <a href="#casos" class="mega-link-lg" data-i18n="mi.luxury">Lujo &amp; Premium</a>
         </div>
-        <div class="mega-col">
-          <div class="mega-col-title" data-i18n="mega.results">Resultados</div>
-          <a href="#casos" class="mega-link" data-i18n="mega.roas">Mejora de ROAS</a>
-          <a href="#casos" class="mega-link" data-i18n="mega.conv">Aumento de conversión</a>
-          <a href="#casos" class="mega-link" data-i18n="mega.revenue">Crecimiento revenue</a>
         </div>
       </div>
     </li>
-    <li class="nav-item">
-      <a href="#proceso" class="nav-link-item" data-i18n="nav.process">Proceso</a>
+
+    <!-- APPS & INTEGRATIONS -->
+    <li class="nav-item" data-mega="mega-apps">
+      <a href="#servicios" class="nav-link-item" data-i18n="nav.apps">Apps &amp; Integraciones
+        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="mega-wrap mega-wide" id="mega-apps">
+        <div class="mega-inner">
+        <div class="mega-section-label" data-i18n="mega.appslabel">Plataformas &amp; Herramientas</div>
+        <div class="mega-links-grid">
+          <a href="#servicios" class="mega-link-lg">Klaviyo</a>
+          <a href="#servicios" class="mega-link-lg">Mailchimp</a>
+          <a href="#servicios" class="mega-link-lg">Meta Ads</a>
+          <a href="#servicios" class="mega-link-lg">Google Ads</a>
+          <a href="#servicios" class="mega-link-lg">Yotpo</a>
+          <a href="#servicios" class="mega-link-lg">Recharge</a>
+          <a href="#servicios" class="mega-link-lg">Gorgias</a>
+          <a href="#servicios" class="mega-link-lg">NetSuite</a>
+          <a href="#servicios" class="mega-link-lg">Shopify Flow</a>
+          <a href="#servicios" class="mega-link-lg">Loox</a>
+          <a href="#servicios" class="mega-link-lg">Judge.me</a>
+          <a href="#servicios" class="mega-link-lg">Attentive</a>
+        </div>
+        </div>
+      </div>
     </li>
+
+    <!-- ABOUT -->
+    <li class="nav-item" data-mega="mega-about">
+      <a href="#nosotros" class="nav-link-item" data-i18n="nav.about">Acerca de
+        <svg class="nav-chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="mega-wrap mega-narrow" id="mega-about">
+        <div class="mega-inner">
+        <a href="#nosotros" class="mega-link-xl" data-i18n="ma.about">Nosotros</a>
+        <a href="#casos" class="mega-link-xl" data-i18n="ma.work">Nuestro trabajo</a>
+        <a href="#" class="mega-link-xl" data-i18n="ma.blog">Blog &amp; Recursos</a>
+        <a href="#contacto" class="mega-link-xl" data-i18n="ma.contact">Contacto</a>
+        </div>
+      </div>
+    </li>
+
     <li class="nav-item">
       <a href="#contacto" class="nav-link-item nav-cta" data-i18n="nav.cta">Agendar llamada →</a>
     </li>
@@ -671,13 +734,13 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
       <span data-i18n="nav.services">Servicios</span><span class="arr">›</span>
     </a></li>
     <li><a href="#casos" class="mobile-nav-link" onclick="closeMobileMenu()">
-      <span data-i18n="nav.cases">Casos de éxito</span><span class="arr">›</span>
+      <span data-i18n="nav.industries">Industrias</span><span class="arr">›</span>
     </a></li>
-    <li><a href="#proceso" class="mobile-nav-link" onclick="closeMobileMenu()">
-      <span data-i18n="nav.process">Proceso</span><span class="arr">›</span>
+    <li><a href="#servicios" class="mobile-nav-link" onclick="closeMobileMenu()">
+      <span data-i18n="nav.apps">Apps &amp; Integraciones</span><span class="arr">›</span>
     </a></li>
-    <li><a href="#contacto" class="mobile-nav-link" onclick="closeMobileMenu()">
-      <span data-i18n="nav.nosotros">Nosotros</span><span class="arr">›</span>
+    <li><a href="#nosotros" class="mobile-nav-link" onclick="closeMobileMenu()">
+      <span data-i18n="nav.about">Acerca de</span><span class="arr">›</span>
     </a></li>
   </ul>
   <a href="#contacto" class="mobile-nav-cta" onclick="closeMobileMenu()" data-i18n="nav.cta">Agendar llamada →</a>
@@ -1063,7 +1126,7 @@ footer{background:var(--green-dark);border-top:1px solid rgba(255,255,255,.08);p
 ═══════════════════════════════════════════ */
 const T = {
   es:{
-    'nav.services':'Servicios','nav.cases':'Casos de éxito','nav.process':'Proceso','nav.cta':'Agendar llamada →','nav.nosotros':'Nosotros',
+    'nav.services':'Servicios','nav.industries':'Industrias','nav.apps':'Apps & Integraciones','nav.about':'Acerca de','nav.cta':'Agendar llamada →','nav.nosotros':'Nosotros',
     'hero.badge':'Shopify Partner Certificado',
     'hero.title1':'Escalamos tu tienda','hero.title2':'con','hero.accent':'estrategia','hero.title3':'y datos reales',
     'hero.sub':'Somos la consultora de Shopify y Growth Marketing que convierte tu tienda en una máquina de ventas. Sin promesas vacías, solo resultados medibles.',
@@ -1113,14 +1176,21 @@ const T = {
     'footer.about':'Nosotros','footer.resources':'Recursos','footer.jobs':'Trabaja con nosotros',
     'footer.copy':'© 2025 Cachai Solutions. Todos los derechos reservados.',
     'footer.settings':'Idioma y moneda','footer.lang_label':'Idioma','footer.currency_label':'Moneda',
-    'mega.shopify':'Shopify','mega.dev':'Desarrollo a medida','mega.migration':'Migraciones','mega.plus':'Shopify Plus','mega.themes':'Temas custom',
+    'mega.whatwedo':'Lo que hacemos','mega.industriesserve':'Industrias que servimos','mega.appslabel':'Plataformas & Herramientas',
+      'ms.shopifydev':'Desarrollo Shopify','ms.shopifyplus':'Shopify Plus','ms.migration':'Migraciones & Replatforming','ms.themes':'Diseño & Temas Custom',
+      'ms.growth':'Growth Marketing','ms.metaads':'Meta Ads','ms.googleads':'Google Ads','ms.email':'Email Marketing',
+      'ms.cro':'Optimización de Conversión','ms.seo':'eCommerce SEO','ms.analytics':'Analytics & Data','ms.audit':'eCommerce Audit',
+      'mi.fashion':'Moda & Accesorios','mi.beauty':'Belleza & Cosmética','mi.tech':'Tecnología & Gadgets','mi.food':'Alimentos & Bebidas',
+      'mi.sports':'Deportes & Outdoors','mi.home':'Hogar & Decoración','mi.health':'Salud & Bienestar',
+      'mi.b2b':'B2B eCommerce','mi.enterprise':'Enterprise eCommerce','mi.luxury':'Lujo & Premium',
+      'ma.about':'Nosotros','ma.work':'Nuestro trabajo','ma.blog':'Blog & Recursos','ma.contact':'Contacto',
     'mega.growth':'Growth','mega.meta':'Meta Ads','mega.google':'Google Ads','mega.email':'Email Marketing','mega.cro':'CRO & A/B Testing',
     'mega.data':'Analytics','mega.ga4':'GA4 & Data Layer','mega.dashboards':'Dashboards','mega.attribution':'Atribución','mega.reports':'Reportes',
     'mega.industries':'Industrias','mega.fashion':'Moda & Accesorios','mega.beauty':'Belleza & Cosmética','mega.tech':'Tecnología','mega.food':'Alimentos & Bebidas',
     'mega.results':'Resultados','mega.roas':'Mejora de ROAS','mega.conv':'Aumento de conversión','mega.revenue':'Crecimiento revenue',
   },
   en:{
-    'nav.services':'Services','nav.cases':'Case Studies','nav.process':'Process','nav.cta':'Book a Call →','nav.nosotros':'About',
+    'nav.services':'Services','nav.industries':'Industries','nav.apps':'Apps & Integrations','nav.about':'About','nav.cta':'Book a Call →','nav.nosotros':'About',
     'hero.badge':'Certified Shopify Partner',
     'hero.title1':'We scale your store','hero.title2':'with','hero.accent':'strategy','hero.title3':'and real data',
     'hero.sub':'We are the Shopify & Growth Marketing consultancy that turns your store into a sales machine. No empty promises, only measurable results.',
@@ -1170,7 +1240,14 @@ const T = {
     'footer.about':'About us','footer.resources':'Resources','footer.jobs':'Work with us',
     'footer.copy':'© 2025 Cachai Solutions. All rights reserved.',
     'footer.settings':'Language & Currency','footer.lang_label':'Language','footer.currency_label':'Currency',
-    'mega.shopify':'Shopify','mega.dev':'Custom Development','mega.migration':'Migrations','mega.plus':'Shopify Plus','mega.themes':'Custom Themes',
+    'mega.whatwedo':'What We Do','mega.industriesserve':'Industries We Serve','mega.appslabel':'Platforms & Tools',
+      'ms.shopifydev':'Shopify Development','ms.shopifyplus':'Shopify Plus','ms.migration':'Migrations & Replatforming','ms.themes':'Design & Custom Themes',
+      'ms.growth':'Growth Marketing','ms.metaads':'Meta Ads','ms.googleads':'Google Ads','ms.email':'Email Marketing',
+      'ms.cro':'Conversion Optimization','ms.seo':'eCommerce SEO','ms.analytics':'Analytics & Data','ms.audit':'eCommerce Audit',
+      'mi.fashion':'Fashion & Apparel','mi.beauty':'Beauty & Cosmetics','mi.tech':'Technology & Gadgets','mi.food':'Food & Beverage',
+      'mi.sports':'Sports & Outdoors','mi.home':'Home & Decor','mi.health':'Health & Wellness',
+      'mi.b2b':'B2B eCommerce','mi.enterprise':'Enterprise eCommerce','mi.luxury':'Luxury & Premium',
+      'ma.about':'About Us','ma.work':'Our Work','ma.blog':'Blog & Resources','ma.contact':'Contact',
     'mega.growth':'Growth','mega.meta':'Meta Ads','mega.google':'Google Ads','mega.email':'Email Marketing','mega.cro':'CRO & A/B Testing',
     'mega.data':'Analytics','mega.ga4':'GA4 & Data Layer','mega.dashboards':'Dashboards','mega.attribution':'Attribution','mega.reports':'Reports',
     'mega.industries':'Industries','mega.fashion':'Fashion & Accessories','mega.beauty':'Beauty & Cosmetics','mega.tech':'Technology','mega.food':'Food & Beverage',
@@ -1356,25 +1433,30 @@ document.querySelectorAll('.nav-item[data-mega]').forEach(item => {
   const mega = document.getElementById(id);
   if(!mega) return;
   let t;
-  item.addEventListener('mouseenter', () => {
+  const open = () => {
     clearTimeout(t);
     document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
     mega.classList.add('visible');
-  });
-  item.addEventListener('mouseleave', () => {
-    t = setTimeout(() => mega.classList.remove('visible'), 120);
-  });
+  };
+  const close = () => {
+    t = setTimeout(() => mega.classList.remove('visible'), 180);
+  };
+  item.addEventListener('mouseenter', open);
+  item.addEventListener('mouseleave', close);
   mega.addEventListener('mouseenter', () => clearTimeout(t));
-  mega.addEventListener('mouseleave', () => {
-    t = setTimeout(() => mega.classList.remove('visible'), 120);
+  mega.addEventListener('mouseleave', close);
+  // touch support
+  item.querySelector('a').addEventListener('click', e => {
+    if(window.innerWidth > 900) e.preventDefault();
   });
 });
 document.addEventListener('click', e => {
-  if(!e.target.closest('.nav-item')) {
+  if(!e.target.closest('.nav-item') && !e.target.closest('.mega-wrap')) {
     document.querySelectorAll('.mega-wrap').forEach(m => m.classList.remove('visible'));
   }
   if(!e.target.closest('.curr-select-wrap')) {
-    document.getElementById('currDropdown').classList.remove('open');
+    const dd = document.getElementById('currDropdown');
+    if(dd) dd.classList.remove('open');
   }
 });
 
