@@ -677,9 +677,10 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
   /* NAV */
-  nav { padding: 0 20px; height: 64px; }
+  nav { padding: 0 20px; height: 64px; grid-template-columns: auto 1fr auto; }
   .nav-links, .nav-cta-wrap { display: none; }
-  .nav-hamburger { display: flex; }
+  .nav-logo { justify-self: start; }
+  .nav-hamburger { display: flex; justify-self: end; }
   /* SECTIONS */
   section { padding: 64px 24px; }
   .why-grid, .faq-grid, .cta-inner { grid-template-columns: 1fr; gap: 40px; }
