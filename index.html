@@ -215,6 +215,7 @@ nav.scrolled {
 }
 /* CHANGEABLE TEXT */
 .changeable_text {
+  display: block;
   overflow: hidden;
   height: clamp(72px, 10.5vw, 148px);
   position: relative;
@@ -226,24 +227,22 @@ nav.scrolled {
   height: 100%;
 }
 .changeable_text span div {
-  visibility: hidden;
   position: absolute;
   top: 0; right: 0;
-  transform: translateY(110%);
-  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s .9s;
   font-size: clamp(72px, 10.5vw, 148px);
   line-height: clamp(72px, 10.5vw, 148px);
   white-space: nowrap;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform .8s cubic-bezier(.23,1,.32,1), opacity .8s ease;
 }
 .changeable_text span div.active {
-  visibility: visible;
   transform: translateY(0);
-  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s 0s;
+  opacity: 1;
 }
-.changeable_text span div.prev-word {
-  visibility: visible;
+.changeable_text span div.out {
   transform: translateY(-110%);
-  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s 0s;
+  opacity: 0;
 }
 /* ACTIONS */
 .rc-hero__actions {
@@ -757,7 +756,7 @@ footer {
     <h2 class="c-header-hp__title">
       <div>ESCALAMOS</div>
       <div class="changeable_text">
-        <span>
+        <span id="rotWords">
           <div>TIENDAS</div>
           <div>SHOPIFY</div>
           <div>REVENUE</div>
@@ -1109,35 +1108,20 @@ footer {
 <script>
 /* ── HERO WORD CHANGER — lógica exacta IWD ── */
 (function() {
-  function initWords() {
-    const container = document.querySelector('.changeable_text span');
-    if (!container) return;
-    const words = Array.from(container.querySelectorAll('div'));
-    if (!words.length) return;
-    let cur = 0;
-    words.forEach(w => { w.classList.remove('active','prev-word'); w.style.visibility='hidden'; w.style.transform='translateY(110%)'; });
-    words[0].style.visibility = 'visible';
-    words[0].style.transform = 'translateY(0)';
-    words[0].classList.add('active');
-    setInterval(() => {
-      const prev = cur;
-      cur = (cur + 1) % words.length;
-      words[prev].style.transform = 'translateY(-110%)';
-      setTimeout(() => { words[prev].style.visibility='hidden'; words[prev].classList.remove('active','prev-word'); }, 900);
-      words[cur].style.visibility = 'visible';
-      words[cur].style.transform = 'translateY(110%)';
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        words[cur].style.transition = 'transform .9s cubic-bezier(.23,1,.32,1)';
-        words[cur].style.transform = 'translateY(0)';
-        words[cur].classList.add('active');
-      }));
-    }, 2400);
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initWords);
-  } else {
-    initWords();
-  }
+  var words = document.querySelectorAll('#rotWords div');
+  if (!words.length) return;
+  var cur = 0;
+  words[0].classList.add('active');
+  setInterval(function() {
+    words[cur].classList.remove('active');
+    words[cur].classList.add('out');
+    var prev = cur;
+    cur = (cur + 1) % words.length;
+    words[cur].classList.add('active');
+    setTimeout(function() {
+      words[prev].classList.remove('out');
+    }, 900);
+  }, 2400);
 })();
 
 /* ── CURSOR ── */
