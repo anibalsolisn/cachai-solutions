@@ -129,130 +129,167 @@ nav.scrolled {
 }
 
 /* ── HERO ── */
-.hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: flex-end;
+.rc-hero {
+  position: relative;
+  width: 100vw; height: 100vh;
   overflow: hidden;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-/* VIDEO BG */
-.hero-video-wrap {
-  position: absolute; inset: 0; z-index: 0;
+.rc-hero__video-bg {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 1;
 }
-.hero-video-wrap video {
-  width: 100%; height: 100%; object-fit: cover;
+.rc-hero__video {
+  position: absolute;
+  top: 10px; left: 10px;
+  width: calc(100vw - 20px);
+  height: calc(100vh - 20px);
+  object-fit: cover;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity .5s ease;
 }
-.hero-video-wrap .hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(8,15,10,1) 0%,
-    rgba(8,15,10,.55) 40%,
-    rgba(8,15,10,.25) 100%
-  );
-}
-/* Fallback gradient when no video */
-.hero-video-fallback {
-  position: absolute; inset: 0;
+.rc-hero__video.is-visible { opacity: 1; }
+/* Fallback when no video */
+.rc-hero__video-fallback {
+  position: absolute;
+  top: 10px; left: 10px;
+  width: calc(100vw - 20px);
+  height: calc(100vh - 20px);
+  border-radius: 16px;
   background:
-    radial-gradient(ellipse 100% 80% at 60% 40%, rgba(26,122,60,.22) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 50% at 10% 90%, rgba(61,204,107,.08) 0%, transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse 80% 70% at 60% 30%, rgba(26,122,60,.3) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(61,204,107,.1) 0%, transparent 55%),
+    #0d1a10;
 }
-.hero-noise {
-  position: absolute; inset: 0; z-index: 1; opacity: .035; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+.rc-hero__overlay {
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  background: linear-gradient(0deg, rgba(8,15,10,.75) 0%, rgba(8,15,10,.35) 60%, rgba(8,15,10,.2) 100%);
+  z-index: 2;
+  border-radius: 16px;
+  pointer-events: none;
 }
-/* HERO CONTENT */
-.hero-inner {
-  position: relative; z-index: 2;
-  width: 100%; padding: 0 5vw 80px;
+/* CONTENT */
+.c-header-hp__content-wrapper {
+  position: absolute;
+  top: 0; right: 80px; bottom: 0; left: 80px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
-.hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 12px;
-  font-size: 11px; font-weight: 700; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--green-lit);
-  margin-bottom: 28px;
-  opacity: 0; animation: fadeUp .5s .2s forwards;
-}
-.hero-eyebrow-line {
-  display: block; width: 40px; height: 1px; background: var(--green-lit);
-}
-/* BIG TITLE */
-.hero-title {
+.c-header-hp__title {
+  color: var(--white);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(80px, 13vw, 180px);
-  line-height: .88; letter-spacing: .01em;
-  color: var(--white); margin-bottom: 0;
+  font-size: clamp(72px, 10.5vw, 148px);
+  line-height: clamp(72px, 10.5vw, 148px);
+  text-align: right;
+  text-transform: uppercase;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  opacity: 0;
+  animation: fadeUp .8s .2s forwards;
 }
-.hero-title-line {
-  display: block; overflow: hidden;
-  opacity: 0; transform: translateY(60px);
-}
-.hero-title-line:nth-child(1) { animation: slideUp .7s .3s cubic-bezier(.16,1,.3,1) forwards; }
-.hero-title-line:nth-child(2) { animation: slideUp .7s .45s cubic-bezier(.16,1,.3,1) forwards; }
-.hero-title-line:nth-child(3) { animation: slideUp .7s .6s cubic-bezier(.16,1,.3,1) forwards; }
-/* CHANGING WORD */
-.hero-word-wrap {
-  display: inline-block; position: relative;
+/* CHANGEABLE TEXT */
+.changeable_text {
+  overflow: hidden;
+  height: clamp(72px, 10.5vw, 148px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
   color: var(--green-lit);
-  min-width: 3ch;
 }
-.hero-words {
-  display: inline-flex; flex-direction: column;
-  transition: transform .5s cubic-bezier(.16,1,.3,1);
+.changeable_text span div {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  transform: translateY(110%);
+  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s .9s;
+  font-size: clamp(72px, 10.5vw, 148px);
+  line-height: clamp(72px, 10.5vw, 148px);
+  white-space: nowrap;
 }
-.hero-word { display: block; line-height: .88; }
-/* BOTTOM ROW */
-.hero-bottom {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-top: 48px; gap: 32px; flex-wrap: wrap;
-  opacity: 0; animation: fadeUp .6s .9s forwards;
+.changeable_text span div.active {
+  visibility: visible;
+  transform: translateY(0);
+  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s 0s;
 }
-.hero-sub {
-  font-size: clamp(15px, 1.6vw, 18px);
-  color: rgba(255,255,255,.55); max-width: 440px;
-  line-height: 1.75; font-weight: 400;
+.changeable_text span div.prev-word {
+  visibility: visible;
+  transform: translateY(-110%);
+  transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s 0s;
 }
-.hero-actions {
-  display: flex; gap: 14px; align-items: center; flex-shrink: 0;
+/* ACTIONS */
+.rc-hero__actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 40px;
+  opacity: 0;
+  animation: fadeUp .7s .7s forwards;
 }
-/* BUTTONS */
-.btn-main {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--green-lit); color: var(--bg);
-  padding: 16px 32px; border-radius: 100px;
-  font-size: 13px; font-weight: 700; letter-spacing: .08em;
-  text-decoration: none; text-transform: uppercase;
-  transition: transform .15s, box-shadow .2s;
+.rc-hero__btn {
+  border-radius: 100px;
+  height: 48px;
+  padding: 0 36px;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform .2s, box-shadow .2s;
+  white-space: nowrap;
+}
+.rc-hero__btn--primary {
+  background: var(--green-lit);
+  color: var(--bg);
   box-shadow: 0 4px 24px rgba(61,204,107,.3);
-  white-space: nowrap;
 }
-.btn-main:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(61,204,107,.45); }
-.btn-ghost {
-  display: inline-flex; align-items: center; gap: 8px;
-  color: rgba(255,255,255,.6); font-size: 13px; font-weight: 600;
-  text-decoration: none; letter-spacing: .06em;
-  text-transform: uppercase; padding: 16px 0;
-  border-bottom: 1px solid rgba(255,255,255,.15);
-  transition: color .2s, border-color .2s, gap .2s;
-  white-space: nowrap;
+.rc-hero__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(61,204,107,.45);
 }
-.btn-ghost:hover { color: var(--white); border-color: rgba(255,255,255,.4); gap: 14px; }
-/* STATS BAR */
+.rc-hero__btn--secondary {
+  background: rgba(255,255,255,.08);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,.2);
+  backdrop-filter: blur(8px);
+}
+.rc-hero__btn--secondary:hover {
+  background: rgba(255,255,255,.14);
+  transform: translateY(-2px);
+}
+/* STATS */
 .hero-stats {
+  position: absolute;
+  bottom: 48px; left: 80px; right: 80px;
+  z-index: 10;
   display: flex; gap: 0;
-  border-top: 1px solid var(--line); margin-top: 64px; padding-top: 32px;
-  opacity: 0; animation: fadeUp .6s 1.1s forwards;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 28px;
+  opacity: 0; animation: fadeUp .6s 1s forwards;
 }
 .hero-stat {
   flex: 1; padding-right: 32px;
-  border-right: 1px solid var(--line); margin-right: 32px;
+  border-right: 1px solid rgba(255,255,255,.08);
+  margin-right: 32px;
 }
 .hero-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
 .stat-n {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(40px, 4.5vw, 64px);
+  font-size: clamp(32px, 3.5vw, 52px);
   line-height: 1; color: var(--white); letter-spacing: .02em;
 }
 .stat-n em { color: var(--green-lit); font-style: normal; }
@@ -260,27 +297,7 @@ nav.scrolled {
   font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
   color: var(--grey); margin-top: 4px;
 }
-/* SCROLL */
-.scroll-hint {
-  position: absolute; right: 5vw; bottom: 80px; z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  opacity: 0; animation: fadeUp .5s 1.3s forwards;
-}
-.scroll-hint-text {
-  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--grey); writing-mode: vertical-rl;
-}
-.scroll-line {
-  width: 1px; height: 56px;
-  background: linear-gradient(to bottom, transparent, var(--green-lit));
-  animation: scrollDown 2s ease-in-out infinite;
-}
-@keyframes scrollDown {
-  0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
-  30% { opacity: 1; }
-  100% { transform: scaleY(1); transform-origin: top; opacity: 0; }
-}
-@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
 
 /* ── TRUST BAR ── */
 .trust-bar {
@@ -697,83 +714,66 @@ footer {
 </div>
 
 <!-- HERO -->
-<section class="hero" id="inicio">
+<section class="rc-hero" id="inicio">
 
-  <!-- VIDEO BG — reemplaza con tu video -->
-  <div class="hero-video-wrap">
+  <div class="rc-hero__video-bg">
     <!--
-      INSTRUCCIONES: sube tu video a GitHub y descomenta estas líneas:
-      <video class="rc-hero__video" loop playsinline muted autoplay preload="metadata">
-        <source src="tu-video.mp4" type="video/mp4">
-      </video>
+      CUANDO TENGAS TU VIDEO: borra la línea del fallback de abajo
+      y descomenta estas líneas con la ruta de tu archivo:
+
+      <video class="rc-hero__video rc-hero__video--desktop is-visible"
+        loop playsinline muted autoplay preload="metadata"
+        src="tu-video-desktop.mp4"></video>
+      <video class="rc-hero__video rc-hero__video--mobile"
+        loop playsinline muted autoplay preload="none"
+        data-mobile-src="tu-video-mobile.mp4"></video>
     -->
-    <div class="hero-video-fallback"></div>
-    <div class="hero-overlay"></div>
+    <div class="rc-hero__video-fallback"></div>
+    <div class="rc-hero__overlay"></div>
   </div>
-  <div class="hero-noise"></div>
 
-  <!-- CONTENIDO -->
-  <div class="hero-inner">
-
-    <div class="hero-eyebrow">
-      <span class="hero-eyebrow-line"></span>
-      Shopify Partner Certificado
-    </div>
-
-    <h1 class="hero-title">
-      <span class="hero-title-line">ESCALAMOS</span>
-      <span class="hero-title-line">
-        TIENDAS&nbsp;<span class="hero-word-wrap">
-          <span class="hero-words" id="heroWords">
-            <span class="hero-word">REALES</span>
-            <span class="hero-word">ONLINE</span>
-            <span class="hero-word">SHOPIFY</span>
-            <span class="hero-word">REALES</span>
-          </span>
+  <div class="c-header-hp__content-wrapper">
+    <h2 class="c-header-hp__title">
+      <div>ESCALAMOS</div>
+      <div class="changeable_text">
+        <span>
+          <div class="active">TIENDAS</div>
+          <div>SHOPIFY</div>
+          <div>REVENUE</div>
+          <div class="active prev-word">MARCAS</div>
         </span>
-      </span>
-      <span class="hero-title-line">DE VERDAD</span>
-    </h1>
-
-    <div class="hero-bottom">
-      <p class="hero-sub">Shopify & Growth Marketing. Convertimos tu tienda en una máquina de ventas con estrategia, datos y ejecución de alto nivel.</p>
-      <div class="hero-actions">
-        <a href="#contacto" class="btn-main">
-          Probemos juntos
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#casos" class="btn-ghost">
-          Ver resultados
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
       </div>
+      <div>DE VERDAD</div>
+    </h2>
+
+    <div class="rc-hero__actions">
+      <a href="#contacto" class="rc-hero__btn rc-hero__btn--primary">
+        Probemos juntos
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#casos" class="rc-hero__btn rc-hero__btn--secondary">
+        Ver resultados
+      </a>
     </div>
-
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="stat-n">+<em>80</em></div>
-        <div class="stat-l">Tiendas escaladas</div>
-      </div>
-      <div class="hero-stat">
-        <div class="stat-n"><em>3.8</em>×</div>
-        <div class="stat-l">ROAS promedio</div>
-      </div>
-      <div class="hero-stat">
-        <div class="stat-n">+<em>62</em>%</div>
-        <div class="stat-l">Conversión media</div>
-      </div>
-      <div class="hero-stat">
-        <div class="stat-n"><em>90</em>d</div>
-        <div class="stat-l">Para ver resultados</div>
-      </div>
-    </div>
-
   </div>
 
-  <!-- SCROLL INDICATOR -->
-  <div class="scroll-hint">
-    <span class="scroll-hint-text">Scroll</span>
-    <div class="scroll-line"></div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-n">+<em>80</em></div>
+      <div class="stat-l">Tiendas escaladas</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-n"><em>3.8</em>×</div>
+      <div class="stat-l">ROAS promedio</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-n">+<em>62</em>%</div>
+      <div class="stat-l">Conversión media</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-n"><em>90</em>d</div>
+      <div class="stat-l">Para ver resultados</div>
+    </div>
   </div>
 
 </section>
@@ -1084,16 +1084,31 @@ footer {
 </footer>
 
 <script>
-/* ── HERO WORD CHANGER ── */
-const heroWords = document.getElementById('heroWords');
-if (heroWords) {
-  const words = heroWords.querySelectorAll('.hero-word');
-  let cur = 0;
+/* ── HERO WORD CHANGER — lógica exacta IWD ── */
+(function() {
+  const container = document.querySelector('.changeable_text span');
+  if (!container) return;
+  const words = Array.from(container.querySelectorAll('div'));
+  let current = words.findIndex(w => w.classList.contains('active') && !w.classList.contains('prev-word'));
+  if (current === -1) current = 0;
+
   setInterval(() => {
-    cur = (cur + 1) % (words.length - 1);
-    heroWords.style.transform = `translateY(-${cur * 100}%)`;
-  }, 2200);
-}
+    const prev = current;
+    current = (current + 1) % words.length;
+
+    // Reset all
+    words.forEach(w => { w.classList.remove('active', 'prev-word'); });
+
+    // Set prev (goes up) and new active (comes from bottom)
+    words[prev].classList.add('active', 'prev-word');
+    words[current].classList.add('active');
+
+    // After transition, clean prev
+    setTimeout(() => {
+      words[prev].classList.remove('active', 'prev-word');
+    }, 950);
+  }, 2400);
+})();
 
 /* ── CURSOR ── */
 const cursor = document.getElementById('cursor');
