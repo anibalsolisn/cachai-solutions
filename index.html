@@ -72,7 +72,7 @@ body {
   transition: opacity .4s ease;
 }
 .nav-isotipo.visible { opacity: 1; pointer-events: all; }
-.nav-isotipo img { height: 36px; display: block; transition: filter .3s; }
+.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; transition: filter .3s; overflow: hidden; }
 
 /* ══ NAV PILL flotante abajo ══ */
 nav {
@@ -925,7 +925,7 @@ footer {
 
 <!-- ISOTIPO fijo (aparece al scrollear) -->
 <div class="nav-isotipo" id="navIsotipo">
-  <a href="#"><img src="isotipo.svg" alt="Cachai" id="isotipoImg" style="height:36px;display:block;"></a>
+  <a href="#"><img src="isotipo.svg" alt="Cachai" id="isotipoImg" style="height:36px!important;width:auto!important;max-width:36px!important;display:block;"></a>
 </div>
 
 <nav id="nav">
