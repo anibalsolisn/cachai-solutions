@@ -116,18 +116,22 @@ nav.scrolled { box-shadow: 0 12px 40px rgba(0,0,0,.4); }
 
 /* ══ MOBILE ══ */
 @media (max-width: 960px) {
+  /* Nav top mobile — logo izquierda + botón derecha */
   .nav-top { padding: 0 20px; height: 64px; }
-  .nav-top-links { display: none; }
-  .nav-top-cta { display: inline-flex; font-size: 13px; padding: 10px 16px; }
+  .nav-top-links { display: none !important; }
+  .nav-top-cta { display: inline-flex !important; font-size: 13px; padding: 10px 16px; }
   .nav-isotipo { top: 18px; left: 20px; }
   .nav-isotipo img { height: 30px; }
+  /* Pill nav abajo — solo hamburger */
   nav {
     bottom: 16px; left: 50%; right: auto;
     transform: translateX(-50%);
-    border-radius: 6px; padding: 0 6px;
+    border-radius: 100px; padding: 0 6px 0 20px;
+    gap: 8px;
   }
-  .nav-hamburger { display: flex; }
-  #navLinks, #navCta { display: none; }
+  nav .nav-links { display: none !important; }
+  nav .nav-cta-wrap { display: none !important; }
+  .nav-hamburger { display: flex !important; }
 }
 nav.scrolled {
   background: rgba(5,24,32,.92);
@@ -899,6 +903,14 @@ footer {
   .about-strip { padding: 80px 5vw; }
 }
 
+
+.nav-pill-label {
+  font-size: 13px; font-weight: 500; color: rgba(208,240,248,.7);
+  letter-spacing: .01em; display: none;
+}
+@media (max-width: 960px) {
+  .nav-pill-label { display: block; }
+}
 </style>
 </head>
 <body>
@@ -936,6 +948,7 @@ footer {
   <div class="nav-cta-wrap">
     <a href="#contacto" class="nav-cta">Probemos juntos</a>
   </div>
+  <span class="nav-pill-label">Menú</span>
   <button class="nav-hamburger" id="hamburger" onclick="toggleMobile()">
     <span></span><span></span><span></span>
   </button>
