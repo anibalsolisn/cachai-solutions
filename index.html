@@ -204,14 +204,17 @@ nav.scrolled {
   overflow: hidden;
   height: clamp(72px, 10.5vw, 148px);
   position: relative;
-  display: flex;
-  flex-direction: column;
   color: var(--green-lit);
+}
+.changeable_text span {
+  display: block;
+  position: relative;
+  height: 100%;
 }
 .changeable_text span div {
   visibility: hidden;
   position: absolute;
-  right: 0;
+  top: 0; right: 0;
   transform: translateY(110%);
   transition: transform .9s cubic-bezier(.23,1,.32,1), visibility 0s .9s;
   font-size: clamp(72px, 10.5vw, 148px);
