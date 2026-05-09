@@ -906,28 +906,21 @@ footer {
 /* ── PILL MOBILE BTN LOOP ── */
 .nav-pill-btn {
   display: none;
-  overflow: hidden;
-  width: 140px;
   height: 36px;
   background: var(--white);
   border-radius: 4px;
   align-items: center;
   text-decoration: none;
   flex-shrink: 0;
-}
-.nav-pill-btn-track {
-  display: flex;
-  white-space: nowrap;
-  animation: marquee-btn 5s linear infinite;
-  font-size: 11px;
+  padding: 0 14px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--bg);
-  letter-spacing: .04em;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: background .2s;
 }
-@keyframes marquee-btn {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+.nav-pill-btn:hover { background: var(--green-lit); }
 @media (max-width: 960px) {
   .nav-pill-btn { display: inline-flex; }
   .nav-pill-label { display: none !important; }
@@ -980,12 +973,7 @@ footer {
   <button class="nav-hamburger" id="hamburger" onclick="toggleMobile()">
     <span></span><span></span><span></span>
   </button>
-  <a href="#contacto" class="nav-pill-btn">
-    <span class="nav-pill-btn-track">
-      <span>Probemos juntos&nbsp;&nbsp;·&nbsp;&nbsp;Probemos juntos&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-      <span aria-hidden="true">Probemos juntos&nbsp;&nbsp;·&nbsp;&nbsp;Probemos juntos&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-    </span>
-  </a>
+  <a href="#contacto" class="nav-pill-btn">Probemos juntos →</a>
 </nav>
 
 <!-- MOBILE MENU OVERLAY -->
