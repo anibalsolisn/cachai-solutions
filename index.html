@@ -759,12 +759,7 @@ footer {
   <div class="c-header-hp__content-wrapper">
     <h2 class="c-header-hp__title">
       <div>ESCALAMOS</div>
-      <div class="word-rotator" id="wordRotator">
-        <span>TIENDAS</span>
-        <span>SHOPIFY</span>
-        <span>REVENUE</span>
-        <span>MARCAS</span>
-      </div>
+      <div style="color:#2bc8e8;">MARCAS</div>
       <div>DE VERDAD</div>
     </h2>
 
@@ -1109,24 +1104,7 @@ footer {
 
 <script>
 /* ── HERO WORD CHANGER — lógica exacta IWD ── */
-document.addEventListener('DOMContentLoaded', function() {
-  var rotator = document.getElementById('wordRotator');
-  if (!rotator) return;
-  var spans = rotator.querySelectorAll('span');
-  if (!spans.length) return;
-  var cur = 0;
-  spans[cur].classList.add('visible');
-  setInterval(function() {
-    spans[cur].classList.remove('visible');
-    spans[cur].classList.add('gone');
-    var prev = cur;
-    cur = (cur + 1) % spans.length;
-    spans[cur].classList.add('visible');
-    setTimeout(function() {
-      spans[prev].classList.remove('gone');
-    }, 800);
-  }, 2600);
-});
+/* rotador eliminado */
 
 /* ── CURSOR ── */
 const cursor = document.getElementById('cursor');
