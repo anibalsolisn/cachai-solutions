@@ -30,6 +30,7 @@ body {
   color: var(--white);
   overflow-x: hidden;
   line-height: 1.6;
+  isolation: auto;
 }
 
 
@@ -72,9 +73,10 @@ body {
   position: fixed; top: 24px; left: 32px; z-index: 503;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease;
+  mix-blend-mode: difference;
 }
 .nav-isotipo.visible { opacity: 1; pointer-events: all; }
-.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; }
+.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; filter: brightness(0) invert(1); }
 
 /* ══ NAV PILL flotante abajo ══ */
 nav {
