@@ -1005,9 +1005,11 @@ body {
 .hero-slide {
   position: absolute; inset: 0;
   transform: translateX(100%);
-  transition: transform .9s cubic-bezier(.77,0,.18,1);
   pointer-events: none;
   overflow: hidden;
+}
+.hero-slide.ready {
+  transition: transform .9s cubic-bezier(.77,0,.18,1);
 }
 .hero-slide.active {
   transform: translateX(0);
@@ -1015,6 +1017,11 @@ body {
 }
 .hero-slide.exit {
   transform: translateX(-100%);
+  transition: transform .9s cubic-bezier(.77,0,.18,1);
+}
+/* Slide inicial sin animación */
+.hero-slide.active.no-anim {
+  transition: none !important;
 }
 
 /* Progress bars */
@@ -1603,12 +1610,25 @@ body {
   const srvNum = document.getElementById('heroSrvNum');
   const srvDesc = document.getElementById('heroSrvDesc');
 
-  function updateContent(idx) {
+  function updateContent(idx, instant) {
     const s = slides[idx];
-    // Fade title
     const title = document.getElementById('heroTitle');
+    if (instant) {
+      line1.textContent = s.lines[0];
+      line2.textContent = s.lines[1];
+      line3.textContent = s.lines[2];
+      srvTitle.textContent = s.srv.title;
+      srvNum.textContent = s.srv.num;
+      srvDesc.textContent = s.srv.desc;
+      title.style.transition = 'none';
+      title.style.opacity = '1';
+      title.style.transform = 'translateY(0)';
+      return;
+    }
+    // Sincronizado con el slide — sale hacia izquierda, entra desde derecha
+    title.style.transition = 'opacity .4s ease, transform .5s cubic-bezier(.77,0,.18,1)';
     title.style.opacity = '0';
-    title.style.transform = 'translateY(10px)';
+    title.style.transform = 'translateX(-40px)';
     setTimeout(() => {
       line1.textContent = s.lines[0];
       line2.textContent = s.lines[1];
@@ -1616,10 +1636,14 @@ body {
       srvTitle.textContent = s.srv.title;
       srvNum.textContent = s.srv.num;
       srvDesc.textContent = s.srv.desc;
-      title.style.transition = 'opacity .5s ease, transform .5s ease';
-      title.style.opacity = '1';
-      title.style.transform = 'translateY(0)';
-    }, 300);
+      title.style.transform = 'translateX(40px)';
+      title.style.transition = 'none';
+      setTimeout(() => {
+        title.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.77,0,.18,1)';
+        title.style.opacity = '1';
+        title.style.transform = 'translateX(0)';
+      }, 30);
+    }, 350);
   }
 
   function goToSlide(idx) {
@@ -1648,7 +1672,7 @@ body {
     bars[idx].style.setProperty('--slide-duration', DURATION + 'ms');
     setTimeout(() => bars[idx].classList.add('animating'), 50);
 
-    updateContent(idx);
+    updateContent(idx, false);
     current = idx;
 
     clearTimeout(timer);
@@ -1660,8 +1684,30 @@ body {
   // Expose globally for onclick
   window.goToSlide = goToSlide;
 
-  // Start
-  document.addEventListener('DOMContentLoaded', () => goToSlide(0));
+  // Start — primer slide sin animación
+  document.addEventListener('DOMContentLoaded', () => {
+    slideEls[0].classList.add('no-anim');
+    slideEls[0].classList.add('active');
+    updateContent(0, true);
+    // Activar barras
+    bars[0].style.setProperty('--slide-duration', DURATION + 'ms');
+    setTimeout(() => {
+      bars[0].classList.add('animating');
+      // Habilitar transiciones después del primer frame
+      setTimeout(() => {
+        slideEls[0].classList.remove('no-anim');
+        slideEls[0].classList.add('ready');
+      }, 100);
+    }, 50);
+    // Marcar slides 1 y 2 como ready para animación
+    setTimeout(() => {
+      slideEls[1].classList.add('ready');
+      slideEls[2].classList.add('ready');
+    }, 100);
+    timer = setTimeout(() => {
+      goToSlide(1);
+    }, DURATION);
+  });
 })();
 
 /* ── HERO WORD CHANGER — lógica exacta IWD ── */
