@@ -1458,11 +1458,21 @@ footer {
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
     const isDark = brightness <= 140;
     document.body.style.color = isDark ? '#e8f8fc' : '#0d2030';
+
     // Adaptar elementos que no heredan fácilmente
     const accentEls = document.querySelectorAll('.s-tag, .section-tag, .about-cta');
     accentEls.forEach(el => {
       el.style.color = isDark ? '#7de0f0' : '#1e4a5a';
     });
+
+    // Isotipo — invertir suavemente según fondo
+    const isotipoImg = document.getElementById('isotipoImg');
+    if (isotipoImg) {
+      // Calcular cuánto invertir — 0 = blanco (fondo oscuro), 1 = negro (fondo claro)
+      const invertAmount = Math.min((brightness / 255), 1);
+      isotipoImg.style.filter = `invert(${invertAmount})`;
+      isotipoImg.style.transition = 'filter .4s ease';
+    }
   }
 
   window.addEventListener('scroll', updateBg, { passive: true });
