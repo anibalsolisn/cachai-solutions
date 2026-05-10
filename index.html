@@ -998,12 +998,24 @@ body {
 
 /* ── HERO SLIDER ── */
 .hero-slides { position: relative; width: 100%; height: 100%; }
+.hero-slides {
+  position: relative; width: 100%; height: 100%;
+  display: flex;
+}
 .hero-slide {
   position: absolute; inset: 0;
-  opacity: 0; transition: opacity .8s ease;
+  transform: translateX(100%);
+  transition: transform .9s cubic-bezier(.77,0,.18,1);
   pointer-events: none;
+  overflow: hidden;
 }
-.hero-slide.active { opacity: 1; pointer-events: all; }
+.hero-slide.active {
+  transform: translateX(0);
+  pointer-events: all;
+}
+.hero-slide.exit {
+  transform: translateX(-100%);
+}
 
 /* Progress bars */
 .hero-progress {
@@ -1611,20 +1623,28 @@ body {
   }
 
   function goToSlide(idx) {
-    // Clear bars
-    bars.forEach(b => { b.classList.remove('animating', 'done'); });
-    slideEls.forEach(s => s.classList.remove('active'));
+    if (idx === current && slideEls[idx].classList.contains('active')) {
+      // reiniciar si es el mismo
+    }
+    const prev = current;
 
-    // Mark done bars
+    // Barras
+    bars.forEach(b => { b.classList.remove('animating', 'done'); });
     for (let i = 0; i < idx; i++) bars[i].classList.add('done');
 
-    // Activate slide
-    slideEls[idx].classList.add('active');
-    // Play video
-    const vid = slideEls[idx].querySelector('video');
-    if (vid) vid.play();
+    // Slide saliente — va a la izquierda
+    slideEls[prev].classList.remove('active');
+    slideEls[prev].classList.add('exit');
+    setTimeout(() => {
+      slideEls[prev].classList.remove('exit');
+    }, 950);
 
-    // Animate current bar
+    // Slide entrante — viene de la derecha
+    slideEls[idx].classList.add('active');
+    const vid = slideEls[idx].querySelector('video');
+    if (vid) { vid.currentTime = 0; vid.play(); }
+
+    // Barra de progreso
     bars[idx].style.setProperty('--slide-duration', DURATION + 'ms');
     setTimeout(() => bars[idx].classList.add('animating'), 50);
 
