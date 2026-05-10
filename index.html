@@ -72,9 +72,11 @@ body {
   position: fixed; top: 24px; left: 32px; z-index: 503;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease;
+  mix-blend-mode: difference;
+  filter: invert(1);
 }
 .nav-isotipo.visible { opacity: 1; pointer-events: all; }
-.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; mix-blend-mode: difference; filter: invert(1); }
+.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; }
 
 /* ══ NAV PILL flotante abajo ══ */
 nav {
