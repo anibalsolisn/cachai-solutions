@@ -70,7 +70,7 @@ body {
 
 /* ══ ISOTIPO fijo — aparece al scrollear ══ */
 .nav-isotipo {
-  position: fixed; top: 24px; left: 32px; z-index: 503;
+  position: fixed; top: 24px; left: 32px; z-index: 499;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease;
   mix-blend-mode: difference;
@@ -80,7 +80,7 @@ body {
 
 /* ══ NAV PILL flotante abajo ══ */
 nav {
-  position: fixed;
+  position: fixed; isolation: isolate;
   bottom: 24px; left: 50%; transform: translateX(-50%);
   top: auto; z-index: 500;
   height: 52px; padding: 0 6px;
