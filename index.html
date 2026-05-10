@@ -940,6 +940,26 @@ footer {
 
 /* ── BAGNARD LOCAL FONT ── */
 /* Playfair Display cargada via Google Fonts */
+
+/* ── TEXTOS HEREDAN COLOR DEL BODY (para transición scroll) ── */
+.about-strip, .about-strip *,
+.cases, .cases *,
+.why, .why *,
+.faq, .faq *,
+.cta-section, .cta-section * {
+  transition: color .4s ease, border-color .4s ease;
+}
+.about-title, .s-title, .s-tag,
+.why-t, .faq-q, .cta-title,
+.why-visual-title, .why-bottom-base {
+  color: inherit !important;
+}
+.about-text, .s-sub, .why-d, .faq-a,
+.cta-sub, .why-kpi-label, .why-bottom-note,
+.footer-desc, .footer-links a, .case-desc {
+  color: inherit !important;
+  opacity: .75;
+}
 </style>
 </head>
 <body>
@@ -1436,7 +1456,13 @@ footer {
 
     // Adaptar color de texto según brillo del fondo
     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    document.body.style.color = brightness > 140 ? '#0d2030' : '#e8f8fc';
+    const isDark = brightness <= 140;
+    document.body.style.color = isDark ? '#e8f8fc' : '#0d2030';
+    // Adaptar elementos que no heredan fácilmente
+    const accentEls = document.querySelectorAll('.s-tag, .section-tag, .about-cta');
+    accentEls.forEach(el => {
+      el.style.color = isDark ? '#7de0f0' : '#1e4a5a';
+    });
   }
 
   window.addEventListener('scroll', updateBg, { passive: true });
