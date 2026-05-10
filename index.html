@@ -1023,9 +1023,8 @@ body {
   });
 
   hero.addEventListener('click', () => {
-    // Ir al siguiente slide inmediatamente
-    const next = (current + 1) % 3;
-    clearTimeout(timer);
+    const cur = window._heroSlider ? window._heroSlider.current : 0;
+    const next = (cur + 1) % 3;
     goToSlide(next);
   });
 })();
@@ -1692,9 +1691,8 @@ body {
   });
 
   hero.addEventListener('click', () => {
-    // Ir al siguiente slide inmediatamente
-    const next = (current + 1) % 3;
-    clearTimeout(timer);
+    const cur = window._heroSlider ? window._heroSlider.current : 0;
+    const next = (cur + 1) % 3;
     goToSlide(next);
   });
 })();
@@ -1717,6 +1715,7 @@ body {
     }
   ];
 
+  window._heroSlider = { current: 0, timer: null };
   let current = 0;
   let timer = null;
 
@@ -1793,6 +1792,7 @@ body {
 
     updateContent(idx, false);
     current = idx;
+    window._heroSlider.current = idx;
 
     clearTimeout(timer);
     timer = setTimeout(() => {
