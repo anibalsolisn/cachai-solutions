@@ -74,7 +74,7 @@ body {
   transition: opacity .4s ease;
 }
 .nav-isotipo.visible { opacity: 1; pointer-events: all; }
-.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; transition: filter .3s; overflow: hidden; }
+.nav-isotipo img { height: 36px !important; width: auto !important; max-width: 36px !important; display: block; mix-blend-mode: difference; filter: invert(1); }
 
 /* ══ NAV PILL flotante abajo ══ */
 nav {
@@ -1465,12 +1465,7 @@ footer {
       el.style.color = isDark ? '#7de0f0' : '#1e4a5a';
     });
 
-    // Isotipo — siempre opuesto al fondo
-    const isotipoImg = document.getElementById('isotipoImg');
-    if (isotipoImg) {
-      isotipoImg.style.transition = 'filter .4s ease';
-      isotipoImg.style.filter = isDark ? 'invert(0) brightness(1)' : 'invert(1) brightness(0)';
-    }
+
   }
 
   window.addEventListener('scroll', updateBg, { passive: true });
