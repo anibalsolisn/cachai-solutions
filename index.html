@@ -1020,6 +1020,19 @@ body {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
     cursor.style.top = my + 'px';
+    // Ocultar si está sobre un elemento clickeable
+    const el = document.elementFromPoint(mx, my);
+    const isClickable = el && (
+      el.closest('a') || el.closest('button') ||
+      el.closest('.hero-progress-bar') || el.closest('.hero-srv')
+    );
+    if (isClickable) {
+      cursor.classList.remove('visible');
+      hero.style.cursor = 'pointer';
+    } else {
+      cursor.classList.add('visible');
+      hero.style.cursor = 'none';
+    }
   });
 
   hero.addEventListener('click', () => {
@@ -1167,6 +1180,15 @@ body {
 }
 @media (max-width: 960px) {
   .hero-cursor { display: none !important; }
+}
+
+/* Cursor normal en elementos clickeables del hero */
+.rc-hero a,
+.rc-hero button,
+.rc-hero .hero-progress-bar,
+.hero-srv,
+.hero-srv a {
+  cursor: pointer !important;
 }
 </style>
 </head>
@@ -1688,6 +1710,19 @@ body {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
     cursor.style.top = my + 'px';
+    // Ocultar si está sobre un elemento clickeable
+    const el = document.elementFromPoint(mx, my);
+    const isClickable = el && (
+      el.closest('a') || el.closest('button') ||
+      el.closest('.hero-progress-bar') || el.closest('.hero-srv')
+    );
+    if (isClickable) {
+      cursor.classList.remove('visible');
+      hero.style.cursor = 'pointer';
+    } else {
+      cursor.classList.add('visible');
+      hero.style.cursor = 'none';
+    }
   });
 
   hero.addEventListener('click', () => {
