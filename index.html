@@ -1005,16 +1005,19 @@ body {
 
 /* Progress bars */
 .hero-progress {
-  position: absolute; bottom: 10px; left: 0; right: 0;
-  display: flex; gap: 4px; z-index: 10;
-  padding: 0 0;
+  position: absolute; bottom: 20px; left: 10%; right: 10%;
+  display: flex; gap: 6px; z-index: 10;
 }
 .hero-progress-bar {
-  flex: 1; height: 3px;
+  flex: 1; height: 2px;
   background: rgba(255,255,255,.25);
   cursor: pointer;
   position: relative; overflow: hidden;
   border-radius: 2px;
+}
+@media (max-width: 600px) {
+  .hero-progress { bottom: 28px; left: 8%; right: 8%; gap: 5px; }
+  .hero-progress-bar { height: 2px; }
 }
 .hero-progress-bar::after {
   content: '';
