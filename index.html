@@ -1074,10 +1074,10 @@ footer {
 <section class="about-strip" id="quienes">
   <div class="about-inner">
     <div class="about-left reveal">
-      <h2 class="about-title">Somos el equipo eCommerce que tú y tu marca necesitan</h2>
+      <h2 class="about-title">SOMOS EL EQUIPO ECOMMERCE QUE TÚ Y TU MARCA NECESITAN</h2>
     </div>
     <div class="about-right reveal">
-      <p class="about-text">Nuestra obesión: escalar marcas sin excusas. Cachai nace de una americana y un chileno que se cansaron de ver negocios con potencial estancados. Crearon Cachai para ser el equipo que tu marca necesita — el que ejecuta, mide y escala. Operamos en inglés y español, trabajando con marcas en Canadá, USA, Latinoamérica y España.</p>
+      <p class="about-text">Ashlea y Gabriel se conocieron con una obsesión: escalar marcas sin excusas. Una americana y un chileno que se cansaron de ver negocios con potencial estancados. Crearon Cachai para ser el equipo que tu marca necesita — el que ejecuta, mide y escala. Operamos en inglés y español, trabajando con marcas en Canadá, USA, Latinoamérica y España.</p>
       <a href="#contacto" class="about-cta">
         Probemos juntos
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1421,11 +1421,43 @@ function toggleMobile() {
   const menu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('mobileOverlay');
   const ham = document.getElementById('hamburger');
+  const isotipo = document.getElementById('navIsotipo');
+  const logoFixed = document.querySelector('.nav-top-logo img');
   const isOpen = menu.classList.contains('open');
+
   menu.classList.toggle('open');
   overlay.classList.toggle('open');
   ham.classList.toggle('open');
-  document.body.style.overflow = !isOpen ? 'hidden' : '';
+
+  if (!isOpen) {
+    // Abriendo — mostrar logo completo, ocultar isotipo
+    document.body.style.overflow = 'hidden';
+    if (isotipo) {
+      isotipo.style.opacity = '0';
+      isotipo.style.pointerEvents = 'none';
+    }
+    // Mostrar logo completo en lugar del isotipo
+    const logoNav = document.createElement('div');
+    logoNav.id = 'mobileLogoOpen';
+    logoNav.style.cssText = 'position:fixed;top:18px;left:20px;z-index:9999;opacity:0;transition:opacity .3s;';
+    logoNav.innerHTML = '<a href="#"><img src="logo_cachaisolutions_blanco.svg" style="height:28px;display:block;"></a>';
+    document.body.appendChild(logoNav);
+    setTimeout(() => { logoNav.style.opacity = '1'; }, 50);
+  } else {
+    // Cerrando — restaurar isotipo
+    document.body.style.overflow = '';
+    const logoNav = document.getElementById('mobileLogoOpen');
+    if (logoNav) {
+      logoNav.style.opacity = '0';
+      setTimeout(() => { logoNav.remove(); }, 300);
+    }
+    if (isotipo) {
+      setTimeout(() => {
+        isotipo.style.opacity = '';
+        isotipo.style.pointerEvents = '';
+      }, 200);
+    }
+  }
 }
 
 /* ── SCROLL REVEAL ── */
