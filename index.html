@@ -31,6 +31,47 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
 }
+/* Secciones intermedias — fondo blanco, texto oscuro */
+.section-white {
+  background: #ffffff;
+  color: #0d2030;
+  transition: background .6s ease;
+}
+.section-white .s-title,
+.section-white .s-tag,
+.section-white .about-title { color: #0d2030; }
+.section-white .s-sub,
+.section-white .about-text,
+.section-white .why-d,
+.section-white .why-desc,
+.section-white p { color: #2a4a5a; }
+.section-white .why-t,
+.section-white .faq-q { color: #0d2030; }
+.section-white .why-item { border-bottom-color: rgba(13,32,48,.1); }
+.section-white .faq-item { border-bottom-color: rgba(13,32,48,.1); }
+.section-white .faq-a { color: #2a4a5a; }
+.section-white .why-right {
+  background: #f0f8fc;
+  border-color: rgba(42,95,114,.15);
+}
+.section-white .why-kpi-label { color: #2a4a5a; }
+.section-white .why-kpi-val { color: #0d2030; }
+.section-white .case-card { border-color: rgba(13,32,48,.1); }
+.section-white .faq-cta-card { background: #f0f8fc; border-color: rgba(42,95,114,.2); }
+.section-white .faq-cta-card h3 { color: #0d2030; }
+.section-white .faq-cta-card p { color: #2a4a5a; }
+/* Transición hero → blanco */
+.hero-to-white-bridge {
+  height: 120px;
+  background: linear-gradient(to bottom, var(--bg), #ffffff);
+  margin-top: -1px;
+}
+/* Transición blanco → footer */
+.white-to-footer-bridge {
+  height: 120px;
+  background: linear-gradient(to bottom, #ffffff, var(--bg2));
+  margin-bottom: -1px;
+}
 
 
 
@@ -648,7 +689,7 @@ section { padding: 120px 5vw; }
 
 /* ── CONTACT / CTA ── */
 .cta-section {
-  background: var(--bg);
+  background: #ffffff;
   padding: 120px 5vw;
   position: relative; overflow: hidden;
 }
@@ -1070,8 +1111,11 @@ footer {
   </div>
 </div>
 
+<!-- BRIDGE hero → blanco -->
+<div class="hero-to-white-bridge"></div>
+
 <!-- QUIENES SOMOS -->
-<section class="about-strip" id="quienes">
+<section class="about-strip section-white" id="quienes">
   <div class="about-inner">
     <div class="about-left reveal">
       <h2 class="about-title">SOMOS EL EQUIPO ECOMMERCE QUE TÚ Y TU MARCA NECESITAN</h2>
@@ -1093,7 +1137,7 @@ footer {
 </section>
 
 <!-- CASOS -->
-<section class="cases" id="casos">
+<section class="cases section-white" id="casos">
   <div class="s-inner">
     <div class="cases-header reveal">
       <div>
@@ -1145,7 +1189,7 @@ footer {
 </section>
 
 <!-- WHY -->
-<section class="why" id="nosotros">
+<section class="why section-white" id="nosotros">
   <div class="s-inner why-grid">
     <div>
       <div class="s-tag reveal">Por qué nosotros</div>
@@ -1222,7 +1266,7 @@ footer {
 </section>
 
 <!-- FAQ -->
-<section class="faq" id="faq">
+<section class="faq section-white" id="faq">
   <div class="s-inner faq-grid">
     <div>
       <div class="s-tag reveal">Preguntas frecuentes</div>
@@ -1286,7 +1330,7 @@ footer {
 </section>
 
 <!-- CTA / CONTACT -->
-<section class="cta-section" id="contacto">
+<section class="cta-section section-white" id="contacto">
   <div class="cta-inner">
     <div class="cta-left reveal">
       <div class="s-tag">Contacto</div>
@@ -1323,6 +1367,9 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- BRIDGE blanco → footer -->
+<div class="white-to-footer-bridge"></div>
 
 <!-- FOOTER -->
 <footer>
