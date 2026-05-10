@@ -952,13 +952,13 @@ footer {
 .about-title, .s-title, .s-tag,
 .why-t, .faq-q, .cta-title,
 .why-visual-title, .why-bottom-base {
-  color: inherit !important;
+  color: inherit;
 }
 .about-text, .s-sub, .why-d, .faq-a,
 .cta-sub, .why-kpi-label, .why-bottom-note,
 .footer-desc, .footer-links a, .case-desc {
-  color: inherit !important;
-  opacity: .75;
+  color: inherit;
+  opacity: .8;
 }
 </style>
 </head>
@@ -1465,13 +1465,11 @@ footer {
       el.style.color = isDark ? '#7de0f0' : '#1e4a5a';
     });
 
-    // Isotipo — invertir suavemente según fondo
+    // Isotipo — siempre opuesto al fondo
     const isotipoImg = document.getElementById('isotipoImg');
     if (isotipoImg) {
-      // Calcular cuánto invertir — 0 = blanco (fondo oscuro), 1 = negro (fondo claro)
-      const invertAmount = Math.min((brightness / 255), 1);
-      isotipoImg.style.filter = `invert(${invertAmount})`;
       isotipoImg.style.transition = 'filter .4s ease';
+      isotipoImg.style.filter = isDark ? 'invert(0) brightness(1)' : 'invert(1) brightness(0)';
     }
   }
 
