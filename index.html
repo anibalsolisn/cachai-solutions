@@ -1277,7 +1277,9 @@ body {
 }
 
 body.services-open .nav-top,
-body.services-open .nav-isotipo {
+body.services-open .nav-isotipo,
+body.services-open header {
+  z-index: 0 !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
@@ -1409,7 +1411,7 @@ body.services-open .nav-isotipo {
 
 <!-- MOBILE SERVICES SUB-PANEL -->
 <div id="mobileServicesPanel" style="
-  position:fixed;inset:0;z-index:1001;
+  position:fixed;inset:0;z-index:9999;
   background:rgba(13,26,32,.97);
   backdrop-filter:blur(20px);
   display:flex;flex-direction:column;
