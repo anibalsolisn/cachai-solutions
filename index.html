@@ -1809,22 +1809,10 @@ body {
     slideEls[prev].classList.add('exit');
     setTimeout(() => {
       slideEls[prev].classList.remove('exit');
-      // Reset posición para próxima vez
-      slideEls[prev].style.transition = 'none';
-      slideEls[prev].style.transform = 'translateX(100%)';
-      setTimeout(() => {
-        slideEls[prev].style.transition = '';
-        slideEls[prev].style.transform = '';
-      }, 50);
     }, 950);
 
-    // Slide entrante — viene de la derecha, resetear primero si venía de exit
-    slideEls[idx].style.transition = 'none';
-    slideEls[idx].style.transform = 'translateX(100%)';
-    setTimeout(() => {
-      slideEls[idx].style.transition = '';
-      slideEls[idx].classList.add('active');
-    }, 20);
+    // Slide entrante — viene de la derecha
+    slideEls[idx].classList.add('active');
     const vid = slideEls[idx].querySelector('video');
     if (vid) { vid.currentTime = 0; vid.play(); }
 
