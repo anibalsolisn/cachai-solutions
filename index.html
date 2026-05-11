@@ -1839,14 +1839,20 @@ const THRESHOLD = 80;
 
 function updateNav() {
   const y = window.scrollY;
+  const isMobile = window.innerWidth <= 960;
   if (y > THRESHOLD) {
     navTop.classList.add('hidden');
     navPill.classList.add('pill-visible');
     navIsotipo.classList.add('visible');
   } else {
     navTop.classList.remove('hidden');
-    navPill.classList.remove('pill-visible');
     navIsotipo.classList.remove('visible');
+    // En mobile la pill siempre visible
+    if (!isMobile) {
+      navPill.classList.remove('pill-visible');
+    } else {
+      navPill.classList.add('pill-visible');
+    }
   }
   // Adaptar color del isotipo según fondo
   // Detecta el elemento debajo del isotipo
@@ -1861,6 +1867,7 @@ function updateNav() {
   }
 }
 window.addEventListener('scroll', updateNav);
+window.addEventListener('resize', updateNav);
 updateNav();
 
 /* ── MOBILE MENU ── */
