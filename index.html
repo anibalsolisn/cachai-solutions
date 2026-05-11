@@ -1201,7 +1201,7 @@ body {
 
 .mega-panel {
   position: fixed;
-  top: 72px; left: 0; right: 0;
+  top: auto; bottom: 80px; left: 0; right: 0;
   background: rgba(13,30,42,.97);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255,255,255,.08);
@@ -1261,6 +1261,28 @@ body {
   /* En mobile el mega menu no existe — se reemplaza por el mobile menu */
   .nav-mega-wrap { display: none; }
   .mega-panel { display: none !important; }
+}
+
+@media (min-width: 961px) {
+  .mega-panel {
+    top: 72px !important;
+    bottom: auto !important;
+  }
+  .mega-inner {
+    padding: 0;
+  }
+}
+@media (max-width: 960px) {
+  .mega-panel {
+    bottom: 80px !important;
+    top: auto !important;
+    padding: 32px 24px;
+  }
+  .mega-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 100%;
+  }
 }
 </style>
 </head>
@@ -1370,7 +1392,12 @@ body {
     <li><a href="#casos">Casos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#faq">Faq</a></li>
-    <li><a href="#servicios">Servicios</a></li>
+    <li class="nav-mega-wrap" id="navMegaWrapPill">
+      <button class="nav-mega-trigger" onclick="toggleMega()">
+        Servicios
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </li>
   </ul>
   <div class="nav-cta-wrap">
     <a href="#contacto" class="nav-cta">Probemos juntos</a>
@@ -1998,16 +2025,23 @@ body {
 /* ── MEGA MENU ── */
 function toggleMega() {
   const panel = document.getElementById('megaPanel');
-  const wrap = document.getElementById('navMegaWrap');
+  const wrap1 = document.getElementById('navMegaWrap');
+  const wrap2 = document.getElementById('navMegaWrapPill');
   panel.classList.toggle('open');
-  wrap.classList.toggle('open');
+  if (wrap1) wrap1.classList.toggle('open');
+  if (wrap2) wrap2.classList.toggle('open');
 }
 document.addEventListener('click', function(e) {
   const panel = document.getElementById('megaPanel');
-  const wrap = document.getElementById('navMegaWrap');
-  if (panel && !panel.contains(e.target) && !wrap.contains(e.target)) {
-    panel.classList.remove('open');
-    wrap.classList.remove('open');
+  const wrap1 = document.getElementById('navMegaWrap');
+  const wrap2 = document.getElementById('navMegaWrapPill');
+  const clickedInside = (wrap1 && wrap1.contains(e.target)) ||
+                        (wrap2 && wrap2.contains(e.target)) ||
+                        (panel && panel.contains(e.target));
+  if (!clickedInside) {
+    if (panel) panel.classList.remove('open');
+    if (wrap1) wrap1.classList.remove('open');
+    if (wrap2) wrap2.classList.remove('open');
   }
 });
 
