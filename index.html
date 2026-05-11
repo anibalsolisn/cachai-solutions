@@ -1182,11 +1182,162 @@ body {
 .hero-srv a {
   cursor: pointer !important;
 }
+
+/* ── MEGA MENU ── */
+.nav-mega-wrap {
+  position: relative;
+}
+.nav-mega-trigger {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 13px; font-weight: 400; color: rgba(232,248,252,.8);
+  text-decoration: none; padding: 8px 16px;
+  cursor: pointer; background: none; border: none;
+  font-family: 'Onest', sans-serif;
+  transition: color .2s;
+}
+.nav-mega-trigger:hover { color: #e8f8fc; }
+.nav-mega-trigger svg { transition: transform .2s; }
+.nav-mega-wrap.open .nav-mega-trigger svg { transform: rotate(180deg); }
+
+.mega-panel {
+  position: fixed;
+  top: 72px; left: 0; right: 0;
+  background: rgba(13,30,42,.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  padding: 48px 80px;
+  display: none;
+  z-index: 600;
+  animation: megaFadeIn .2s ease;
+}
+.mega-panel.open { display: block; }
+@keyframes megaFadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+.mega-inner {
+  max-width: 900px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+.mega-col-title {
+  font-size: 10px; font-weight: 600; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(255,255,255,.3);
+  margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
+}
+.mega-col-title::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.08); }
+.mega-links { display: flex; flex-direction: column; gap: 4px; }
+.mega-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border-radius: 4px;
+  text-decoration: none;
+  transition: background .15s;
+  group: true;
+}
+.mega-link:hover { background: rgba(255,255,255,.06); }
+.mega-link-info {}
+.mega-link-title {
+  font-size: 15px; font-weight: 400; color: #e8f8fc;
+  font-family: 'Onest', sans-serif;
+  transition: color .15s;
+}
+.mega-link:hover .mega-link-title { color: #7de0f0; }
+.mega-link-desc {
+  font-size: 12px; color: rgba(255,255,255,.35);
+  margin-top: 2px;
+}
+.mega-link-arrow {
+  color: rgba(255,255,255,.2); font-size: 16px;
+  transition: transform .15s, color .15s;
+}
+.mega-link:hover .mega-link-arrow { transform: translateX(4px); color: #7de0f0; }
+.mega-link-soon {
+  font-size: 10px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.06);
+  padding: 2px 8px; border-radius: 2px;
+}
+
+/* Mega menu responsive */
+@media (max-width: 960px) {
+  /* En mobile el mega menu no existe — se reemplaza por el mobile menu */
+  .nav-mega-wrap { display: none; }
+  .mega-panel { display: none !important; }
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
+
+<!-- MEGA MENU PANEL -->
+<div class="mega-panel" id="megaPanel">
+  <div class="mega-inner">
+
+    <!-- CONSTRUIR -->
+    <div>
+      <div class="mega-col-title">Construir</div>
+      <div class="mega-links">
+        <a href="shopify.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Ecommerce &amp; Shopify</div>
+            <div class="mega-link-desc">Desarrollo, UX/UI y optimización de tiendas</div>
+          </div>
+          <span class="mega-link-arrow">→</span>
+        </a>
+        <a href="migrations.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Migraciones a Shopify</div>
+            <div class="mega-link-desc">Cambio de plataforma sin perder nada</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+        <a href="shopify-plus.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Shopify Plus</div>
+            <div class="mega-link-desc">Soluciones enterprise para marcas que escalan</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- CRECER -->
+    <div>
+      <div class="mega-col-title">Crecer</div>
+      <div class="mega-links">
+        <a href="growth.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Growth Marketing</div>
+            <div class="mega-link-desc">Meta Ads, Google Ads y estrategia de adquisición</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+        <a href="email.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Email Marketing</div>
+            <div class="mega-link-desc">Klaviyo, flujos y retención de clientes</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+        <a href="seo.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">SEO Ecommerce</div>
+            <div class="mega-link-desc">Posicionamiento orgánico para tiendas online</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+        <a href="analytics.html" class="mega-link">
+          <div class="mega-link-info">
+            <div class="mega-link-title">Analytics &amp; Data</div>
+            <div class="mega-link-desc">Dashboards y decisiones basadas en datos</div>
+          </div>
+          <span class="mega-link-soon">Próximo</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- NAV TOP (visible al inicio) -->
 <header class="nav-top" id="navTop">
   <a href="#" class="nav-top-logo">
@@ -1196,7 +1347,12 @@ body {
     <li><a href="#casos">Casos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="shopify.html">Servicios</a></li>
+    <li class="nav-mega-wrap" id="navMegaWrap">
+      <button class="nav-mega-trigger" onclick="toggleMega()">
+        Servicios
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </li>
   </ul>
   <a href="#contacto" class="nav-top-cta">Probemos juntos</a>
 </header>
@@ -1233,7 +1389,15 @@ body {
   <a href="#casos" onclick="toggleMobile()">Casos</a>
   <a href="#nosotros" onclick="toggleMobile()">Nosotros</a>
   <a href="#faq" onclick="toggleMobile()">Faq</a>
-  <a href="shopify.html" onclick="toggleMobile()">Servicios</a>
+  <div style="padding:14px 20px;font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(232,248,252,.3);text-transform:uppercase;border-bottom:1px solid rgba(125,205,232,.08);">Construir</div>
+  <a href="shopify.html" onclick="toggleMobile()" style="padding-left:32px;">Ecommerce &amp; Shopify</a>
+  <a href="migrations.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Migraciones <span style="font-size:10px;">Próximo</span></a>
+  <a href="shopify-plus.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Shopify Plus <span style="font-size:10px;">Próximo</span></a>
+  <div style="padding:14px 20px;font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(232,248,252,.3);text-transform:uppercase;border-bottom:1px solid rgba(125,205,232,.08);">Crecer</div>
+  <a href="growth.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Growth Marketing <span style="font-size:10px;">Próximo</span></a>
+  <a href="email.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Email Marketing <span style="font-size:10px;">Próximo</span></a>
+  <a href="seo.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">SEO Ecommerce <span style="font-size:10px;">Próximo</span></a>
+  <a href="analytics.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Analytics &amp; Data <span style="font-size:10px;">Próximo</span></a>
 
 </div>
 
@@ -1829,6 +1993,23 @@ body {
 
 
 /* scroll bg removed */
+
+
+/* ── MEGA MENU ── */
+function toggleMega() {
+  const panel = document.getElementById('megaPanel');
+  const wrap = document.getElementById('navMegaWrap');
+  panel.classList.toggle('open');
+  wrap.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const panel = document.getElementById('megaPanel');
+  const wrap = document.getElementById('navMegaWrap');
+  if (panel && !panel.contains(e.target) && !wrap.contains(e.target)) {
+    panel.classList.remove('open');
+    wrap.classList.remove('open');
+  }
+});
 
 /* ── NAV SCROLL ── */
 const navTop = document.getElementById('navTop');
