@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopify Development — Cachai Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --bg:       #ffffff;
+  --dark:     #0d1e2a;
+  --teal:     #2a5f72;
+  --teal2:    #1e4a5a;
+  --accent:   #7de0f0;
+  --grey:     #6b8a96;
+  --line:     rgba(13,30,42,.1);
+  --white:    #ffffff;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; overflow-x: hidden; }
+body {
+  font-family: 'Onest', sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* ── NAV (igual que el home) ── */
+.nav-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 502;
+  height: 72px; padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-logo img { height: 32px; display: block; }
+.nav-links { display: flex; gap: 0; list-style: none; }
+.nav-links a {
+  font-size: 13px; font-weight: 400; color: var(--grey);
+  text-decoration: none; padding: 8px 16px;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--dark); }
+.nav-cta {
+  background: var(--dark); color: var(--white) !important;
+  padding: 10px 22px; border-radius: 4px;
+  font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: background .2s;
+}
+.nav-cta:hover { background: var(--teal); }
+
+/* ── HERO PAGE ── */
+.page-hero {
+  min-height: 100vh;
+  background: var(--teal2);
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 120px 80px 80px;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 80% 50%, rgba(125,224,240,.12) 0%, transparent 70%);
+}
+.page-hero-tag {
+  font-size: 11px; font-weight: 500; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--accent);
+  margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+}
+.page-hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); }
+.page-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 7vw, 110px);
+  font-weight: 400; line-height: .95;
+  color: var(--white); max-width: 900px;
+  margin-bottom: 40px;
+}
+.page-hero-title em { font-style: italic; color: var(--accent); }
+.page-hero-bottom {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  border-top: 1px solid rgba(255,255,255,.15);
+  padding-top: 32px; gap: 40px; flex-wrap: wrap;
+}
+.page-hero-desc {
+  font-size: 16px; color: rgba(255,255,255,.6);
+  max-width: 480px; line-height: 1.75;
+}
+.page-hero-stats { display: flex; gap: 48px; }
+.ph-stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 400; color: var(--white); line-height: 1;
+}
+.ph-stat-l { font-size: 11px; color: rgba(255,255,255,.4); letter-spacing: .1em; margin-top: 4px; }
+
+/* ── INTRO STRIP ── */
+.intro-strip {
+  background: var(--white);
+  padding: 100px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.intro-label {
+  font-size: 11px; font-weight: 500; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+}
+.intro-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--teal); }
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 400; line-height: 1.15;
+  color: var(--dark);
+}
+.intro-title em { font-style: italic; color: var(--teal); }
+.intro-text { font-size: 16px; color: var(--grey); line-height: 1.8; }
+.intro-text strong { color: var(--dark); font-weight: 500; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--dark); color: var(--white);
+  padding: 14px 28px; border-radius: 4px;
+  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  text-decoration: none; margin-top: 32px;
+  transition: background .2s, transform .15s;
+}
+.btn-primary:hover { background: var(--teal); transform: translateY(-2px); }
+.btn-primary svg { width: 14px; height: 14px; }
+
+/* ── SERVICES LIST ── */
+.services-section { background: var(--white); }
+.service-item {
+  display: grid; grid-template-columns: 80px 1fr 1fr;
+  gap: 0; padding: 64px 80px;
+  border-bottom: 1px solid var(--line);
+  transition: background .3s;
+  position: relative;
+}
+.service-item:hover { background: #f7fbfc; }
+.service-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px; color: var(--grey); padding-top: 6px;
+  letter-spacing: .04em;
+}
+.service-left { padding-right: 60px; }
+.service-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400; color: var(--dark);
+  line-height: 1.1; margin-bottom: 16px;
+}
+.service-title em { font-style: italic; color: var(--teal); }
+.service-tagline {
+  font-size: 14px; font-weight: 500; color: var(--teal);
+  font-style: italic; margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+}
+.service-desc { font-size: 14px; color: var(--grey); line-height: 1.8; }
+.service-right { padding-left: 60px; border-left: 1px solid var(--line); }
+.service-includes {
+  font-size: 11px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--grey);
+  margin-bottom: 20px;
+}
+.service-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.service-list li {
+  font-size: 14px; color: var(--dark);
+  display: flex; align-items: center; gap: 12px;
+}
+.service-list li::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--teal); flex-shrink: 0;
+}
+/* Migrations special */
+.service-item.migration {
+  background: var(--teal2);
+  color: var(--white);
+}
+.service-item.migration:hover { background: var(--teal); }
+.service-item.migration .service-num { color: rgba(255,255,255,.4); }
+.service-item.migration .service-title { color: var(--white); }
+.service-item.migration .service-tagline { color: var(--accent); }
+.service-item.migration .service-desc { color: rgba(255,255,255,.6); }
+.service-item.migration .service-right { border-left-color: rgba(255,255,255,.15); }
+.service-item.migration .service-includes { color: rgba(255,255,255,.4); }
+.service-item.migration .service-list li { color: rgba(255,255,255,.85); }
+.service-item.migration .service-list li::before { background: var(--accent); }
+.btn-migration {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--dark);
+  padding: 14px 28px; border-radius: 4px;
+  font-size: 13px; font-weight: 600; letter-spacing: .04em;
+  text-decoration: none; margin-top: 32px;
+  transition: background .2s;
+}
+.btn-migration:hover { background: var(--accent); }
+
+/* ── CTA FINAL ── */
+.cta-final {
+  background: var(--dark);
+  padding: 120px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: '';
+  position: absolute; top: -100px; right: -100px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(125,224,240,.1) 0%, transparent 70%);
+}
+.cta-final-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4vw, 64px);
+  font-weight: 400; color: var(--white);
+  line-height: 1.1;
+}
+.cta-final-title em { font-style: italic; color: var(--accent); }
+.cta-final-text { font-size: 16px; color: rgba(255,255,255,.5); line-height: 1.75; margin-bottom: 32px; }
+.cta-checks { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.cta-check { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(255,255,255,.7); }
+.cta-check::before {
+  content: '✓'; width: 22px; height: 22px;
+  background: rgba(125,224,240,.15); color: var(--accent);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+  line-height: 22px; text-align: center;
+}
+.cta-form { display: flex; flex-direction: column; gap: 14px; }
+.cta-input {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 4px; padding: 14px 18px;
+  color: var(--white); font-size: 14px; font-family: 'Onest', sans-serif;
+  outline: none; transition: border-color .2s;
+}
+.cta-input::placeholder { color: rgba(255,255,255,.25); }
+.cta-input:focus { border-color: rgba(125,224,240,.4); }
+.cta-submit {
+  background: var(--accent); color: var(--dark);
+  border: none; border-radius: 4px; padding: 16px;
+  font-family: 'Onest', sans-serif; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: transform .15s, opacity .2s;
+  letter-spacing: .04em;
+}
+.cta-submit:hover { transform: translateY(-2px); opacity: .9; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--teal2);
+  padding: 48px 80px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.footer-logo img { height: 32px; filter: brightness(0) invert(1); }
+.footer-links { display: flex; gap: 32px; list-style: none; }
+.footer-links a { font-size: 13px; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,.25); }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .page-hero { padding: 100px 32px 64px; }
+  .intro-strip { grid-template-columns: 1fr; gap: 40px; padding: 64px 32px; }
+  .service-item { grid-template-columns: 40px 1fr; padding: 48px 32px; gap: 0; }
+  .service-right { grid-column: 2; padding-left: 0; border-left: none; border-top: 1px solid var(--line); padding-top: 32px; margin-top: 32px; }
+  .service-item.migration .service-right { border-top-color: rgba(255,255,255,.15); }
+  .cta-final { grid-template-columns: 1fr; padding: 64px 32px; gap: 48px; }
+  footer { flex-direction: column; gap: 24px; padding: 40px 32px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+  .nav-links { display: none; }
+  .nav-top { padding: 0 20px; }
+  .page-hero-stats { gap: 32px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-top">
+  <a href="index.html" class="nav-logo">
+    <img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#casos">Casos</a></li>
+    <li><a href="index.html#nosotros">Nosotros</a></li>
+    <li><a href="index.html#faq">FAQ</a></li>
+    <li><a href="shopify.html" style="color:var(--dark);font-weight:600;">Shopify</a></li>
+  </ul>
+  <a href="index.html#contacto" class="nav-cta">Probemos juntos</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-tag">Servicios Shopify</div>
+  <h1 class="page-hero-title">
+    Construimos tiendas que<br><em>realmente venden</em>
+  </h1>
+  <div class="page-hero-bottom">
+    <p class="page-hero-desc">Desarrollo técnico en Shopify con obsesión por la conversión. Desde el diseño hasta el checkout — cada decisión está tomada para que tu tienda venda más.</p>
+    <div class="page-hero-stats">
+      <div>
+        <div class="ph-stat-n">+80</div>
+        <div class="ph-stat-l">Tiendas construidas</div>
+      </div>
+      <div>
+        <div class="ph-stat-n">+62%</div>
+        <div class="ph-stat-l">Conversión media</div>
+      </div>
+      <div>
+        <div class="ph-stat-n">90d</div>
+        <div class="ph-stat-l">Para ver resultados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro-strip reveal">
+  <div>
+    <div class="intro-label">Por qué Cachai</div>
+    <h2 class="intro-title">Especializados en crear experiencias que son tanto <em>estratégicas</em> como efectivas</h2>
+  </div>
+  <div>
+    <p class="intro-text">La mayoría de las agencias construyen tiendas bonitas. Nosotros construimos tiendas que convierten. <strong>Cada decisión de diseño y desarrollo está respaldada por datos</strong> — no por intuición ni por tendencias del momento.</p>
+    <p class="intro-text" style="margin-top:16px;">Trabajamos con marcas que ya venden y quieren vender más. Desde el primer píxel hasta el último paso del checkout, todo está optimizado para un objetivo: revenue.</p>
+    <a href="index.html#contacto" class="btn-primary">
+      Hablemos de tu tienda
+      <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+
+  <!-- 01 Shopify Development -->
+  <div class="service-item reveal">
+    <div class="service-num">01</div>
+    <div class="service-left">
+      <h3 class="service-title">Shopify<br><em>Development</em></h3>
+      <div class="service-tagline">"No construimos tiendas. Construimos máquinas de revenue."</div>
+      <p class="service-desc">Desarrollo custom en Shopify desde cero — temas a medida, integraciones y arquitectura técnica construida para escalar. Cada línea de código tiene un propósito: convertir.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Desarrollo de temas custom en Liquid</li>
+        <li>Integraciones con apps y APIs de terceros</li>
+        <li>Optimización de velocidad y rendimiento</li>
+        <li>Mobile-first desde el primer día</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 02 UX/UI Design -->
+  <div class="service-item reveal">
+    <div class="service-num">02</div>
+    <div class="service-left">
+      <h3 class="service-title">UX/UI<br><em>Design</em></h3>
+      <div class="service-tagline">"Tu tienda tiene 3 segundos para convencer. Lo que diseñamos convence."</div>
+      <p class="service-desc">Experiencias de compra que guían al usuario de forma intuitiva desde el primer clic hasta el checkout. Diseño que no solo se ve bien — vende.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Investigación y auditoría UX de tu tienda</li>
+        <li>Wireframes y prototipos interactivos</li>
+        <li>Diseño de checkout y flujos de conversión</li>
+        <li>Pruebas A/B de elementos clave</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 03 Shopify Plus -->
+  <div class="service-item reveal">
+    <div class="service-num">03</div>
+    <div class="service-left">
+      <h3 class="service-title">Shopify<br><em>Plus</em></h3>
+      <div class="service-tagline">"Para las marcas que ya crecieron y necesitan más."</div>
+      <p class="service-desc">Implementación enterprise en Shopify Plus con flujos automatizados, checkout personalizado y arquitectura multi-mercado. Para marcas que facturan en serio.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Checkout extensible y personalizado</li>
+        <li>Automatizaciones con Shopify Flow</li>
+        <li>Multi-moneda y multi-idioma</li>
+        <li>Planificación de campañas y lanzamientos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 04 Integraciones -->
+  <div class="service-item reveal">
+    <div class="service-num">04</div>
+    <div class="service-left">
+      <h3 class="service-title">Integraciones<br><em>y Apps</em></h3>
+      <div class="service-tagline">"Tu conjunto de herramientas, funcionando en perfecta armonía."</div>
+      <p class="service-desc">Conectamos tu tienda con Klaviyo, Gorgias, Recharge, NetSuite y cualquier herramienta de tu ecosistema. Sin fricciones, sin datos perdidos.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Sistemas de gestión y ERP</li>
+        <li>Email marketing y CRM</li>
+        <li>Pagos, suscripciones y fidelización</li>
+        <li>Integraciones headless y APIs personalizadas</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 05 Performance -->
+  <div class="service-item reveal">
+    <div class="service-num">05</div>
+    <div class="service-left">
+      <h3 class="service-title">Optimización de<br><em>Rendimiento</em></h3>
+      <div class="service-tagline">"Una tienda lenta pierde ventas. Así de simple."</div>
+      <p class="service-desc">Auditamos y optimizamos la velocidad, el SEO técnico y el rendimiento de tu tienda para que cada visita tenga las máximas probabilidades de convertir.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Auditoría técnica completa</li>
+        <li>Optimización de imágenes y recursos</li>
+        <li>Mejoras de velocidad de carga</li>
+        <li>SEO técnico en página</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 06 Migrations -->
+  <div class="service-item migration reveal">
+    <div class="service-num">06</div>
+    <div class="service-left">
+      <h3 class="service-title">Migraciones<br><em>a Shopify</em></h3>
+      <div class="service-tagline">"Cambiar de plataforma no tiene que ser un caos."</div>
+      <p class="service-desc">Migramos tu tienda desde cualquier plataforma a Shopify sin perder datos, posicionamiento ni ventas en el proceso. Un servicio tan importante que le dedicamos su propia página.</p>
+      <a href="migrations.html" class="btn-migration">
+        Ver página de Migraciones
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Migración de productos y clientes</li>
+        <li>Preservación del SEO y URLs</li>
+        <li>Redirecciones y auditoría post-migración</li>
+        <li>Cero downtime garantizado</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="reveal">
+    <h2 class="cta-final-title">¿Listo para construir algo <em>que venda de verdad?</em></h2>
+    <div class="cta-checks" style="margin-top:32px;">
+      <div class="cta-check">Sin costo ni compromiso</div>
+      <div class="cta-check">Análisis previo de tu tienda</div>
+      <div class="cta-check">Respuesta en menos de 24h</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="cta-final-text">Agendemos una llamada de 30 minutos. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="text" placeholder="Tu nombre">
+      <input class="cta-input" type="email" placeholder="tu@empresa.com">
+      <select class="cta-input" style="-webkit-appearance:none;cursor:pointer;">
+        <option value="" disabled selected>¿Qué necesitas?</option>
+        <option>Shopify Development</option>
+        <option>UX/UI Design</option>
+        <option>Shopify Plus</option>
+        <option>Integraciones y Apps</option>
+        <option>Optimización de Rendimiento</option>
+        <option>Migración a Shopify</option>
+      </select>
+      <button class="cta-submit" onclick="this.textContent='✓ ¡Listo! Te contactamos pronto'; this.disabled=true;">Probemos juntos →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo_cachaisolutions_blanco.svg" alt="Cachai Solutions">
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="shopify.html">Shopify</a></li>
+    <li><a href="migrations.html">Migraciones</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Cachai Solutions</div>
+</footer>
+
+<script>
+/* Reveal on scroll */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 100);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
