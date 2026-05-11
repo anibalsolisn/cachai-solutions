@@ -1273,16 +1273,7 @@ body {
   }
 }
 @media (max-width: 960px) {
-  .mega-panel {
-    bottom: 80px !important;
-    top: auto !important;
-    padding: 32px 24px;
-  }
-  .mega-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    max-width: 100%;
-  }
+  .mega-panel { display: none !important; }
 }
 </style>
 </head>
@@ -1408,6 +1399,81 @@ body {
   <a href="#contacto" class="nav-pill-btn">Probemos juntos →</a>
 </nav>
 
+
+<!-- MOBILE SERVICES SUB-PANEL -->
+<div id="mobileServicesPanel" style="
+  position:fixed;inset:0;z-index:1001;
+  background:rgba(13,26,32,.97);
+  backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+  pointer-events:none;
+">
+  <!-- Header -->
+  <div style="display:flex;align-items:center;gap:12px;padding:0 20px;height:64px;border-bottom:1px solid rgba(125,205,232,.08);flex-shrink:0;">
+    <button onclick="closeMobileServices()" style="background:none;border:none;cursor:pointer;color:#e8f8fc;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:500;font-family:'Onest',sans-serif;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Servicios
+    </button>
+  </div>
+  <!-- Content -->
+  <div style="flex:1;overflow-y:auto;padding:24px 20px;">
+    <!-- CONSTRUIR -->
+    <div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px;padding:0 4px;">Construir</div>
+    <a href="shopify.html" style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;text-decoration:none;margin-bottom:4px;background:rgba(255,255,255,.04);">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Ecommerce &amp; Shopify</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Desarrollo, UX/UI y optimización</div>
+      </div>
+      <span style="color:rgba(255,255,255,.3);">→</span>
+    </a>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:4px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Migraciones a Shopify</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Cambio de plataforma sin perder nada</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:24px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Shopify Plus</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Soluciones enterprise</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+    <!-- CRECER -->
+    <div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px;padding:0 4px;">Crecer</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:4px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Growth Marketing</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Meta Ads, Google Ads y adquisición</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:4px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Email Marketing</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Klaviyo, flujos y retención</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:4px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">SEO Ecommerce</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Posicionamiento orgánico</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px;border-radius:6px;margin-bottom:4px;opacity:.45;">
+      <div>
+        <div style="font-size:15px;font-weight:500;color:#e8f8fc;">Analytics &amp; Data</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:2px;">Dashboards y decisiones con datos</div>
+      </div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.3);background:rgba(255,255,255,.06);padding:2px 8px;border-radius:2px;">Próximo</span>
+    </div>
+  </div>
+</div>
 <!-- MOBILE MENU OVERLAY -->
 <div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
 
@@ -1416,15 +1482,7 @@ body {
   <a href="#casos" onclick="toggleMobile()">Casos</a>
   <a href="#nosotros" onclick="toggleMobile()">Nosotros</a>
   <a href="#faq" onclick="toggleMobile()">Faq</a>
-  <div style="padding:14px 20px;font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(232,248,252,.3);text-transform:uppercase;border-bottom:1px solid rgba(125,205,232,.08);">Construir</div>
-  <a href="shopify.html" onclick="toggleMobile()" style="padding-left:32px;">Ecommerce &amp; Shopify</a>
-  <a href="migrations.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Migraciones <span style="font-size:10px;">Próximo</span></a>
-  <a href="shopify-plus.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Shopify Plus <span style="font-size:10px;">Próximo</span></a>
-  <div style="padding:14px 20px;font-size:11px;font-weight:600;letter-spacing:.14em;color:rgba(232,248,252,.3);text-transform:uppercase;border-bottom:1px solid rgba(125,205,232,.08);">Crecer</div>
-  <a href="growth.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Growth Marketing <span style="font-size:10px;">Próximo</span></a>
-  <a href="email.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Email Marketing <span style="font-size:10px;">Próximo</span></a>
-  <a href="seo.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">SEO Ecommerce <span style="font-size:10px;">Próximo</span></a>
-  <a href="analytics.html" onclick="toggleMobile()" style="padding-left:32px;opacity:.5;">Analytics &amp; Data <span style="font-size:10px;">Próximo</span></a>
+  <button class="mobile-nav-link" onclick="openMobileServices()" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:'Onest',sans-serif;font-size:15px;font-weight:500;color:#e8f8fc;padding:14px 20px;border-bottom:1px solid rgba(125,205,232,.08);">Servicios <span style="opacity:.5;">›</span></button>
 
 </div>
 
@@ -2086,6 +2144,18 @@ window.addEventListener('resize', updateNav);
 updateNav();
 
 /* ── MOBILE MENU ── */
+
+function openMobileServices() {
+  const panel = document.getElementById('mobileServicesPanel');
+  panel.style.transform = 'translateX(0)';
+  panel.style.pointerEvents = 'all';
+}
+function closeMobileServices() {
+  const panel = document.getElementById('mobileServicesPanel');
+  panel.style.transform = 'translateX(100%)';
+  panel.style.pointerEvents = 'none';
+}
+
 function toggleMobile() {
   const menu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('mobileOverlay');
