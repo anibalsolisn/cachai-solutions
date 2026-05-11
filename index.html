@@ -1050,24 +1050,16 @@ body {
 }
 .hero-slide {
   position: absolute; inset: 0;
-  transform: translateX(100%);
+  opacity: 0;
   pointer-events: none;
   overflow: hidden;
 }
-.hero-slide.ready {
-  transition: transform .9s cubic-bezier(.77,0,.18,1);
-}
 .hero-slide.active {
-  transform: translateX(0);
+  opacity: 1;
   pointer-events: all;
 }
 .hero-slide.exit {
-  transform: translateX(-100%);
-  transition: transform .9s cubic-bezier(.77,0,.18,1);
-}
-/* Slide inicial sin animación */
-.hero-slide.active.no-anim {
-  transition: none !important;
+  opacity: 0;
 }
 
 /* Progress bars */
@@ -1773,25 +1765,16 @@ body {
       title.style.transform = 'translateY(0)';
       return;
     }
-    // Sincronizado con el slide — sale hacia izquierda, entra desde derecha
-    title.style.transition = 'opacity .4s ease, transform .5s cubic-bezier(.77,0,.18,1)';
-    title.style.opacity = '0';
-    title.style.transform = 'translateX(-40px)';
-    setTimeout(() => {
-      line1.textContent = s.lines[0];
-      line2.textContent = s.lines[1];
-      line3.textContent = s.lines[2];
-      srvTitle.textContent = s.srv.title;
-      srvNum.textContent = s.srv.num;
-      srvDesc.textContent = s.srv.desc;
-      title.style.transform = 'translateX(40px)';
-      title.style.transition = 'none';
-      setTimeout(() => {
-        title.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.77,0,.18,1)';
-        title.style.opacity = '1';
-        title.style.transform = 'translateX(0)';
-      }, 30);
-    }, 350);
+    // Cambio instantáneo de texto
+    line1.textContent = s.lines[0];
+    line2.textContent = s.lines[1];
+    line3.textContent = s.lines[2];
+    srvTitle.textContent = s.srv.title;
+    srvNum.textContent = s.srv.num;
+    srvDesc.textContent = s.srv.desc;
+    title.style.transition = 'none';
+    title.style.opacity = '1';
+    title.style.transform = 'none';
   }
 
   function goToSlide(idx) {
@@ -1804,15 +1787,13 @@ body {
     bars.forEach(b => { b.classList.remove('animating', 'done'); });
     for (let i = 0; i < idx; i++) bars[i].classList.add('done');
 
-    // Slide saliente — va a la izquierda
+    // Slide saliente
     slideEls[prev].classList.remove('active');
-    slideEls[prev].classList.add('exit');
-    setTimeout(() => {
-      slideEls[prev].classList.remove('exit');
-    }, 950);
 
-    // Slide entrante — viene de la derecha
+    // Slide entrante — corte directo
     slideEls[idx].classList.add('active');
+    const vid = slideEls[idx].querySelector('video');
+    if (vid) { vid.currentTime = 0; vid.play(); }
     const vid = slideEls[idx].querySelector('video');
     if (vid) { vid.currentTime = 0; vid.play(); }
 
@@ -1835,27 +1816,11 @@ body {
 
   // Start — primer slide sin animación
   document.addEventListener('DOMContentLoaded', () => {
-    slideEls[0].classList.add('no-anim');
     slideEls[0].classList.add('active');
     updateContent(0, true);
-    // Activar barras
     bars[0].style.setProperty('--slide-duration', DURATION + 'ms');
-    setTimeout(() => {
-      bars[0].classList.add('animating');
-      // Habilitar transiciones después del primer frame
-      setTimeout(() => {
-        slideEls[0].classList.remove('no-anim');
-        slideEls[0].classList.add('ready');
-      }, 100);
-    }, 50);
-    // Marcar slides 1 y 2 como ready para animación
-    setTimeout(() => {
-      slideEls[1].classList.add('ready');
-      slideEls[2].classList.add('ready');
-    }, 100);
-    timer = setTimeout(() => {
-      goToSlide(1);
-    }, DURATION);
+    setTimeout(() => bars[0].classList.add('animating'), 50);
+    timer = setTimeout(() => goToSlide(1), DURATION);
   });
 })();
 
@@ -1993,4 +1958,3 @@ function submitForm() {
 </script>
 </body>
 </html>
-
