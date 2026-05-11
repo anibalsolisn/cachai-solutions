@@ -1275,6 +1275,13 @@ body {
 @media (max-width: 960px) {
   .mega-panel { display: none !important; }
 }
+
+body.services-open .nav-top,
+body.services-open .nav-isotipo {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 </style>
 </head>
 <body>
@@ -2149,23 +2156,13 @@ function openMobileServices() {
   const panel = document.getElementById('mobileServicesPanel');
   panel.style.transform = 'translateX(0)';
   panel.style.pointerEvents = 'all';
-  const isotipo = document.getElementById('navIsotipo');
-  const navTop = document.getElementById('navTop');
-  const navTopLogo = document.querySelector('.nav-top-logo');
-  if (isotipo) { isotipo.style.opacity = '0'; isotipo.style.visibility = 'hidden'; }
-  if (navTop) { navTop.style.opacity = '0'; navTop.style.visibility = 'hidden'; }
-  if (navTopLogo) { navTopLogo.style.opacity = '0'; navTopLogo.style.visibility = 'hidden'; }
+  document.body.classList.add('services-open');
 }
 function closeMobileServices() {
   const panel = document.getElementById('mobileServicesPanel');
   panel.style.transform = 'translateX(100%)';
   panel.style.pointerEvents = 'none';
-  const isotipo = document.getElementById('navIsotipo');
-  const navTop = document.getElementById('navTop');
-  const navTopLogo = document.querySelector('.nav-top-logo');
-  if (isotipo) { isotipo.style.opacity = ''; isotipo.style.visibility = ''; }
-  if (navTop) { navTop.style.opacity = ''; navTop.style.visibility = ''; }
-  if (navTopLogo) { navTopLogo.style.opacity = ''; navTopLogo.style.visibility = ''; }
+  document.body.classList.remove('services-open');
 }
 
 function toggleMobile() {
