@@ -2149,11 +2149,21 @@ function openMobileServices() {
   const panel = document.getElementById('mobileServicesPanel');
   panel.style.transform = 'translateX(0)';
   panel.style.pointerEvents = 'all';
+  // Ocultar isotipo y nav top logo
+  const isotipo = document.getElementById('navIsotipo');
+  const navTop = document.getElementById('navTop');
+  if (isotipo) isotipo.style.opacity = '0';
+  if (navTop) navTop.style.opacity = '0';
 }
 function closeMobileServices() {
   const panel = document.getElementById('mobileServicesPanel');
   panel.style.transform = 'translateX(100%)';
   panel.style.pointerEvents = 'none';
+  // Restaurar isotipo y nav top logo
+  const isotipo = document.getElementById('navIsotipo');
+  const navTop = document.getElementById('navTop');
+  if (isotipo) isotipo.style.opacity = '';
+  if (navTop) navTop.style.opacity = '';
 }
 
 function toggleMobile() {
