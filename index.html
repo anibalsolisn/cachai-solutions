@@ -43,7 +43,7 @@ body {
 /* ── NAV ── */
 /* ══ NAV TOP — aparece al inicio, desaparece al scroll ══ */
 .nav-top {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 601;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
   height: 72px; padding: 0 40px;
   display: flex; align-items: center; justify-content: space-between;
   transition: opacity .4s ease, transform .4s ease;
@@ -1265,9 +1265,9 @@ body {
 
 @media (min-width: 961px) {
   .mega-panel {
-    top: 72px !important;
+    top: 0 !important;
     bottom: auto !important;
-    padding: 48px 80px !important;
+    padding: 96px 80px 56px !important;
   }
 }
 @media (max-width: 960px) {
