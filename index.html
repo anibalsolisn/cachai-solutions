@@ -189,52 +189,7 @@ nav.scrolled {
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── MOBILE MENU ── */
-.mobile-menu-overlay {
-  position: fixed; inset: 0; z-index: 398;
-  background: rgba(5,18,26,.7);
-  backdrop-filter: blur(4px);
-  opacity: 0; pointer-events: none;
-  transition: opacity .35s ease;
-}
-.mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
 
-.mobile-menu {
-  position: fixed;
-  bottom: 90px; top: 80px; left: 16px; right: 16px;
-  z-index: 399;
-  overflow-y: auto;
-  background: rgba(30,74,90,.95);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(125,224,240,.15);
-  border-radius: 6px;
-  flex-direction: column;
-  padding: 24px 8px;
-  gap: 0;
-  display: flex;
-  transform: translateY(20px);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform .4s cubic-bezier(.16,1,.3,1), opacity .3s ease;
-}
-.mobile-menu.open {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: all;
-}
-.mobile-menu a {
-  font-family: 'Onest', sans-serif;
-  font-size: 13px; font-weight: 400;
-  letter-spacing: -.01em;
-  color: var(--white); text-decoration: none;
-  border-bottom: 1px solid rgba(125,224,240,.08);
-  padding: 14px 20px;
-  transition: color .2s, background .2s;
-  border-radius: 4px;
-}
-.mobile-menu a:last-of-type { border-bottom: none; }
-.mobile-menu a:hover { color: var(--green-lit); background: rgba(125,224,240,.06); }
-.mobile-menu-cta { display: none !important; }
 
 /* ── HERO ── */
 .rc-hero {
@@ -1297,6 +1252,86 @@ body.services-open nav {
     transform: rotate(180deg);
   }
 }
+
+/* ── MOBILE MENU ── */
+.mobile-menu-overlay {
+  display: none; position: fixed; inset: 0; z-index: 997;
+  background: rgba(0,0,0,.5);
+}
+.mobile-menu-overlay.open { display: block; }
+
+.mobile-menu {
+  position: fixed;
+  top: 80px; bottom: 90px;
+  left: 16px; right: 16px;
+  z-index: 998;
+  background: rgba(30,74,90,.97);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(125,224,240,.15);
+  border-radius: 6px;
+  overflow: hidden;
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.mobile-menu.open {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Paneles */
+.mmenu-panel {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+
+/* Links comunes */
+.mmenu-panel a,
+.mmenu-srv-btn,
+.mmenu-back-btn,
+.mmenu-item-disabled {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(125,205,232,.08);
+  font-family: 'Onest', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: #e8f8fc;
+  text-decoration: none;
+  background: none; border-left: none; border-right: none; border-top: none;
+  cursor: pointer; width: 100%; text-align: left;
+  transition: background .15s;
+}
+.mmenu-panel a:hover,
+.mmenu-srv-btn:hover { background: rgba(255,255,255,.05); }
+.mmenu-item-disabled { color: rgba(232,248,252,.35); cursor: default; }
+
+.mmenu-back-btn {
+  gap: 8px; justify-content: flex-start;
+  color: rgba(232,248,252,.7);
+  font-size: 12px;
+  border-bottom: 1px solid rgba(125,205,232,.15) !important;
+}
+.mmenu-back-btn:hover { background: rgba(255,255,255,.04); }
+
+.mmenu-section-title {
+  padding: 8px 20px;
+  font-size: 10px; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: rgba(232,248,252,.3);
+  border-bottom: 1px solid rgba(125,205,232,.08);
+  font-family: 'Onest', sans-serif;
+}
+.mmenu-arrow { color: rgba(232,248,252,.3); }
+.mmenu-soon {
+  font-size: 10px; font-weight: 600;
+  color: rgba(255,255,255,.25);
+  background: rgba(255,255,255,.06);
+  padding: 2px 7px; border-radius: 2px;
+  flex-shrink: 0;
+}
 </style>
 </head>
 <body>
@@ -1472,36 +1507,40 @@ body.services-open nav {
   </div>
 </div>
 <!-- MOBILE MENU OVERLAY -->
-<div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileServices(); toggleMobile();"></div>
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
 
-<!-- MOBILE MENU -->
+<!-- MOBILE MENU — contenedor único con 2 paneles -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#casos" onclick="toggleMobile()">Casos</a>
-  <a href="#nosotros" onclick="toggleMobile()">Nosotros</a>
-  <a href="#faq" onclick="toggleMobile()">Faq</a>
-  <button class="mobile-nav-link" onclick="openMobileServices()" style="display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;font-family:'Onest',sans-serif;font-size:15px;font-weight:500;color:#e8f8fc;padding:14px 20px;border-bottom:1px solid rgba(125,205,232,.08);">Servicios <span style="opacity:.5;">›</span></button>
+  <!-- PANEL PRINCIPAL -->
+  <div class="mmenu-panel" id="mmPanel1">
+    <a href="#casos" onclick="toggleMobile()">Casos</a>
+    <a href="#nosotros" onclick="toggleMobile()">Nosotros</a>
+    <a href="#faq" onclick="toggleMobile()">Faq</a>
+    <button class="mmenu-srv-btn" onclick="openMobileServices()">
+      Servicios <span>›</span>
+    </button>
+  </div>
 
+  <!-- PANEL SERVICIOS -->
+  <div class="mmenu-panel" id="mmPanel2" style="transform:translateX(100%);position:absolute;inset:0;">
+    <button class="mmenu-back-btn" onclick="closeMobileServices()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7 7M5 12l7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Volver
+    </button>
+    <div class="mmenu-section-title">Construir</div>
+    <a href="shopify.html" onclick="toggleMobile()">Ecommerce &amp; Shopify <span class="mmenu-arrow">→</span></a>
+    <div class="mmenu-item-disabled">Migraciones a Shopify <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">Shopify Plus <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-section-title">Crecer</div>
+    <div class="mmenu-item-disabled">Growth Marketing <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">Email Marketing <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">SEO Ecommerce <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">Analytics &amp; Data <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">Sales Strategy <span class="mmenu-soon">Próximo</span></div>
+    <div class="mmenu-item-disabled">Conversion Rate Optimization <span class="mmenu-soon">Próximo</span></div>
+  </div>
 </div>
 
-
-<!-- HERO CURSOR -->
-<div class="hero-cursor" id="heroCursor">
-  <div class="hero-cursor-ring">
-    <svg viewBox="0 0 100 100" width="100" height="100">
-      <defs>
-        <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"/>
-      </defs>
-      <text font-size="9" fill="rgba(255,255,255,0.75)" font-family="Onest,sans-serif" letter-spacing="3.2">
-        <textPath href="#circlePath">NEXT · NEXT · NEXT · NEXT · NEXT · NEXT ·</textPath>
-      </text>
-    </svg>
-  </div>
-  <div class="hero-cursor-arrow">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M5 12h14M13 6l6 6-6 6"/>
-    </svg>
-  </div>
-</div>
 <!-- HERO -->
 <section class="rc-hero" id="inicio">
 
@@ -2169,51 +2208,49 @@ function closeMobileServices() {
   document.body.classList.remove('services-open');
 }
 
+
+/* ── MOBILE MENU ── */
 function toggleMobile() {
-  // Cerrar sub-panel si está abierto
-  closeMobileServices();
   const menu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('mobileOverlay');
   const ham = document.getElementById('hamburger');
   const isotipo = document.getElementById('navIsotipo');
-  const logoFixed = document.querySelector('.nav-top-logo img');
   const isOpen = menu.classList.contains('open');
 
-  menu.classList.toggle('open');
-  overlay.classList.toggle('open');
-  ham.classList.toggle('open');
-
-  if (!isOpen) {
-    // Abriendo — mostrar logo completo, ocultar isotipo
-    document.body.style.overflow = 'hidden';
-    if (isotipo) {
-      isotipo.style.opacity = '0';
-      isotipo.style.pointerEvents = 'none';
-    }
-    // Mostrar logo completo en lugar del isotipo
-    const logoNav = document.createElement('div');
-    logoNav.id = 'mobileLogoOpen';
-    logoNav.style.cssText = 'position:fixed;top:18px;left:20px;z-index:9999;opacity:0;transition:opacity .3s;';
-    logoNav.innerHTML = '<a href="#"><img src="logo_cachaisolutions_blanco.svg" style="height:28px;display:block;"></a>';
-    document.body.appendChild(logoNav);
-    setTimeout(() => { logoNav.style.opacity = '1'; }, 50);
-  } else {
-    // Cerrando — restaurar isotipo
+  if (isOpen) {
+    // Cerrar todo
+    menu.classList.remove('open');
+    overlay.classList.remove('open');
+    ham.classList.remove('open');
     document.body.style.overflow = '';
-    const logoNav = document.getElementById('mobileLogoOpen');
-    if (logoNav) {
-      logoNav.style.opacity = '0';
-      setTimeout(() => { logoNav.remove(); }, 300);
-    }
-    if (isotipo) {
-      setTimeout(() => {
-        isotipo.style.opacity = '';
-        isotipo.style.pointerEvents = '';
-      }, 200);
+    if (isotipo) { isotipo.style.opacity = ''; isotipo.style.pointerEvents = ''; }
+    // Reset panel de servicios
+    const p2 = document.getElementById('mmPanel2');
+    if (p2) p2.style.transform = 'translateX(100%)';
+  } else {
+    menu.classList.add('open');
+    overlay.classList.add('open');
+    ham.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (isotipo && window.scrollY > 80) {
+      // isotipo visible
     }
   }
 }
 
+function openMobileServices() {
+  const p1 = document.getElementById('mmPanel1');
+  const p2 = document.getElementById('mmPanel2');
+  if (p1) p1.style.transform = 'translateX(-100%)';
+  if (p2) p2.style.transform = 'translateX(0)';
+}
+
+function closeMobileServices() {
+  const p1 = document.getElementById('mmPanel1');
+  const p2 = document.getElementById('mmPanel2');
+  if (p1) p1.style.transform = 'translateX(0)';
+  if (p2) p2.style.transform = 'translateX(100%)';
+}
 /* ── SCROLL REVEAL ── */
 const obs = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
