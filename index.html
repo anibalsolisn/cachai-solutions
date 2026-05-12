@@ -1212,13 +1212,10 @@ body {
   pointer-events: none;
   transition: opacity .2s ease, visibility .2s ease;
 }
-.mega-panel.open,
-.nav-mega-wrap:hover .mega-panel,
-.mega-panel:hover {
+.mega-panel.open {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: all !important;
-  display: block !important;
 }
 @keyframes megaFadeIn { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
 
@@ -2134,16 +2131,40 @@ body.services-open nav {
 
 /* ── MEGA MENU ── */
 function toggleMega() {
-  // Solo para mobile/pill
   if (window.innerWidth <= 960) {
     const panel = document.getElementById('megaPanel');
-    const wrap1 = document.getElementById('navMegaWrap');
-    const wrap2 = document.getElementById('navMegaWrapPill');
     if (panel) panel.classList.toggle('open');
-    if (wrap1) wrap1.classList.toggle('open');
-    if (wrap2) wrap2.classList.toggle('open');
   }
 }
+
+// Desktop hover
+(function() {
+  const panel = document.getElementById('megaPanel');
+  const wrap1 = document.getElementById('navMegaWrap');
+  const wrap2 = document.getElementById('navMegaWrapPill');
+  let hideTimer = null;
+
+  function showPanel() {
+    if (window.innerWidth <= 960) return;
+    clearTimeout(hideTimer);
+    if (panel) panel.classList.add('open');
+  }
+  function hidePanel() {
+    if (window.innerWidth <= 960) return;
+    hideTimer = setTimeout(() => {
+      if (panel) panel.classList.remove('open');
+    }, 150);
+  }
+
+  if (wrap1) {
+    wrap1.addEventListener('mouseenter', showPanel);
+    wrap1.addEventListener('mouseleave', hidePanel);
+  }
+  if (panel) {
+    panel.addEventListener('mouseenter', showPanel);
+    panel.addEventListener('mouseleave', hidePanel);
+  }
+})();
 
 /* ── NAV SCROLL ── */
 const navTop = document.getElementById('navTop');
