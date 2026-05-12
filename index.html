@@ -84,6 +84,7 @@ body {
 /* ══ NAV PILL flotante abajo ══ */
 nav {
   position: fixed; isolation: isolate;
+  z-index: 9999 !important;
   bottom: 24px; left: 50%; transform: translateX(-50%);
   top: auto; z-index: 500;
   height: 52px; padding: 0 6px;
@@ -2224,9 +2225,16 @@ function toggleMobile() {
     ham.classList.remove('open');
     document.body.style.overflow = '';
     if (isotipo) { isotipo.style.opacity = ''; isotipo.style.pointerEvents = ''; }
-    // Reset panel de servicios
+    // Reset AMBOS paneles instantáneamente
+    const p1 = document.getElementById('mmPanel1');
     const p2 = document.getElementById('mmPanel2');
-    if (p2) p2.style.transform = 'translateX(100%)';
+    if (p1) { p1.style.transition = 'none'; p1.style.transform = 'translateX(0)'; }
+    if (p2) { p2.style.transition = 'none'; p2.style.transform = 'translateX(100%)'; }
+    // Restaurar transición después
+    setTimeout(() => {
+      if (p1) p1.style.transition = '';
+      if (p2) p2.style.transition = '';
+    }, 50);
   } else {
     menu.classList.add('open');
     overlay.classList.add('open');
