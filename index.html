@@ -1438,7 +1438,7 @@ body.services-open nav {
 
 <!-- MOBILE SERVICES SUB-PANEL -->
 <div id="mobileServicesPanel" style="
-  position:fixed;top:80px;left:16px;right:16px;bottom:90px;z-index:9999;
+  position:fixed;top:80px;left:16px;right:16px;bottom:90px;z-index:1000;
   background:rgba(30,74,90,.95);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border:1px solid rgba(125,224,240,.15);
@@ -1472,7 +1472,7 @@ body.services-open nav {
   </div>
 </div>
 <!-- MOBILE MENU OVERLAY -->
-<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobile()"></div>
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="closeMobileServices(); toggleMobile();"></div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
@@ -2170,6 +2170,8 @@ function closeMobileServices() {
 }
 
 function toggleMobile() {
+  // Cerrar sub-panel si está abierto
+  closeMobileServices();
   const menu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('mobileOverlay');
   const ham = document.getElementById('hamburger');
