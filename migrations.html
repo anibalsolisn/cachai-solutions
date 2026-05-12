@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migraciones a Shopify — Cachai Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:    #0a1a22;
+  --teal:    #2a5f72;
+  --teal2:   #1e4a5a;
+  --accent:  #7de0f0;
+  --accent2: #2bc8e8;
+  --white:   #ffffff;
+  --grey:    #6b8a96;
+  --line:    rgba(13,30,42,.1);
+  --line-l:  rgba(255,255,255,.08);
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html,body { margin:0;padding:0;overflow-x:hidden; scroll-behavior: smooth; }
+body { font-family:'Onest',sans-serif; background:#fff; color:var(--dark); line-height:1.6; }
+
+/* ── NAV ── */
+.nav {
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:72px;padding:0 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s;
+}
+.nav-logo img { height:30px;display:block; }
+.nav-links { display:flex;gap:0;list-style:none; }
+.nav-links a { font-size:13px;font-weight:400;color:var(--grey);text-decoration:none;padding:8px 16px;transition:color .2s; }
+.nav-links a:hover { color:var(--dark); }
+.nav-cta { background:var(--dark);color:#fff !important;padding:10px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s; }
+.nav-cta:hover { background:var(--teal); }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  background:var(--teal2);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:120px 80px 80px;
+}
+.hero-bg {
+  position:absolute;inset:0;
+  background: radial-gradient(ellipse 100% 80% at 100% 0%, rgba(125,224,240,.12) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 60% at 0% 100%, rgba(42,95,114,.8) 0%, transparent 70%);
+}
+.hero-grid {
+  position:absolute;inset:0;
+  background-image: linear-gradient(rgba(125,224,240,.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(125,224,240,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-tag {
+  position:relative;
+  font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:28px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-tag::before { content:'';display:block;width:40px;height:1px;background:var(--accent); }
+.hero-title {
+  position:relative;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,8vw,120px);
+  font-weight:400;line-height:.95;color:#fff;
+  max-width:800px;margin-bottom:48px;
+}
+.hero-title em { font-style:italic;color:var(--accent); }
+.hero-bottom {
+  position:relative;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:1px solid rgba(255,255,255,.12);padding-top:40px;
+  gap:40px;flex-wrap:wrap;
+}
+.hero-desc { font-size:16px;color:rgba(255,255,255,.55);max-width:480px;line-height:1.8; }
+.hero-platforms {
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.platform-tag {
+  font-size:11px;font-weight:500;letter-spacing:.06em;
+  color:rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.1);
+  padding:6px 14px;border-radius:100px;
+  transition:all .2s;cursor:default;
+}
+.platform-tag:hover { color:var(--accent);border-color:rgba(125,224,240,.3);background:rgba(125,224,240,.06); }
+
+/* ── WHY SHOPIFY ── */
+.why-section {
+  padding:120px 80px;
+  background:#fff;
+  position:relative;overflow:hidden;
+}
+.why-inner { max-width:1100px;margin:0 auto; }
+.section-tag {
+  font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-tag::before { content:'';display:block;width:28px;height:1px;background:var(--teal); }
+.why-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,4.5vw,64px);
+  font-weight:400;line-height:1.1;color:var(--dark);
+  max-width:700px;margin-bottom:64px;
+}
+.why-title em { font-style:italic;color:var(--teal); }
+.why-grid { display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--line); }
+.why-card {
+  background:#fff;padding:40px 36px;
+  transition:background .25s;
+  cursor:default;
+}
+.why-card:hover { background:#f7fbfc; }
+.why-num {
+  font-family:'Playfair Display',serif;
+  font-size:48px;font-weight:400;color:var(--accent);
+  line-height:1;margin-bottom:16px;
+  display:flex;align-items:flex-start;gap:4px;
+}
+.why-num span { font-size:20px;margin-top:8px; }
+.why-card-title { font-size:18px;font-weight:500;color:var(--dark);margin-bottom:10px;line-height:1.3; }
+.why-card-text { font-size:14px;color:var(--grey);line-height:1.7; }
+
+/* ── FEAR SECTION ── */
+.fear-section {
+  background:var(--dark);padding:100px 80px;
+  position:relative;overflow:hidden;
+}
+.fear-section::before {
+  content:'';position:absolute;top:-200px;right:-200px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(125,224,240,.06) 0%,transparent 70%);
+}
+.fear-inner { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+.fear-left .section-tag { color:var(--accent); }
+.fear-left .section-tag::before { background:var(--accent); }
+.fear-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,3.5vw,52px);font-weight:400;
+  color:#fff;line-height:1.15;margin-bottom:28px;
+}
+.fear-title em { font-style:italic;color:var(--accent); }
+.fear-text { font-size:16px;color:rgba(255,255,255,.5);line-height:1.8; }
+.fear-text strong { color:rgba(255,255,255,.8);font-weight:500; }
+.fear-right { display:flex;flex-direction:column;gap:16px; }
+.fear-item {
+  display:flex;align-items:flex-start;gap:16px;
+  padding:20px 24px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:4px;
+  background:rgba(255,255,255,.02);
+  transition:border-color .2s,background .2s;
+}
+.fear-item:hover { border-color:rgba(125,224,240,.2);background:rgba(125,224,240,.04); }
+.fear-icon { width:36px;height:36px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent); }
+.fear-icon svg { width:20px;height:20px; }
+.fear-item-title { font-size:14px;font-weight:600;color:#fff;margin-bottom:4px; }
+.fear-item-text { font-size:13px;color:rgba(255,255,255,.45);line-height:1.6; }
+
+/* ── PROCESS ── */
+.process-section { padding:120px 80px;background:#fff; }
+.process-inner { max-width:1100px;margin:0 auto; }
+.process-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,3.5vw,52px);font-weight:400;
+  color:var(--dark);max-width:600px;margin-bottom:72px;line-height:1.15;
+}
+.process-title em { font-style:italic;color:var(--teal); }
+.steps { display:flex;flex-direction:column;gap:0; }
+.step {
+  display:grid;grid-template-columns:80px 1fr 1fr;
+  gap:0;padding:40px 0;
+  border-bottom:1px solid var(--line);
+  transition:background .2s;
+  cursor:default;
+}
+.step:first-child { border-top:1px solid var(--line); }
+.step:hover { background:#f7fbfc;margin:0 -80px;padding:40px 80px; }
+.step-num {
+  font-family:'Playfair Display',serif;
+  font-size:13px;color:var(--grey);padding-top:4px;letter-spacing:.04em;
+}
+.step-left { padding-right:48px; }
+.step-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,2.5vw,34px);font-weight:400;color:var(--dark);
+  margin-bottom:12px;line-height:1.1;
+}
+.step-title em { font-style:italic;color:var(--teal); }
+.step-badge {
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--teal);background:rgba(42,95,114,.08);
+  padding:4px 12px;border-radius:100px;
+}
+.step-right { padding-left:48px;border-left:1px solid var(--line); }
+.step-desc { font-size:14px;color:var(--grey);line-height:1.8;margin-bottom:16px; }
+.step-bullets { display:flex;flex-direction:column;gap:8px; }
+.step-bullet {
+  display:flex;align-items:center;gap:10px;
+  font-size:13px;color:var(--dark);
+}
+.step-bullet::before { content:'';width:18px;height:1px;background:var(--teal);flex-shrink:0; }
+
+/* ── BRANDS ── */
+.brands-section {
+  padding:80px;
+  background:var(--teal2);
+  overflow:hidden;
+}
+.brands-inner { max-width:1100px;margin:0 auto; }
+.brands-top {
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:56px;gap:40px;flex-wrap:wrap;
+}
+.brands-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,3vw,44px);font-weight:400;color:#fff;
+  line-height:1.15;
+}
+.brands-title em { font-style:italic;color:var(--accent); }
+.brands-subtitle { font-size:14px;color:rgba(255,255,255,.4);max-width:320px;line-height:1.7; }
+.brand-cards { display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(255,255,255,.06); }
+.brand-card {
+  background:rgba(30,74,90,.8);padding:36px 32px;
+  transition:background .25s;
+}
+.brand-card:hover { background:rgba(42,95,114,.9); }
+.brand-logo-text {
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:400;color:#fff;margin-bottom:8px;
+}
+.brand-from { font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px; }
+.brand-quote { font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;font-style:italic; }
+.brand-result {
+  margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);
+  font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+}
+
+/* ── CTA ── */
+.cta-section {
+  padding:120px 80px;
+  background:var(--dark);position:relative;overflow:hidden;
+}
+.cta-section::before {
+  content:'';position:absolute;bottom:-100px;left:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(125,224,240,.08) 0%,transparent 70%);
+}
+.cta-inner { max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start; }
+.cta-left-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,4vw,60px);font-weight:400;color:#fff;
+  line-height:1.1;margin-bottom:28px;
+}
+.cta-left-title em { font-style:italic;color:var(--accent); }
+.cta-left-text { font-size:16px;color:rgba(255,255,255,.45);line-height:1.8;margin-bottom:32px; }
+.cta-checks { display:flex;flex-direction:column;gap:12px;margin-bottom:32px; }
+.cta-check {
+  display:flex;align-items:center;gap:12px;
+  font-size:14px;color:rgba(255,255,255,.65);
+}
+.cta-check-dot {
+  width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;
+}
+.cta-form { display:flex;flex-direction:column;gap:12px; }
+.cta-input {
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:4px;padding:14px 18px;
+  color:#fff;font-size:14px;font-family:'Onest',sans-serif;
+  outline:none;transition:border-color .2s;
+}
+.cta-input::placeholder { color:rgba(255,255,255,.2); }
+.cta-input:focus { border-color:rgba(125,224,240,.4); }
+.cta-select { -webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center; }
+.cta-select option { background:var(--dark);color:#fff; }
+.cta-submit {
+  background:var(--accent);color:var(--dark);border:none;border-radius:4px;
+  padding:16px;font-family:'Onest',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:opacity .2s,transform .15s;letter-spacing:.04em;
+}
+.cta-submit:hover { opacity:.9;transform:translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--teal2);padding:48px 80px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:24px;
+}
+.footer-logo img { height:28px;filter:brightness(0) invert(1); }
+.footer-links { display:flex;gap:32px;list-style:none;flex-wrap:wrap; }
+.footer-links a { font-size:13px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s; }
+.footer-links a:hover { color:#fff; }
+.footer-copy { font-size:12px;color:rgba(255,255,255,.2); }
+
+/* ── REVEAL ── */
+.reveal { opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1;transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:960px) {
+  .nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .hero { padding:100px 24px 64px; }
+  .hero-bottom { flex-direction:column;align-items:flex-start; }
+  .why-section,.fear-section,.process-section,.brands-section,.cta-section { padding:72px 24px; }
+  .why-grid { grid-template-columns:1fr; }
+  .fear-inner,.cta-inner { grid-template-columns:1fr;gap:48px; }
+  .brand-cards { grid-template-columns:1fr; }
+  .step { grid-template-columns:40px 1fr; }
+  .step-right { grid-column:2;padding-left:0;border-left:none;border-top:1px solid var(--line);padding-top:20px;margin-top:20px; }
+  .step:hover { margin:0;padding:40px 0; }
+  footer { padding:40px 24px;flex-direction:column;text-align:center; }
+  .footer-links { justify-content:center; }
+  .brands-top { flex-direction:column; }
+}
+@media (max-width:600px) {
+  .hero-title { font-size:clamp(42px,12vw,72px); }
+  .process-section { padding:60px 20px; }
+  .step { grid-template-columns:32px 1fr;padding:28px 0; }
+  .step:hover { padding:28px 0; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions"></a>
+  <ul class="nav-links">
+    <li><a href="index.html#casos">Casos</a></li>
+    <li><a href="index.html#nosotros">Nosotros</a></li>
+    <li><a href="shopify.html">Shopify</a></li>
+  </ul>
+  <a href="index.html#contacto" class="nav-cta">Probemos juntos</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag reveal">Migraciones a Shopify</div>
+  <h1 class="hero-title reveal reveal-delay-1">
+    Tu próxima<br>plataforma.<br><em>Sin perder nada.</em>
+  </h1>
+  <div class="hero-bottom reveal reveal-delay-2">
+    <p class="hero-desc">Cambiar de plataforma da miedo. Datos perdidos, SEO destruido, downtime que cuesta ventas. Nosotros hemos hecho esto decenas de veces.</p>
+    <div class="hero-platforms">
+      <span class="platform-tag">WooCommerce</span>
+      <span class="platform-tag">Magento</span>
+      <span class="platform-tag">Adobe Commerce</span>
+      <span class="platform-tag">PrestaShop</span>
+      <span class="platform-tag">BigCommerce</span>
+      <span class="platform-tag">Wix</span>
+      <span class="platform-tag">Personalizadas</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY SHOPIFY -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="section-tag reveal">Por qué Shopify</div>
+    <h2 class="why-title reveal">El mundo ya <em>decidió.</em><br>¿Y tú?</h2>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-num">$14.6<span>B</span></div>
+        <div class="why-card-title">En ventas en un solo Black Friday</div>
+        <div class="why-card-text">Los merchants de Shopify generaron $14.6 billones en el Black Friday 2024 — un aumento del 27% respecto al año anterior.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-num">36<span>%</span></div>
+        <div class="why-card-title">Menor costo de operación</div>
+        <div class="why-card-text">Shopify tiene un costo total de propiedad hasta 36% menor que sus competidores — 29% mejor que Adobe Commerce, 35% mejor que Salesforce.</div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-num">16<span>+</span></div>
+        <div class="why-card-title">Lanzamientos enterprise en un trimestre</div>
+        <div class="why-card-text">Solo en Q3 2024, marcas como On, Victoria's Secret, Off-White y Estée Lauder migraron a Shopify. No es tendencia — es el estándar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEAR SECTION -->
+<section class="fear-section">
+  <div class="fear-inner">
+    <div class="fear-left reveal">
+      <div class="section-tag">El miedo es real</div>
+      <h2 class="fear-title">Sabemos exactamente<br>qué puede salir <em>mal.</em></h2>
+      <p class="fear-text">
+        Gymshark perdió ventas cuando su <strong>Magento colapsó</strong> durante un peak de tráfico. Newcastle United necesitaba procesar miles de órdenes en la primera hora del lanzamiento de su camiseta. Club Brugge quería convertir el 72% de su tráfico móvil en ventas reales.
+        <br><br>
+        <strong>Todos migraron a Shopify. Y nosotros sabemos cómo hacerlo sin el caos.</strong>
+      </p>
+    </div>
+    <div class="fear-right reveal reveal-delay-1">
+      <div class="fear-item">
+        <div class="fear-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg></div>
+        <div>
+          <div class="fear-item-title">Pérdida de datos</div>
+          <div class="fear-item-text">Productos, clientes, historial de pedidos. Lo migramos todo con verificación doble antes del go-live.</div>
+        </div>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg></div>
+        <div>
+          <div class="fear-item-title">SEO destruido</div>
+          <div class="fear-item-text">Redirecciones 301, URLs preservadas, meta tags y autoridad de dominio intactos. Tu posicionamiento no se toca.</div>
+        </div>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <div>
+          <div class="fear-item-title">Downtime que cuesta ventas</div>
+          <div class="fear-item-text">La migración ocurre en paralelo. Tu tienda sigue vendiendo hasta el último segundo antes del switch.</div>
+        </div>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/></svg></div>
+        <div>
+          <div class="fear-item-title">Integraciones rotas</div>
+          <div class="fear-item-text">Reconectamos todas tus apps, ERPs y herramientas. Sin fricción, sin datos perdidos entre sistemas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-inner">
+    <div class="section-tag reveal">Nuestro proceso</div>
+    <h2 class="process-title reveal">6 pasos para migrar<br><em>sin sorpresas</em></h2>
+    <div class="steps">
+
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-left">
+          <h3 class="step-title">Migración<br>de <em>datos</em></h3>
+          <div class="step-badge">Sin perder nada</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">Productos, clientes, pedidos e historial completo. Cada dato verificado antes y después de la migración.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">Catálogo completo de productos</div>
+            <div class="step-bullet">Base de datos de clientes</div>
+            <div class="step-bullet">Historial de órdenes</div>
+            <div class="step-bullet">Reviews y contenido generado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-left">
+          <h3 class="step-title">Preservación<br>de <em>SEO</em></h3>
+          <div class="step-badge">Posicionamiento intacto</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">Tu autoridad de dominio y posicionamiento orgánico son activos reales. Los protegemos como si fueran nuestros.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">Redirecciones 301 completas</div>
+            <div class="step-bullet">URLs y estructura preservadas</div>
+            <div class="step-bullet">Meta tags y datos estructurados</div>
+            <div class="step-bullet">Monitoreo post-migración</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-left">
+          <h3 class="step-title">Diseño<br>y <em>UX</em></h3>
+          <div class="step-badge">Mejor que antes</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">Tu nueva tienda en Shopify no solo funciona mejor — también se ve mejor. Aprovechamos la migración para elevar la experiencia.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">Tema custom en Liquid</div>
+            <div class="step-bullet">Mobile-first desde el primer día</div>
+            <div class="step-bullet">Checkout optimizado para conversión</div>
+            <div class="step-bullet">Velocidad de carga mejorada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">04</div>
+        <div class="step-left">
+          <h3 class="step-title">Integraciones<br>y <em>apps</em></h3>
+          <div class="step-badge">Ecosistema completo</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">Reconectamos todas tus herramientas al nuevo ecosistema Shopify. Sin fricción, sin datos perdidos entre sistemas.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">ERP y sistemas de gestión</div>
+            <div class="step-bullet">Email marketing y CRM</div>
+            <div class="step-bullet">Pagos y suscripciones</div>
+            <div class="step-bullet">Apps custom si es necesario</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">05</div>
+        <div class="step-left">
+          <h3 class="step-title">Cero<br><em>downtime</em></h3>
+          <div class="step-badge">Siempre vendiendo</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">La migración ocurre en paralelo a tu tienda actual. No pierdes ni un minuto de ventas durante el proceso.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">Desarrollo en entorno paralelo</div>
+            <div class="step-bullet">Switch instantáneo de DNS</div>
+            <div class="step-bullet">Rollback plan si es necesario</div>
+            <div class="step-bullet">Monitoreo en tiempo real</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">06</div>
+        <div class="step-left">
+          <h3 class="step-title">QA y<br><em>lanzamiento</em></h3>
+          <div class="step-badge">Sin sorpresas</div>
+        </div>
+        <div class="step-right">
+          <p class="step-desc">Revisión exhaustiva de cada página, flujo y función antes del go-live. Solo lanzamos cuando estamos 100% seguros.</p>
+          <div class="step-bullets">
+            <div class="step-bullet">Testing en múltiples dispositivos</div>
+            <div class="step-bullet">Verificación de pagos y checkout</div>
+            <div class="step-bullet">Prueba de carga y velocidad</div>
+            <div class="step-bullet">Soporte post-lanzamiento</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BRAND CASES -->
+<section class="brands-section">
+  <div class="brands-inner">
+    <div class="brands-top reveal">
+      <h2 class="brands-title">Las marcas más grandes<br>ya <em>migraron.</em></h2>
+      <p class="brands-subtitle">Desde clubes de fútbol europeos hasta marcas de moda global. Todos eligieron Shopify.</p>
+    </div>
+    <div class="brand-cards">
+      <div class="brand-card reveal">
+        <div class="brand-logo-text">Gymshark</div>
+        <div class="brand-from">Migró desde Magento</div>
+        <div class="brand-quote">"Su sitio Magento colapsó durante un evento de ventas masivo. Perdieron revenue en tiempo real. Migraron a Shopify y nunca miraron atrás."</div>
+        <div class="brand-result">→ Cero caídas desde la migración</div>
+      </div>
+      <div class="brand-card reveal reveal-delay-1">
+        <div class="brand-logo-text">Newcastle United FC</div>
+        <div class="brand-from">Migró a Shopify Plus · 2024</div>
+        <div class="brand-quote">"En el fin de semana de apertura, coincidiendo con el lanzamiento de su nueva camiseta Adidas, el sitio procesó miles de órdenes en la primera hora sin caerse."</div>
+        <div class="brand-result">→ Miles de órdenes en la primera hora</div>
+      </div>
+      <div class="brand-card reveal reveal-delay-2">
+        <div class="brand-logo-text">Club Brugge</div>
+        <div class="brand-from">Migró a Shopify Plus</div>
+        <div class="brand-quote">"72% del tráfico venía de móvil. Migraron a Shopify con diseño mobile-first y lograron 77% de tasa de conversión en checkout móvil."</div>
+        <div class="brand-result">→ 77% conversión móvil en checkout</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="reveal">
+      <h2 class="cta-left-title">¿Listo para<br>pasarte a <em>Shopify?</em></h2>
+      <p class="cta-left-text">Agendemos una llamada de 30 minutos. Analizamos tu plataforma actual y te decimos exactamente qué necesitas — sin rodeos.</p>
+      <div class="cta-checks">
+        <div class="cta-check"><span class="cta-check-dot"></span>Análisis previo de tu plataforma actual</div>
+        <div class="cta-check"><span class="cta-check-dot"></span>Estimación de tiempo y costo real</div>
+        <div class="cta-check"><span class="cta-check-dot"></span>Plan de migración sin downtime</div>
+        <div class="cta-check"><span class="cta-check-dot"></span>Respuesta en menos de 24h</div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <form class="cta-form" onsubmit="return handleSubmit(event)">
+        <input class="cta-input" type="text" placeholder="Tu nombre" required>
+        <input class="cta-input" type="email" placeholder="tu@empresa.com" required>
+        <input class="cta-input" type="url" placeholder="URL de tu tienda actual">
+        <select class="cta-input cta-select" required>
+          <option value="" disabled selected>¿Desde qué plataforma migrás?</option>
+          <option>WooCommerce</option>
+          <option>Magento</option>
+          <option>Adobe Commerce</option>
+          <option>PrestaShop</option>
+          <option>BigCommerce</option>
+          <option>Wix</option>
+          <option>Plataforma personalizada</option>
+          <option>Otra</option>
+        </select>
+        <button class="cta-submit" type="submit">Hablemos de tu migración →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><img src="logo_cachaisolutions_blanco.svg" alt="Cachai Solutions"></div>
+  <ul class="footer-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="shopify.html">Shopify</a></li>
+    <li><a href="migrations.html">Migraciones</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Cachai Solutions</div>
+</footer>
+
+<script>
+/* Reveal on scroll */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold:.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Números animados */
+function animateNumber(el, target, suffix='', duration=1500) {
+  let start = 0;
+  const step = timestamp => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = target < 100 ? (target * ease).toFixed(1) : Math.round(target * ease);
+    el.textContent = val + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const numObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const nums = e.target.querySelectorAll('.why-num');
+      nums.forEach(n => {
+        const raw = n.textContent.trim();
+        if (raw.includes('14.6')) animateNumber(n.querySelector(':first-child') || n, 14.6, 'B');
+        if (raw.includes('36')) animateNumber(n, 36, '%');
+        if (raw.includes('16')) animateNumber(n, 16, '+');
+      });
+      numObs.unobserve(e.target);
+    }
+  });
+}, { threshold:.3 });
+
+document.querySelectorAll('.why-grid').forEach(el => numObs.observe(el));
+
+/* Form submit */
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.cta-submit');
+  btn.textContent = '✓ ¡Recibido! Te contactamos pronto.';
+  btn.style.background = 'rgba(125,224,240,.3)';
+  btn.disabled = true;
+  return false;
+}
+</script>
+</body>
+</html>
