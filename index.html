@@ -1284,6 +1284,16 @@ body.services-open nav {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+@media (min-width: 961px) {
+  .nav-mega-wrap:hover .mega-panel,
+  .mega-panel:hover {
+    display: block !important;
+  }
+  .nav-mega-wrap:hover .nav-mega-trigger svg {
+    transform: rotate(180deg);
+  }
+}
 </style>
 </head>
 <body>
@@ -1384,7 +1394,7 @@ body.services-open nav {
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li class="nav-mega-wrap" id="navMegaWrap">
-      <button class="nav-mega-trigger" onclick="toggleMega()">
+      <button class="nav-mega-trigger">
         Servicios
         <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -1407,7 +1417,7 @@ body.services-open nav {
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#faq">Faq</a></li>
     <li class="nav-mega-wrap" id="navMegaWrapPill">
-      <button class="nav-mega-trigger" onclick="toggleMega()">
+      <button class="nav-mega-trigger">
         Servicios
         <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
@@ -2119,26 +2129,16 @@ body.services-open nav {
 
 /* ── MEGA MENU ── */
 function toggleMega() {
-  const panel = document.getElementById('megaPanel');
-  const wrap1 = document.getElementById('navMegaWrap');
-  const wrap2 = document.getElementById('navMegaWrapPill');
-  panel.classList.toggle('open');
-  if (wrap1) wrap1.classList.toggle('open');
-  if (wrap2) wrap2.classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  const panel = document.getElementById('megaPanel');
-  const wrap1 = document.getElementById('navMegaWrap');
-  const wrap2 = document.getElementById('navMegaWrapPill');
-  const clickedInside = (wrap1 && wrap1.contains(e.target)) ||
-                        (wrap2 && wrap2.contains(e.target)) ||
-                        (panel && panel.contains(e.target));
-  if (!clickedInside) {
-    if (panel) panel.classList.remove('open');
-    if (wrap1) wrap1.classList.remove('open');
-    if (wrap2) wrap2.classList.remove('open');
+  // Solo para mobile/pill
+  if (window.innerWidth <= 960) {
+    const panel = document.getElementById('megaPanel');
+    const wrap1 = document.getElementById('navMegaWrap');
+    const wrap2 = document.getElementById('navMegaWrapPill');
+    if (panel) panel.classList.toggle('open');
+    if (wrap1) wrap1.classList.toggle('open');
+    if (wrap2) wrap2.classList.toggle('open');
   }
-});
+}
 
 /* ── NAV SCROLL ── */
 const navTop = document.getElementById('navTop');
