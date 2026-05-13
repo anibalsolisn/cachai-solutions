@@ -29,29 +29,13 @@ body {
 }
 
 /* ── NAV (igual que el home) ── */
-.nav-top {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 502;
-  height: 72px; padding: 0 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(255,255,255,.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--line);
-}
+
 .nav-logo img { height: 32px; display: block; }
-.nav-links { display: flex; gap: 0; list-style: none; }
-.nav-links a {
-  font-size: 13px; font-weight: 400; color: var(--grey);
-  text-decoration: none; padding: 8px 16px;
-  transition: color .2s;
-}
-.nav-links a:hover { color: var(--dark); }
-.nav-cta {
-  background: var(--dark); color: var(--white) !important;
-  padding: 10px 22px; border-radius: 4px;
-  font-size: 13px; font-weight: 600;
-  text-decoration: none; transition: background .2s;
-}
-.nav-cta:hover { background: var(--teal); }
+
+
+
+
+
 
 /* ── HERO PAGE ── */
 .page-hero {
@@ -276,8 +260,8 @@ footer {
   .cta-final { grid-template-columns: 1fr; padding: 64px 32px; gap: 48px; }
   footer { flex-direction: column; gap: 24px; padding: 40px 32px; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; }
-  .nav-links { display: none; }
-  .nav-top { padding: 0 20px; }
+  
+  
   .page-hero-stats { gap: 32px; }
 }
 </style>
@@ -305,7 +289,7 @@ html, body { margin: 0; padding: 0; border: 0; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'Onest', sans-serif;
-  background: #ffffff;
+  background: #1e4a5a;
   color: #0d2030;
   overflow-x: hidden;
   line-height: 1.6;
