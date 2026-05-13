@@ -24,21 +24,7 @@ html,body { margin:0;padding:0;overflow-x:hidden; scroll-behavior: smooth; }
 body { font-family:'Onest',sans-serif; background:#fff; color:var(--dark); line-height:1.6; }
 
 /* ── NAV ── */
-.nav {
-  position:fixed;top:0;left:0;right:0;z-index:999;
-  height:72px;padding:0 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);
-  transition:background .3s;
-}
-.nav-logo img { height:30px;display:block; }
-.nav-links { display:flex;gap:0;list-style:none; }
-.nav-links a { font-size:13px;font-weight:400;color:var(--grey);text-decoration:none;padding:8px 16px;transition:color .2s; }
-.nav-links a:hover { color:var(--dark); }
-.nav-cta { background:var(--dark);color:#fff !important;padding:10px 22px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;transition:background .2s; }
-.nav-cta:hover { background:var(--teal); }
+
 
 /* ── HERO ── */
 .hero {
@@ -336,16 +322,8 @@ footer {
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="index.html" class="nav-logo"><img src="logo_cachaisolutions_verde.svg" alt="Cachai Solutions"></a>
-  <ul class="nav-links">
-    <li><a href="index.html#casos">Casos</a></li>
-    <li><a href="index.html#nosotros">Nosotros</a></li>
-    <li><a href="shopify.html">Shopify</a></li>
-  </ul>
-  <a href="index.html#contacto" class="nav-cta">Probemos juntos</a>
-</nav>
+<!-- NAV COMPARTIDO -->
+<script src="nav.js"></script>
 
 <!-- HERO -->
 <section class="hero">
