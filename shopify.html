@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopify Development — Cachai Solutions</title>
+<title>Ecommerce & Shopify Services — Cachai Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* ── PAGE CSS ── */
+
 /* ── TOKENS ── */
 :root {
   --bg:       #ffffff;
@@ -30,7 +32,7 @@ body {
 
 /* ── NAV (igual que el home) ── */
 
-.nav-logo img { height: 32px; display: block; }
+
 
 
 
@@ -264,13 +266,13 @@ footer {
   
   .page-hero-stats { gap: 32px; }
 }
+
 </style>
 </head>
-<body>
+<body style="background:#1e4a5a;">
 
-<!-- ═══ CACHAI NAV ═══ -->
-<style>
-:root {
+<!-- NAV -->
+<style>:root {
   --bg:        #2a5f72;
   --bg2:       #1e4a5a;
   --green:     #1a7a8a;
@@ -289,7 +291,7 @@ html, body { margin: 0; padding: 0; border: 0; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: 'Onest', sans-serif;
-  background: #1e4a5a;
+  background: #ffffff;
   color: #0d2030;
   overflow-x: hidden;
   line-height: 1.6;
@@ -1154,8 +1156,7 @@ html {
 body {
   margin: 0 !important;
   padding: 0 !important;
-}
-</style>
+}</style>
 <!-- MEGA MENU: NAV TOP (2 columnas, full width) -->
 <div id="megaPanelTop" style="
   position:fixed; top:0; left:0; right:0; z-index:9998;
@@ -1337,9 +1338,418 @@ body {
   </div>
 </div>
 
-
+<!-- HERO CURSOR -->
+<div class="hero-cursor" id="heroCursor">
+  <div class="hero-cursor-ring">
+    <svg viewBox="0 0 100 100" width="100" height="100">
+      <defs>
+        <path id="circlePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"/>
+      </defs>
+      <text font-size="9" fill="rgba(255,255,255,0.75)" font-family="Onest,sans-serif" letter-spacing="3.2">
+        <textPath href="#circlePath">NEXT · NEXT · NEXT · NEXT · NEXT · NEXT ·</textPath>
+      </text>
+    </svg>
   </div>
+  <div class="hero-cursor-arrow">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </svg>
+  </div>
+</div>
+<script>/* ── MEGA MENU ── */
+function toggleMega() { /* mobile only — no usado */ }
+
+function openPillServices() {
+  document.getElementById('megaPillP1').style.display = 'none';
+  document.getElementById('megaPillP2').style.display = 'block';
+}
+function closePillServices() {
+  document.getElementById('megaPillP1').style.display = 'block';
+  document.getElementById('megaPillP2').style.display = 'none';
+}
+
+// Nav TOP hover
+(function() {
+  const panel = document.getElementById('megaPanelTop');
+  const wrap = document.getElementById('navMegaWrap');
+  let t = null;
+  const show = () => { if(window.innerWidth<=960) return; clearTimeout(t); panel.style.opacity='1'; panel.style.visibility='visible'; panel.style.pointerEvents='all'; };
+  const hide = () => { if(window.innerWidth<=960) return; t=setTimeout(()=>{ panel.style.opacity='0'; panel.style.visibility='hidden'; panel.style.pointerEvents='none'; },150); };
+  if(wrap){ wrap.addEventListener('mouseenter',show); wrap.addEventListener('mouseleave',hide); }
+  if(panel){ panel.addEventListener('mouseenter',()=>clearTimeout(t)); panel.addEventListener('mouseleave',hide); }
+})();
+
+// Nav PILL hover
+(function() {
+  const panel = document.getElementById('megaPanelPill');
+  const wrap = document.getElementById('navMegaWrapPill');
+  let t = null;
+  const show = () => {
+    if(window.innerWidth<=960) return;
+    clearTimeout(t);
+    // Mostrar directamente P2 (todos los servicios)
+    document.getElementById('megaPillP1').style.display = 'none';
+    document.getElementById('megaPillP2').style.display = 'block';
+    panel.style.opacity='1'; panel.style.visibility='visible'; panel.style.pointerEvents='all';
+  };
+  const hide = () => { if(window.innerWidth<=960) return; t=setTimeout(()=>{ panel.style.opacity='0'; panel.style.visibility='hidden'; panel.style.pointerEvents='none'; },150); };
+  if(wrap){ wrap.addEventListener('mouseenter',show); wrap.addEventListener('mouseleave',hide); }
+  if(panel){ panel.addEventListener('mouseenter',()=>clearTimeout(t)); panel.addEventListener('mouseleave',hide); }
+})();
+
+/* ── NAV SCROLL ── */
+const navTop = document.getElementById('navTop');
+const navPill = document.getElementById('nav');
+const navIsotipo = document.getElementById('navIsotipo');
+const isotipoImg = document.getElementById('isotipoImg');
+const THRESHOLD = 80;
+
+function updateNav() {
+  const y = window.scrollY;
+  const isMobile = window.innerWidth <= 960;
+  if (y > THRESHOLD) {
+    navTop.classList.add('hidden');
+    navPill.classList.add('pill-visible');
+    navIsotipo.classList.add('visible');
+  } else {
+    navTop.classList.remove('hidden');
+    navIsotipo.classList.remove('visible');
+    // En mobile la pill siempre visible
+    if (!isMobile) {
+      navPill.classList.remove('pill-visible');
+    } else {
+      navPill.classList.add('pill-visible');
+    }
+  }
+  // Adaptar color del isotipo según fondo
+  // Detecta el elemento debajo del isotipo
+  const el = document.elementFromPoint(48, 48);
+  if (el) {
+    const bg = window.getComputedStyle(el).backgroundColor;
+    const rgb = bg.match(/\d+/g);
+    if (rgb) {
+      const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000;
+      isotipoImg.style.filter = brightness > 128 ? 'invert(1)' : 'none';
+    }
+  }
+}
+window.addEventListener('scroll', updateNav);
+window.addEventListener('resize', updateNav);
+updateNav();
+
+/* ── MOBILE MENU ── */
+
+function openMobileServices() {
+  const panel = document.getElementById('mobileServicesPanel');
+  panel.style.transform = 'translateX(0)';
+  panel.style.pointerEvents = 'all';
+  document.body.classList.add('services-open');
+}
+function closeMobileServices() {
+  const panel = document.getElementById('mobileServicesPanel');
+  panel.style.transform = 'translateX(100%)';
+  panel.style.pointerEvents = 'none';
+  document.body.classList.remove('services-open');
+}
+
+
+/* ── MOBILE MENU ── */
+function toggleMobile() {
+  const menu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('mobileOverlay');
+  const ham = document.getElementById('hamburger');
+  const isotipo = document.getElementById('navIsotipo');
+  const isOpen = menu.classList.contains('open');
+
+  if (isOpen) {
+    // Cerrar todo
+    menu.classList.remove('open');
+    overlay.classList.remove('open');
+    ham.classList.remove('open');
+    document.body.style.overflow = '';
+    if (isotipo) { isotipo.style.opacity = ''; isotipo.style.pointerEvents = ''; }
+    // Reset AMBOS paneles instantáneamente
+    const p1 = document.getElementById('mmPanel1');
+    const p2 = document.getElementById('mmPanel2');
+    if (p1) { p1.style.transition = 'none'; p1.style.transform = 'translateX(0)'; }
+    if (p2) { p2.style.transition = 'none'; p2.style.transform = 'translateX(100%)'; }
+    // Restaurar transición después
+    setTimeout(() => {
+      if (p1) p1.style.transition = '';
+      if (p2) p2.style.transition = '';
+    }, 50);
+  } else {
+    menu.classList.add('open');
+    overlay.classList.add('open');
+    ham.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (isotipo && window.scrollY > 80) {
+      // isotipo visible
+    }
+  }
+}
+
+function openMobileServices() {
+  const p1 = document.getElementById('mmPanel1');
+  const p2 = document.getElementById('mmPanel2');
+  if (p1) p1.style.transform = 'translateX(-100%)';
+  if (p2) p2.style.transform = 'translateX(0)';
+}
+
+function closeMobileServices() {
+  const p1 = document.getElementById('mmPanel1');
+  const p2 = document.getElementById('mmPanel2');
+  if (p1) p1.style.transform = 'translateX(0)';
+  if (p2) p2.style.transform = 'translateX(100%)';
+}
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        e.target.classList.add('visible');
+        // Trigger KPI bars
+        if (e.target.classList.contains('why-right')) {
+          e.target.querySelectorAll('.why-kpi-bar').forEach((bar, j) => {
+            setTimeout(() => { bar.style.transform = 'scaleX(1)'; }, j * 200);
+          });
+        }
+      }, i * 100);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── FAQ ── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id === '#') return;
+    e.preventDefault();
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+    if (document.getElementById('mobileMenu').classList.contains('open')) toggleMobile();
+  });
+});
+
+/* ── FORM ── */
+function submitForm() {
+  const btn = document.getElementById('fBtn');
+  btn.textContent = '✓ ¡Listo! Te contactaremos pronto';
+  btn.style.background = 'rgba(125,224,240,.2)';
+  btn.style.color = 'var(--green-lit)';
+  btn.disabled = true;
+}</script>
+<!-- /NAV -->
+
+<!-- HERO -->
+<!-- INTRO -->
+<section class="intro-strip reveal">
+  <div>
+    <div class="intro-label">Por qué Cachai</div>
+    <h2 class="intro-title">Especializados en crear experiencias que son tanto <em>estratégicas</em> como efectivas</h2>
+  </div>
+  <div>
+    <p class="intro-text">La mayoría de las agencias construyen tiendas bonitas. Nosotros construimos tiendas que convierten. <strong>Cada decisión de diseño y desarrollo está respaldada por datos</strong> — no por intuición ni por tendencias del momento.</p>
+    <p class="intro-text" style="margin-top:16px;">Trabajamos con marcas que ya venden y quieren vender más. Desde el primer píxel hasta el último paso del checkout, todo está optimizado para un objetivo: revenue.</p>
+    <a href="index.html#contacto" class="btn-primary">
+      Hablemos de tu tienda
+      <svg viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+
+  <!-- 01 Shopify Development -->
+  <div class="service-item reveal">
+    <div class="service-num">01</div>
+    <div class="service-left">
+      <h3 class="service-title">Shopify<br><em>Development</em></h3>
+      <div class="service-tagline">"No construimos tiendas. Construimos máquinas de revenue."</div>
+      <p class="service-desc">Desarrollo custom en Shopify desde cero — temas a medida, integraciones y arquitectura técnica construida para escalar. Cada línea de código tiene un propósito: convertir.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Desarrollo de temas custom en Liquid</li>
+        <li>Integraciones con apps y APIs de terceros</li>
+        <li>Optimización de velocidad y rendimiento</li>
+        <li>Mobile-first desde el primer día</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 02 UX/UI Design -->
+  <div class="service-item reveal">
+    <div class="service-num">02</div>
+    <div class="service-left">
+      <h3 class="service-title">UX/UI<br><em>Design</em></h3>
+      <div class="service-tagline">"Tu tienda tiene 3 segundos para convencer. Lo que diseñamos convence."</div>
+      <p class="service-desc">Experiencias de compra que guían al usuario de forma intuitiva desde el primer clic hasta el checkout. Diseño que no solo se ve bien — vende.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Investigación y auditoría UX de tu tienda</li>
+        <li>Wireframes y prototipos interactivos</li>
+        <li>Diseño de checkout y flujos de conversión</li>
+        <li>Pruebas A/B de elementos clave</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 03 Shopify Plus -->
+  <div class="service-item reveal">
+    <div class="service-num">03</div>
+    <div class="service-left">
+      <h3 class="service-title">Shopify<br><em>Plus</em></h3>
+      <div class="service-tagline">"Para las marcas que ya crecieron y necesitan más."</div>
+      <p class="service-desc">Implementación enterprise en Shopify Plus con flujos automatizados, checkout personalizado y arquitectura multi-mercado. Para marcas que facturan en serio.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Checkout extensible y personalizado</li>
+        <li>Automatizaciones con Shopify Flow</li>
+        <li>Multi-moneda y multi-idioma</li>
+        <li>Planificación de campañas y lanzamientos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 04 Integraciones -->
+  <div class="service-item reveal">
+    <div class="service-num">04</div>
+    <div class="service-left">
+      <h3 class="service-title">Integraciones<br><em>y Apps</em></h3>
+      <div class="service-tagline">"Tu conjunto de herramientas, funcionando en perfecta armonía."</div>
+      <p class="service-desc">Conectamos tu tienda con Klaviyo, Gorgias, Recharge, NetSuite y cualquier herramienta de tu ecosistema. Sin fricciones, sin datos perdidos.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Sistemas de gestión y ERP</li>
+        <li>Email marketing y CRM</li>
+        <li>Pagos, suscripciones y fidelización</li>
+        <li>Integraciones headless y APIs personalizadas</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 05 Performance -->
+  <div class="service-item reveal">
+    <div class="service-num">05</div>
+    <div class="service-left">
+      <h3 class="service-title">Optimización de<br><em>Rendimiento</em></h3>
+      <div class="service-tagline">"Una tienda lenta pierde ventas. Así de simple."</div>
+      <p class="service-desc">Auditamos y optimizamos la velocidad, el SEO técnico y el rendimiento de tu tienda para que cada visita tenga las máximas probabilidades de convertir.</p>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Auditoría técnica completa</li>
+        <li>Optimización de imágenes y recursos</li>
+        <li>Mejoras de velocidad de carga</li>
+        <li>SEO técnico en página</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 06 Migrations -->
+  <div class="service-item migration reveal">
+    <div class="service-num">06</div>
+    <div class="service-left">
+      <h3 class="service-title">Migraciones<br><em>a Shopify</em></h3>
+      <div class="service-tagline">"Cambiar de plataforma no tiene que ser un caos."</div>
+      <p class="service-desc">Migramos tu tienda desde cualquier plataforma a Shopify sin perder datos, posicionamiento ni ventas en el proceso. Un servicio tan importante que le dedicamos su propia página.</p>
+      <a href="migrations.html" class="btn-migration">
+        Ver página de Migraciones
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="service-right">
+      <div class="service-includes">Incluye</div>
+      <ul class="service-list">
+        <li>Migración de productos y clientes</li>
+        <li>Preservación del SEO y URLs</li>
+        <li>Redirecciones y auditoría post-migración</li>
+        <li>Cero downtime garantizado</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="reveal">
+    <h2 class="cta-final-title">¿Listo para construir algo <em>que venda de verdad?</em></h2>
+    <div class="cta-checks" style="margin-top:32px;">
+      <div class="cta-check">Sin costo ni compromiso</div>
+      <div class="cta-check">Análisis previo de tu tienda</div>
+      <div class="cta-check">Respuesta en menos de 24h</div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="cta-final-text">Agendemos una llamada de 30 minutos. Te mostramos exactamente qué haríamos con tu tienda y qué resultados puedes esperar.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="text" placeholder="Tu nombre">
+      <input class="cta-input" type="email" placeholder="tu@empresa.com">
+      <select class="cta-input" style="-webkit-appearance:none;cursor:pointer;">
+        <option value="" disabled selected>¿Qué necesitas?</option>
+        <option>Shopify Development</option>
+        <option>UX/UI Design</option>
+        <option>Shopify Plus</option>
+        <option>Integraciones y Apps</option>
+        <option>Optimización de Rendimiento</option>
+        <option>Migración a Shopify</option>
+      </select>
+      <button class="cta-submit" onclick="this.textContent='✓ ¡Listo! Te contactamos pronto'; this.disabled=true;">Probemos juntos →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo_cachaisolutions_blanco.svg" alt="Cachai Solutions">
+  </div>
+  <ul class="footer-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="shopify.html">Shopify</a></li>
+    <li><a href="migrations.html">Migraciones</a></li>
+    <li><a href="index.html#contacto">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Cachai Solutions</div>
+</footer>
+
 <script>
+/* Reveal on scroll */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 100);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+
+
+<script>
+
 /* ── MEGA MENU ── */
 function toggleMega() { /* mobile only — no usado */ }
 
@@ -1753,6 +2163,7 @@ const obs = new IntersectionObserver(entries => {
   });
 }, { threshold: .1 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
 </script>
 </body>
 </html>
